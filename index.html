@@ -1,0 +1,1128 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070914">
+<meta name="description" content="NotenFlow – Noten lesen spielerisch lernen: Violin- und Bassschlüssel, Lieder, Akkorde, Level und Cloud-Speicherstand.">
+<title>NotenFlow – Noten spielerisch lernen</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238b6bff'/%3E%3Cstop offset='1' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cpath d='M26 44V20l18-4v24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='21' cy='44' r='5' fill='white'/%3E%3Ccircle cx='39' cy='40' r='5' fill='white'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#070914;--ink:#eef0ff;--muted:#9aa3c7;--line:rgba(255,255,255,.1);
+  --glass:rgba(255,255,255,.055);--glass2:rgba(255,255,255,.09);
+  --violet:#8b6bff;--cyan:#22d3ee;--green:#34d399;--red:#fb7185;--amber:#fbbf24;--pink:#f472b6;
+  --grad:linear-gradient(135deg,#8b6bff 0%,#22d3ee 100%);
+  --radius:22px;--shadow:0 20px 60px -24px rgba(0,0,0,.7);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--ink);font:500 16px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg.ic{flex:none;display:block}
+h1,h2,h3{letter-spacing:-.02em;line-height:1.15}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.bg::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 46px,rgba(255,255,255,.035) 46px 47px);mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent)}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;animation:float 24s ease-in-out infinite}
+.b1{width:46vmax;height:46vmax;left:-14vmax;top:-16vmax;background:#5b3df5}
+.b2{width:40vmax;height:40vmax;right:-14vmax;top:10vh;background:#0891b2;animation-delay:-8s}
+.b3{width:36vmax;height:36vmax;left:22vw;bottom:-22vmax;background:#c026d3;opacity:.3;animation-delay:-14s}
+@keyframes float{50%{transform:translate(4vmax,3vmax) scale(1.08)}}
+.glass{background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);border-radius:var(--radius);box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.08)}
+.wrap{width:min(1080px,100%);margin:0 auto;padding:0 18px}
+.topbar{position:sticky;top:0;z-index:30;padding:calc(env(safe-area-inset-top) + 10px) 0 10px;backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px);background:linear-gradient(rgba(7,9,20,.82),rgba(7,9,20,.5));border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;letter-spacing:-.02em;cursor:pointer}
+.brand svg{width:34px;height:34px}
+.spacer{flex:1}
+.lvl{display:flex;align-items:center;gap:10px;padding:5px 14px 5px 5px;border-radius:999px;cursor:pointer}
+.lvl .badge{width:32px;height:32px;border-radius:50%;background:var(--grad);display:grid;place-items:center;font-weight:800;font-size:.85rem;color:#fff}
+.lvl .bar{width:84px;height:6px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden}
+.lvl .bar i{display:block;height:100%;background:var(--grad);width:0;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.lvl small{color:var(--muted);font-size:.7rem;display:block;line-height:1.2;margin-top:3px}
+.icon-btn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--glass);border:1px solid var(--line);transition:.2s}
+.icon-btn:hover{background:var(--glass2);transform:translateY(-1px)}
+.avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;background:var(--grad);display:grid;place-items:center;font-weight:800;color:#fff;border:2px solid rgba(255,255,255,.25)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:14px;background:var(--glass2);border:1px solid var(--line);font-weight:700;transition:.2s;white-space:nowrap}
+.btn:hover{background:rgba(255,255,255,.14);transform:translateY(-1px)}
+.btn.primary{background:var(--grad);border-color:transparent;color:#071018;box-shadow:0 10px 30px -10px rgba(139,107,255,.8)}
+.btn.google{background:#fff;color:#1f2340;border-color:transparent}
+.btn.danger{color:var(--red);border-color:rgba(251,113,133,.35)}
+.btn.sm{padding:8px 14px;font-size:.9rem}
+main{padding:26px 0 60px}
+.view{display:none}
+.view.active{display:block;animation:viewIn .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes viewIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.hero{padding:10px 0 26px}
+.hero h1{font-size:clamp(2rem,5.5vw,3.4rem);font-weight:850;max-width:16ch}
+.hero h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);margin-top:12px;max-width:52ch;font-size:1.05rem}
+.sect{margin:30px 0 14px;font-size:.8rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:800}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.mode{padding:20px;text-align:left;display:flex;flex-direction:column;gap:10px;transition:.25s;position:relative;overflow:hidden}
+.mode:hover{transform:translateY(-4px);border-color:rgba(139,107,255,.55)}
+.mode .mi{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--grad);color:#071018}
+.mode h3{font-size:1.2rem}
+.mode p{color:var(--muted);font-size:.93rem;flex:1}
+.mode .st{font-size:.82rem;font-weight:700;color:var(--cyan)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{padding:22px}
+.field{margin-bottom:20px}
+.field:last-child{margin-bottom:0}
+.field label,.field .lb{display:block;font-weight:750;margin-bottom:9px}
+.hint-txt{color:var(--muted);font-size:.88rem;margin-top:8px}
+.seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:15px}
+.seg button{padding:8px 14px;border-radius:11px;font-weight:700;font-size:.92rem;color:var(--muted);transition:.2s;display:inline-flex;align-items:center;gap:7px}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed=true]{background:var(--grad);color:#071018}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:8px 13px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);font-weight:700;font-size:.92rem;transition:.2s;text-align:center;line-height:1.2}
+.chip small{display:block;font-size:.68rem;color:var(--muted);font-weight:600}
+.chip[aria-pressed=true]{background:var(--grad);color:#071018;border-color:transparent}
+.chip[aria-pressed=true] small{color:rgba(7,16,24,.7)}
+.switch{display:flex;align-items:center;gap:12px;width:100%;padding:9px 0;text-align:left;font-weight:650}
+.switch i{width:44px;height:26px;border-radius:99px;background:rgba(255,255,255,.12);position:relative;transition:.25s;flex:none}
+.switch i::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.25s}
+.switch[aria-checked=true] i{background:var(--green)}
+.switch[aria-checked=true] i::after{transform:translateX(18px)}
+.preview{margin-top:14px;padding:6px 10px;border-radius:16px;background:rgba(0,0,0,.2);border:1px solid var(--line)}
+.stf-svg{display:block;margin:0 auto;width:100%;height:auto}
+.stf{stroke:rgba(255,255,255,.5);stroke-width:1.4}
+.ledger{stroke:rgba(255,255,255,.65);stroke-width:1.7;stroke-linecap:round}
+.barline{stroke:rgba(255,255,255,.5);stroke-width:1.5}
+.barline.thick{stroke-width:4.5}
+.clef{color:var(--ink)}
+.clef path{fill:none;stroke:currentColor;stroke-width:.27;stroke-linecap:round;stroke-linejoin:round}
+.clef circle{fill:currentColor}
+.clef-ic{width:16px;height:22px}
+.clef-ic .clef{color:inherit}
+.acc{color:var(--ink)}
+.acc path{fill:none;stroke:currentColor;stroke-linecap:round}
+.head{fill:var(--c)}
+.head.hollow{fill:rgba(7,9,20,.01);stroke:var(--c);stroke-width:2.4}
+.head.idle{--c:var(--ink)}
+.head.active{--c:var(--cyan);filter:drop-shadow(0 0 5px rgba(34,211,238,.9))}
+.head.correct{--c:var(--green);filter:drop-shadow(0 0 5px rgba(52,211,153,.8))}
+.head.wrong{--c:var(--red);filter:drop-shadow(0 0 5px rgba(251,113,133,.9))}
+.stem{stroke-width:1.7;stroke-linecap:round}
+.stem.idle{stroke:var(--ink)}.stem.active{stroke:var(--cyan)}.stem.correct{stroke:var(--green)}
+.band{fill:rgba(34,211,238,.07);stroke:rgba(34,211,238,.25)}
+.hint{fill:var(--muted);font:700 12px ui-sans-serif,system-ui,sans-serif}
+.clabel{fill:#c4b5fd;font:800 12px ui-sans-serif,system-ui,sans-serif}
+.fx-pop{animation:ntpop .45s cubic-bezier(.2,1.6,.4,1)}
+@keyframes ntpop{40%{transform:scale(1.35)}}
+.fx-shake{animation:ntshake .42s}
+@keyframes ntshake{20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.hud{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.hud-title{font-weight:800;font-size:1.05rem;flex:1;text-align:center}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat{padding:10px 14px;display:flex;flex-direction:column;gap:2px;border-radius:16px}
+.stat .k{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800}
+.stat .v{font-size:1.5rem;font-weight:850;display:flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+.stat .v svg{color:var(--amber)}
+.stat .v.bump{animation:bump .35s}
+@keyframes bump{40%{transform:scale(1.3)}}
+.stage{padding:14px 14px 16px;margin-top:12px;position:relative}
+.stage-top{display:flex;justify-content:space-between;gap:10px;font-size:.85rem;color:var(--muted);font-weight:700;min-height:22px;padding:0 6px}
+.stage-top b{color:#c4b5fd}
+.timer{height:6px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin:6px 6px 0}
+.timer i{display:block;height:100%;width:100%;background:var(--grad);transform-origin:left;transform:scaleX(1)}
+.timer i.low{background:var(--red)}
+.feedback{min-height:30px;text-align:center;font-weight:750;margin-top:10px}
+.feedback.ok{color:var(--green)}.feedback.bad{color:var(--red)}
+.feedback.pop{animation:fpop .35s}
+@keyframes fpop{from{opacity:0;transform:translateY(6px)}}
+.xpf{position:absolute;left:50%;top:40%;font-weight:850;color:var(--amber);pointer-events:none;animation:xpf .9s forwards;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+@keyframes xpf{from{opacity:1;transform:translate(-50%,0)}to{opacity:0;transform:translate(-50%,-50px)}}
+.piano{margin-top:14px;padding:8px;border-radius:20px;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.keys{position:relative;height:clamp(130px,24vh,200px);display:flex;gap:3px}
+.wk{flex:1;position:relative;border-radius:0 0 12px 12px;background:linear-gradient(#fdfdff,#d5d9f0);color:#2b2f55;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-weight:800;font-size:.95rem;box-shadow:0 4px 0 #9aa0cc;transition:transform .08s,background .15s}
+.wk:active,.wk.down{transform:translateY(3px);box-shadow:0 1px 0 #9aa0cc}
+.bk{position:absolute;top:0;width:7.6%;height:60%;transform:translateX(-50%);z-index:2;border-radius:0 0 9px 9px;background:linear-gradient(#2d3258,#0b0d20);color:#aeb4de;font-size:.62rem;font-weight:700;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;box-shadow:0 4px 0 #000;transition:transform .08s}
+.bk:active{transform:translateX(-50%) translateY(3px)}
+.wk.ok,.bk.ok{background:var(--green);color:#052e1d}
+.wk.bad,.bk.bad{background:var(--red);color:#4c0519}
+.wk.hint,.bk.hint{background:var(--cyan);color:#05303a}
+.kbd-hint{text-align:center;color:var(--muted);font-size:.82rem;margin-top:12px}
+kbd{padding:1px 7px;border-radius:7px;background:var(--glass2);border:1px solid var(--line);font:700 .8rem ui-monospace,monospace}
+.overlay[hidden]{display:none}
+.overlay{position:absolute;inset:0;border-radius:var(--radius);background:rgba(7,9,20,.78);backdrop-filter:blur(8px);display:grid;place-items:center;text-align:center;z-index:5;gap:12px;align-content:center}
+.modal-bd{position:fixed;inset:0;background:rgba(3,4,12,.62);backdrop-filter:blur(6px);display:grid;place-items:center;z-index:50;padding:16px;animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.modal{width:min(520px,100%);max-height:90dvh;overflow:auto;padding:24px;background:rgba(18,20,44,.82);animation:viewIn .3s}
+.modal.wide{width:min(720px,100%)}
+.modal h2{font-size:1.5rem;margin-bottom:6px}
+.modal .sub{color:var(--muted);margin-bottom:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:14px}
+.tile{padding:14px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.tile .k{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800}
+.tile .v{font-size:1.5rem;font-weight:850;font-variant-numeric:tabular-nums}
+.rec{margin-top:14px;padding:12px 14px;border-radius:14px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.35);color:var(--amber);font-weight:750;display:flex;gap:10px;align-items:center}
+.list{display:flex;flex-direction:column;gap:8px}
+.li{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid var(--line);text-align:left;width:100%;transition:.2s}
+button.li:hover{background:rgba(255,255,255,.1);border-color:rgba(139,107,255,.5)}
+.li[aria-pressed=true]{border-color:var(--cyan);background:rgba(34,211,238,.1)}
+.li .grow{flex:1;min-width:0}
+.li b{display:block}
+.li small{color:var(--muted)}
+.stars{color:var(--amber);letter-spacing:2px;font-size:.9rem}
+.stars .off{color:rgba(255,255,255,.2)}
+.ring-wrap{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.ring-wrap svg{width:130px;height:130px;flex:none}
+.ring-bg{fill:none;stroke:rgba(255,255,255,.1);stroke-width:10}
+.ring{fill:none;stroke:url(#rg);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .8s}
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.ach{padding:14px;display:flex;gap:12px;align-items:center;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+.ach .ai{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--grad);color:#071018;flex:none}
+.ach.locked{opacity:.5}.ach.locked .ai{background:rgba(255,255,255,.1);color:var(--muted)}
+.ach b{display:block;font-size:.95rem}.ach small{color:var(--muted);line-height:1.25;display:block}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--muted);margin-right:8px}
+.dot.synced{background:var(--green)}.dot.syncing,.dot.pending{background:var(--amber)}.dot.error{background:var(--red)}
+#toasts{position:fixed;right:16px;top:calc(env(safe-area-inset-top) + 74px);display:flex;flex-direction:column;gap:10px;z-index:60;pointer-events:none;width:min(340px,calc(100vw - 32px))}
+.toast{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:18px;background:rgba(22,24,52,.9);border:1px solid rgba(139,107,255,.5);backdrop-filter:blur(16px);box-shadow:0 16px 40px -12px rgba(0,0,0,.7);animation:toastIn .5s cubic-bezier(.2,1.3,.3,1)}
+.toast.out{opacity:0;transform:translateX(30px);transition:.4s}
+.toast .t-ic{width:40px;height:40px;border-radius:12px;background:var(--grad);display:grid;place-items:center;color:#071018;flex:none}
+.toast.level .t-ic{background:linear-gradient(135deg,#fbbf24,#f472b6)}
+.toast b{display:block}.toast span{color:var(--muted);font-size:.88rem;line-height:1.3;display:block}
+@keyframes toastIn{from{opacity:0;transform:translateX(60px) scale(.9)}}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:70}
+.notice{padding:12px 14px;border-radius:14px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fde68a;font-size:.9rem}
+.tag{display:inline-block;padding:2px 9px;border-radius:99px;background:rgba(255,255,255,.1);font-size:.72rem;font-weight:800;color:var(--muted)}
+@media (max-width:760px){
+  .cols{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .lvl .bar,.brand span{display:none}
+  .lvl{padding-right:10px}
+  #toasts{left:50%;right:auto;transform:translateX(-50%)}
+  .hero{padding-top:0}
+  .keys{height:clamp(120px,22vh,170px)}
+  .wk{font-size:.8rem}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bg"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i></div>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand" data-act="home" title="Zum Menü">
+      <svg viewBox="0 0 64 64"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b6bff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#lg)"/><path d="M26 44V20l18-4v24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="21" cy="44" r="5" fill="#fff"/><circle cx="39" cy="40" r="5" fill="#fff"/></svg>
+      <span>NotenFlow</span>
+    </div>
+    <div class="spacer"></div>
+    <div class="lvl glass" data-act="profile" title="Profil &amp; Erfolge">
+      <div class="badge" id="lvl-badge">1</div>
+      <div><div class="bar"><i id="lvl-bar"></i></div><small id="lvl-txt">0 XP</small></div>
+    </div>
+    <button class="icon-btn" id="btn-sound" data-act="sound" aria-label="Sound an/aus"></button>
+    <div id="auth"></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- HOME -->
+  <section id="view-home" class="view active">
+    <div class="hero">
+      <h1>Noten lesen – <span>spielerisch</span> gelernt.</h1>
+      <p>Wähle einen Modus, tippe die Noten auf der Klaviatur oder mit deiner Computertastatur und sammle XP, Serien und Erfolge.</p>
+    </div>
+    <div class="sect">Modus wählen</div>
+    <div class="modes" id="modes"></div>
+    <div class="sect">Einstellungen</div>
+    <div class="cols" id="settings"></div>
+  </section>
+
+  <!-- GAME -->
+  <section id="view-game" class="view">
+    <div class="hud">
+      <button class="btn sm" data-act="quit" id="btn-quit"></button>
+      <div class="hud-title" id="hud-title"></div>
+      <button class="icon-btn" data-act="pause" aria-label="Pause" id="btn-pause"></button>
+    </div>
+    <div class="stats">
+      <div class="stat glass"><span class="k">Serie</span><span class="v" id="hud-streak"></span></div>
+      <div class="stat glass"><span class="k" id="hud-time-k">Zeit</span><span class="v" id="hud-time">0:00</span></div>
+      <div class="stat glass"><span class="k">Treffer</span><span class="v" id="hud-hit">0</span></div>
+      <div class="stat glass"><span class="k">Genauigkeit</span><span class="v" id="hud-acc">–</span></div>
+    </div>
+    <div class="stage glass" id="stage">
+      <div class="stage-top"><span id="stage-label"></span><b id="chord-label"></b></div>
+      <div id="staff"></div>
+      <div class="timer"><i id="timer-bar"></i></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="overlay" id="pause-ov" hidden>
+        <h2>Pause</h2>
+        <button class="btn primary" data-act="resume" id="btn-resume"></button>
+      </div>
+    </div>
+    <div class="piano glass" id="piano"></div>
+    <p class="kbd-hint">Tastatur: <kbd>C</kbd> <kbd>D</kbd> <kbd>E</kbd> <kbd>F</kbd> <kbd>G</kbd> <kbd>A</kbd> <kbd>H</kbd>/<kbd>B</kbd> · <kbd>⇧</kbd>+Taste = ♯ · <kbd>Alt</kbd>+Taste = ♭ · <kbd>Esc</kbd> = Pause</p>
+  </section>
+
+  <!-- PROFILE -->
+  <section id="view-profile" class="view"></section>
+</main>
+
+<div id="toasts"></div>
+<canvas id="fx"></canvas>
+
+<script>
+/* =====================================================================
+   FIREBASE-KONFIGURATION  –  HIER DEINE DATEN EINTRAGEN
+   ---------------------------------------------------------------------
+   1. Firebase Console → Projekteinstellungen → "Meine Apps" → Web-App
+   2. Die Werte apiKey, authDomain und projectId hier einsetzen.
+   Solange die Platzhalter ("DEIN…") stehen bleiben, läuft die App im
+   Gastmodus und speichert alles im localStorage deines Browsers.
+   Der apiKey ist bei Firebase-Web-Apps NICHT geheim; geschützt werden
+   deine Daten durch die Firestore-Regeln (siehe ANLEITUNG.md).
+   ===================================================================== */
+const firebaseConfig = {
+  apiKey: "DEIN_API_KEY",
+  authDomain: "DEIN-PROJEKT.firebaseapp.com",
+  projectId: "DEIN-PROJEKT-ID"
+};
+const FIREBASE_SDK_VERSION = "10.14.1";
+
+(function () {
+'use strict';
+
+/* ---------------------------------------------------------------
+   Helfer
+   --------------------------------------------------------------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmt = n => new Intl.NumberFormat('de-DE').format(n);
+const FIREBASE_READY = !!(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId) && !/DEIN|YOUR|\.\.\./i.test(JSON.stringify(firebaseConfig));
+
+const IC = {
+  flame: '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+  zap: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+  trophy: '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+  music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+  clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+  pause: '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>',
+  play: '<polygon points="5 3 19 12 5 21 5 3"/>',
+  x: '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+  vol: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>',
+  mute: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>',
+  layers: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+  target: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  user: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
+  check: '<polyline points="20 6 9 17 4 12"/>',
+  lock: '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  award: '<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>',
+  grad: '<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>',
+  crown: '<path d="M2 20h20"/><path d="M4 20 2 6l6 5 4-7 4 7 6-5-2 14"/>',
+  trash: '<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/>',
+  arrow: '<line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>'
+};
+const icon = (n, s = 20) => `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n] || ''}</svg>`;
+const GOOGLE = '<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>';
+
+/* ---------------------------------------------------------------
+   Musiktheorie
+   Eine Note = { step, acc }.  step = Oktave*7 + Buchstabe (C4 = 28).
+   --------------------------------------------------------------- */
+const LETTERS = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+const NAT = [0, 2, 4, 5, 7, 9, 11];
+const KEYS = [
+  { id: 'C', name: 'C-Dur', n: 0, t: '#', li: 0 }, { id: 'G', name: 'G-Dur', n: 1, t: '#', li: 4 },
+  { id: 'D', name: 'D-Dur', n: 2, t: '#', li: 1 }, { id: 'A', name: 'A-Dur', n: 3, t: '#', li: 5 },
+  { id: 'E', name: 'E-Dur', n: 4, t: '#', li: 2 }, { id: 'F', name: 'F-Dur', n: 1, t: 'b', li: 3 },
+  { id: 'Bb', name: 'B-Dur', n: 2, t: 'b', li: 6 }, { id: 'Eb', name: 'Es-Dur', n: 3, t: 'b', li: 2 },
+  { id: 'Ab', name: 'As-Dur', n: 4, t: 'b', li: 5 }
+];
+const KEY = id => KEYS.find(k => k.id === id) || KEYS[0];
+const SHARPS = ['F', 'C', 'G', 'D', 'A', 'E', 'B'], FLATS = ['B', 'E', 'A', 'D', 'G', 'C', 'F'];
+const KEYACC = {};
+KEYS.forEach(k => { const m = {}; (k.t === '#' ? SHARPS : FLATS).slice(0, k.n).forEach(l => m[l] = k.t === '#' ? 1 : -1); KEYACC[k.id] = m; });
+const SIG = {
+  treble: { '#': [38, 35, 39, 36, 33, 37, 34], b: [34, 37, 33, 36, 32, 35, 31] },
+  bass: { '#': [24, 21, 25, 22, 19, 23, 20], b: [20, 23, 19, 22, 18, 21, 17] }
+};
+const CLEF = { treble: { bottom: 30, name: 'Violinschlüssel' }, bass: { bottom: 18, name: 'Bassschlüssel' } };
+const DIFFS = [
+  { id: 1, name: 'Nur Notenlinien', desc: 'Fünf Noten – ausschließlich auf den Linien.', mult: 1 },
+  { id: 2, name: 'Im Notensystem', desc: 'Linien und Zwischenräume, noch ohne Hilfslinien.', mult: 1.2 },
+  { id: 3, name: 'Mit Hilfslinien', desc: 'Bis zu einer Hilfslinie oberhalb und unterhalb.', mult: 1.5 },
+  { id: 4, name: 'Alle Noten', desc: 'Bis zu drei Hilfslinien – der volle Umfang.', mult: 2 }
+];
+const letterIdx = st => ((st % 7) + 7) % 7;
+const octOf = st => Math.floor(st / 7);
+const kacc = (n, keyId) => KEYACC[keyId][LETTERS[letterIdx(n.step)]] || 0;
+const accOf = (n, keyId) => kacc(n, keyId) + (n.acc || 0);
+const pcOf = (n, keyId) => (((NAT[letterIdx(n.step)] + accOf(n, keyId)) % 12) + 12) % 12;
+const midiOf = (n, keyId) => (octOf(n.step) + 1) * 12 + NAT[letterIdx(n.step)] + accOf(n, keyId);
+function noteName(n, keyId, naming) {
+  const L = LETTERS[letterIdx(n.step)], a = accOf(n, keyId);
+  if (naming === 'en') return L + (a > 0 ? '♯' : a < 0 ? '♭' : '');
+  const base = L === 'B' ? 'H' : L;
+  if (a === 0) return base;
+  if (a > 0) return base + 'is';
+  if (L === 'B') return 'B';
+  if (L === 'E') return 'Es';
+  if (L === 'A') return 'As';
+  return base + 'es';
+}
+const pcFromLetter = (L, keyId, mod) => {
+  let a = KEYACC[keyId][L] || 0;
+  if (mod === 'sharp') a = 1; else if (mod === 'flat') a = -1;
+  return (NAT[LETTERS.indexOf(L)] + a + 12) % 12;
+};
+function pool(clef, diff) {
+  const b = CLEF[clef].bottom;
+  if (diff === 1) return [0, 2, 4, 6, 8].map(i => b + i);
+  const ext = diff === 2 ? 0 : diff === 3 ? 2 : 6, out = [];
+  for (let s = b - ext; s <= b + 8 + ext; s++) out.push(s);
+  return out;
+}
+const rangeOf = (clef, diff) => { const p = pool(clef, diff); return [Math.min(...p), Math.max(...p)]; };
+const lvlOf = xp => Math.floor(Math.sqrt(xp / 60)) + 1;
+const xpAt = L => 60 * (L - 1) * (L - 1);
+
+/* Akkorde */
+const QUAL = { '43': '-Dur', '34': '-Moll', '33': ' vermindert', '44': ' übermäßig', '434': 'maj7', '433': '7', '343': 'm7', '334': 'm7♭5', '333': 'dim7' };
+const INV = ['Grundstellung', '1. Umkehrung', '2. Umkehrung', '3. Umkehrung'];
+function chordName(rootStep, n, keyId, naming) {
+  const pcs = []; for (let i = 0; i < n; i++) pcs.push(pcOf({ step: rootStep + 2 * i }, keyId));
+  const iv = []; for (let i = 1; i < n; i++) iv.push(((pcs[i] - pcs[i - 1]) % 12 + 12) % 12);
+  return noteName({ step: rootStep }, keyId, naming) + (QUAL[iv.join('')] || '');
+}
+function makeChord(clef, keyId, level, naming) {
+  const b = CLEF[clef].bottom, seventh = level >= 3, inv = level === 2 || level === 4, n = seventh ? 4 : 3;
+  for (let tries = 0; tries < 40; tries++) {
+    const root = rnd(b - 2, b + 4);
+    let steps = []; for (let i = 0; i < n; i++) steps.push(root + 2 * i);
+    const k = inv ? rnd(0, n - 1) : 0;
+    for (let j = 0; j < k; j++) steps.push(steps.shift() + 7);
+    let hi = Math.max(...steps), lo = Math.min(...steps);
+    while (hi > b + 12) { steps = steps.map(s => s - 7); hi -= 7; lo -= 7; }
+    if (lo < b - 4 || hi > b + 12) continue;
+    return { notes: steps.map(step => ({ step, acc: 0 })), name: chordName(root, n, keyId, naming), inv: k };
+  }
+  return { notes: [0, 2, 4].map(i => ({ step: b + i * 2, acc: 0 })), name: '', inv: 0 };
+}
+function triadFor(clef, keyId, deg) {
+  const li = (KEY(keyId).li + deg - 1) % 7, base = clef === 'bass' ? 16 : 28;
+  const root = base + (((li - letterIdx(base)) % 7) + 7) % 7;
+  return { notes: [root, root + 2, root + 4].map(step => ({ step, acc: 0 })), name: chordName(root, 3, keyId, S.settings.naming), rootStep: root };
+}
+function autoHarmony(bar, tonicLi, last) {
+  if (last) return 1;
+  let best = 1, bc = -1;
+  for (const d of [1, 5, 4]) {
+    const r = (tonicLi + d - 1) % 7, set = [r, (r + 2) % 7, (r + 4) % 7];
+    const c = bar.filter(n => set.includes(letterIdx(n.step))).length;
+    if (c > bc) { bc = c; best = d; }
+  }
+  return best;
+}
+
+/* Lieder (gemeinfreie Melodien, vereinfacht) */
+const SONGS = [
+  { id: 'entchen', title: 'Alle meine Entchen', key: 'C', lv: 1, s: 'C4q D4q E4q F4q | G4h G4h | A4q A4q A4q A4q | G4w | A4q A4q A4q A4q | G4w | F4q F4q F4q F4q | E4h E4h | D4q D4q D4q D4q | C4w' },
+  { id: 'twinkle', title: 'Morgen kommt der Weihnachtsmann / Twinkle', key: 'C', lv: 1, s: 'C4q C4q G4q G4q | A4q A4q G4h | F4q F4q E4q E4q | D4q D4q C4h | G4q G4q F4q F4q | E4q E4q D4h | G4q G4q F4q F4q | E4q E4q D4h | C4q C4q G4q G4q | A4q A4q G4h | F4q F4q E4q E4q | D4q D4q C4h' },
+  { id: 'mary', title: 'Mary Had a Little Lamb', key: 'C', lv: 1, s: 'E4q D4q C4q D4q | E4q E4q E4h | D4q D4q D4h | E4q G4q G4h | E4q D4q C4q D4q | E4q E4q E4q E4q | D4q D4q E4q D4q | C4w' },
+  { id: 'haenschen', title: 'Hänschen klein', key: 'C', lv: 2, s: 'G4q E4q E4h | F4q D4q D4h | C4q D4q E4q F4q | G4q G4q G4h | G4q E4q E4h | F4q D4q D4h | C4q E4q G4q G4q | C4w' },
+  { id: 'ode', title: 'Ode an die Freude', key: 'C', lv: 2, s: 'E4q E4q F4q G4q | G4q F4q E4q D4q | C4q C4q D4q E4q | E4q D4q D4h | E4q E4q F4q G4q | G4q F4q E4q D4q | C4q C4q D4q E4q | D4q C4q C4h' },
+  { id: 'bruder', title: 'Bruder Jakob', key: 'C', lv: 2, s: 'C4q D4q E4q C4q | C4q D4q E4q C4q | E4q F4q G4h | E4q F4q G4h | G4q A4q G4q F4q | E4q C4q | G4q A4q G4q F4q | E4q C4q | C4q G3q C4h | C4q G3q C4h' },
+  { id: 'jingle', title: 'Jingle Bells (Refrain)', key: 'C', lv: 2, s: 'E4q E4q E4h | E4q E4q E4h | E4q G4q C4q D4q | E4w | F4q F4q F4q F4q | F4q E4q E4q E4q | E4q D4q D4q E4q | D4h G4h' },
+  { id: 'menuett', title: 'Menuett in G (Anfang)', key: 'G', lv: 3, s: 'D5q G4q A4q B4q | C5q D5q G4h | E5q C5q D5q E5q | F5q G5q G4h' },
+  { id: 'elise', title: 'Für Elise (Thema)', key: 'C', lv: 3, noChords: true, s: 'E5q D#5q E5q D#5q | E5q B4q D5q C5q | A4h C4q E4q | A4q B4h E4q | G#4q B4q C5h' }
+];
+function parseSong(str) {
+  const bars = [[]];
+  for (const tok of str.trim().split(/\s+/)) {
+    if (tok === '|') { if (bars[bars.length - 1].length) bars.push([]); continue; }
+    const m = tok.match(/^([A-G])(#|b)?(\d)([qhw])$/);
+    if (!m) continue;
+    bars[bars.length - 1].push({ step: Number(m[3]) * 7 + LETTERS.indexOf(m[1]), acc: m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0, dur: { q: 1, h: 2, w: 4 }[m[4]] });
+  }
+  return bars.filter(b => b.length);
+}
+const SONG_LEVELS = [
+  { id: 1, name: 'Leicht', desc: 'Notennamen werden als Hilfe angezeigt.' },
+  { id: 2, name: 'Mittel', desc: 'Ohne Hilfe, ohne Zeitdruck.' },
+  { id: 3, name: 'Schwer', desc: 'Ohne Hilfe, höchstens 4 Sekunden pro Note.' },
+  { id: 4, name: 'Mit Akkorden', desc: 'Nach jedem Takt kommt ein Begleitakkord (I–IV–V), den du Ton für Ton spielst.' }
+];
+const CHORD_LEVELS = [
+  { id: 1, name: 'Dreiklänge', desc: 'Grundstellung – Terzen übereinander.' },
+  { id: 2, name: 'Dreiklänge + Umkehrungen', desc: 'Auch 1. und 2. Umkehrung.' },
+  { id: 3, name: 'Septakkorde', desc: 'Vier Töne in Grundstellung.' },
+  { id: 4, name: 'Septakkorde + Umkehrungen', desc: 'Vierklänge in allen Lagen – inklusive Sekund-Reibungen.' }
+];
+
+/* ---------------------------------------------------------------
+   Daten & Speicherung (localStorage + Firestore)
+   --------------------------------------------------------------- */
+const DEFAULTS = () => ({
+  v: 1, updated: 0, xp: 0, totalCorrect: 0, totalWrong: 0, bestStreak: 0, bassCorrect: 0, chordsDone: 0,
+  songsDone: {}, keysUsed: {}, ach: {}, weak: {},
+  high: { speedrun: 0, learn: 0, chords: 0, songs: {} },
+  settings: { clef: 'treble', diff: 2, key: 'C', limit: 0, perLine: 6, naming: 'de', labels: true, help: true, sound: true, chordNames: true, songLevel: 1, chordLevel: 1 }
+});
+function fill(def, src) {
+  const out = {}; src = (src && typeof src === 'object') ? src : {};
+  for (const k in def) {
+    const dv = def[k], sv = src[k];
+    if (dv && typeof dv === 'object') out[k] = Object.keys(dv).length ? fill(dv, sv) : (sv && typeof sv === 'object' ? JSON.parse(JSON.stringify(sv)) : {});
+    else out[k] = (typeof sv === typeof dv) ? sv : dv;
+  }
+  return out;
+}
+const LS = 'notenflow:v1:';
+const readLocal = k => { try { const t = localStorage.getItem(LS + k); return t ? JSON.parse(t) : null; } catch (e) { return null; } };
+const writeLocal = (k, d) => { try { localStorage.setItem(LS + k, JSON.stringify(d)); } catch (e) { /* voll / blockiert */ } };
+function mergeData(a, b) {
+  a = fill(DEFAULTS(), a); b = fill(DEFAULTS(), b);
+  const m = fill(DEFAULTS(), (a.updated >= b.updated) ? a : b);
+  ['xp', 'totalCorrect', 'totalWrong', 'bestStreak', 'bassCorrect', 'chordsDone'].forEach(k => m[k] = Math.max(a[k], b[k]));
+  const un = (k, f) => { const o = {}; [a[k], b[k]].forEach(src => { for (const id in src) o[id] = o[id] === undefined ? src[id] : f(o[id], src[id]); }); m[k] = o; };
+  un('songsDone', (x, y) => x || y); un('keysUsed', (x, y) => x || y); un('ach', (x, y) => Math.min(x, y));
+  un('weak', (x, y) => [Math.max(x[0], y[0]), Math.max(x[1], y[1])]);
+  m.high.speedrun = Math.max(a.high.speedrun, b.high.speedrun); m.high.learn = Math.max(a.high.learn, b.high.learn); m.high.chords = Math.max(a.high.chords, b.high.chords);
+  const hs = {}; [a.high.songs, b.high.songs].forEach(src => { for (const id in src) { const x = hs[id], y = src[id]; hs[id] = !x || (y.stars > x.stars) || (y.stars === x.stars && y.acc > x.acc) ? y : x; } });
+  m.high.songs = hs;
+  return m;
+}
+const hasProgress = d => d && (d.xp > 0 || d.totalCorrect > 0);
+let S = fill(DEFAULTS(), readLocal('guest'));
+let saveTimer = 0;
+function storeKey() { return Cloud.user ? 'uid:' + Cloud.user.uid : 'guest'; }
+function save() {
+  S.updated = Date.now();
+  writeLocal(storeKey(), S);
+  if (Cloud.user) { Cloud.setStatus('pending'); clearTimeout(saveTimer); saveTimer = setTimeout(() => Cloud.push(), 1800); }
+}
+function flush() { if (Cloud.user && saveTimer) { clearTimeout(saveTimer); saveTimer = 0; Cloud.push(); } }
+addEventListener('pagehide', () => { writeLocal(storeKey(), S); flush(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { writeLocal(storeKey(), S); flush(); if (G && !G.over && !G.paused) setPause(true); } });
+
+/* ---------------------------------------------------------------
+   Cloud (Firebase Auth + Firestore)
+   --------------------------------------------------------------- */
+const Cloud = {
+  on: false, user: null, status: 'local', auth: null, db: null, A: null, F: null,
+  async init() {
+    if (!FIREBASE_READY) { renderAuth(); return; }
+    try {
+      const base = 'https://www.gstatic.com/firebasejs/' + FIREBASE_SDK_VERSION + '/';
+      const [app, au, fs] = await Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-firestore.js')]);
+      const a = app.initializeApp(firebaseConfig);
+      this.A = au; this.F = fs; this.auth = au.getAuth(a); this.db = fs.getFirestore(a); this.on = true;
+      au.onAuthStateChanged(this.auth, u => this.onUser(u));
+    } catch (e) {
+      console.error('Firebase konnte nicht geladen werden', e);
+      toast({ title: 'Cloud nicht erreichbar', text: 'Die App läuft lokal weiter (Gastmodus).', ic: 'lock' });
+      renderAuth();
+    }
+  },
+  setStatus(s) { this.status = s; const el = $('#sync-state'); if (el) el.innerHTML = syncHTML(); },
+  async onUser(u) {
+    if (u) {
+      this.user = u; this.setStatus('syncing'); renderAuth();
+      try { await this.pull(u); } catch (e) { this.fail(e); }
+    } else {
+      this.user = null; this.status = 'local';
+      S = fill(DEFAULTS(), readLocal('guest'));
+    }
+    renderAuth(); renderAll();
+  },
+  async pull(u) {
+    const ref = this.F.doc(this.db, 'users', u.uid), snap = await this.F.getDoc(ref);
+    const cloud = snap.exists() ? snap.data().data : null, cache = readLocal('uid:' + u.uid), guest = readLocal('guest');
+    let m = fill(DEFAULTS(), cloud);
+    if (hasProgress(cache)) m = mergeData(m, cache);
+    if (hasProgress(guest)) { m = mergeData(m, guest); writeLocal('guest', DEFAULTS()); }
+    S = m; writeLocal('uid:' + u.uid, S);
+    await this.push();
+  },
+  async push() {
+    if (!this.user) return;
+    try {
+      this.setStatus('syncing');
+      await this.F.setDoc(this.F.doc(this.db, 'users', this.user.uid), { data: JSON.parse(JSON.stringify(S)), name: this.user.displayName || '', updatedAt: this.F.serverTimestamp() });
+      this.setStatus('synced');
+    } catch (e) { this.fail(e); }
+  },
+  fail(e) {
+    console.error(e); this.setStatus('error');
+    const perm = e && e.code === 'permission-denied';
+    toast({ title: 'Cloud-Speicherung fehlgeschlagen', text: perm ? 'Firestore-Regeln prüfen (siehe Anleitung). Fortschritt ist lokal gesichert.' : 'Fortschritt ist lokal gesichert.', ic: 'lock' });
+  },
+  async login() {
+    if (!this.on) { infoNoCloud(); return; }
+    try {
+      const p = new this.A.GoogleAuthProvider(); p.setCustomParameters({ prompt: 'select_account' });
+      await this.A.signInWithPopup(this.auth, p);
+    } catch (e) {
+      if (e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request') return;
+      const t = e.code === 'auth/unauthorized-domain' ? 'Diese Domain ist in Firebase nicht als „Autorisierte Domain“ eingetragen.' : e.code === 'auth/popup-blocked' ? 'Der Browser hat das Login-Fenster blockiert. Bitte Pop-ups erlauben.' : (e.code || 'Unbekannter Fehler');
+      toast({ title: 'Anmeldung fehlgeschlagen', text: t, ic: 'lock' });
+    }
+  },
+  async logout() { flush(); if (this.on) await this.A.signOut(this.auth); }
+};
+function syncHTML() {
+  const m = { local: 'Gastmodus – lokal gespeichert', pending: 'Änderungen werden gleich gespeichert …', syncing: 'Synchronisiere …', synced: 'Cloud synchronisiert', error: 'Cloud-Fehler – lokal gesichert' };
+  return `<span class="dot ${Cloud.status}"></span>${m[Cloud.status] || ''}`;
+}
+
+/* ---------------------------------------------------------------
+   Sound (Web Audio API)
+   --------------------------------------------------------------- */
+const Snd = {
+  ctx: null, master: null,
+  init() {
+    if (this.ctx) { if (this.ctx.state === 'suspended') this.ctx.resume(); return; }
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    this.ctx = new AC(); this.master = this.ctx.createGain(); this.master.gain.value = .55;
+    const c = this.ctx.createDynamicsCompressor(); this.master.connect(c); c.connect(this.ctx.destination);
+  },
+  tone(f, o = {}) {
+    if (!this.ctx || !S.settings.sound) return;
+    const { dur = .5, type = 'triangle', vol = .25, delay = 0, slide } = o, t0 = this.ctx.currentTime + delay;
+    const osc = this.ctx.createOscillator(), g = this.ctx.createGain();
+    osc.type = type; osc.frequency.setValueAtTime(f, t0);
+    if (slide) osc.frequency.exponentialRampToValueAtTime(slide, t0 + dur);
+    g.gain.setValueAtTime(.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + .006); g.gain.exponentialRampToValueAtTime(.0001, t0 + dur);
+    osc.connect(g); g.connect(this.master); osc.start(t0); osc.stop(t0 + dur + .05);
+  },
+  note(m) { const f = 440 * Math.pow(2, (m - 69) / 12); this.tone(f, { dur: 1, vol: .3 }); this.tone(f * 2, { type: 'sine', dur: .5, vol: .09 }); this.tone(f * 3, { type: 'sine', dur: .25, vol: .03 }); },
+  bad() { this.tone(150, { type: 'sawtooth', dur: .28, vol: .12, slide: 90 }); },
+  up() { [523, 659, 784, 1047].forEach((f, i) => this.tone(f, { delay: i * .09, dur: .5, vol: .22 })); },
+  ach() { [784, 988, 1319].forEach((f, i) => this.tone(f, { delay: i * .08, type: 'sine', dur: .6, vol: .2 })); }
+};
+
+/* ---------------------------------------------------------------
+   Notensystem als SVG
+   --------------------------------------------------------------- */
+const GAP = 14;
+const P_SHARP = '<path d="M-.24-1.3V1.5M.24-1.5V1.3" stroke-width=".11"/><path d="M-.65.55L.65.2M-.65-.3L.65-.65" stroke-width=".3" stroke-linecap="butt"/>';
+const P_FLAT = '<path d="M-.3-1.9V.72" stroke-width=".11"/><path d="M-.3.72C.25.5.9.1.8-.35C.7-.85.1-.8-.3-.2" stroke-width=".2"/>';
+const G_CLEF = '<path d="M-.6 2.3C-.55 3.2 .7 3.3 .6 2.2L.15-3.2C.05-4.3 .95-4.6 1.15-3.6C1.3-2.6 .2-1.6-.6-.9C-1.5-.1-1.3 1.1-.1 1.35C1.2 1.5 1.6 .1 .9-.6C.3-1.1-.6-.7-.6 0C-.6 .6 .3 .7 .45 .15"/><circle cx="-.6" cy="2.3" r=".26"/>';
+const F_CLEF = '<path d="M-.6-.1C-.6-1 .4-1.25 1-.4C1.6.6 .9 2-1.1 3.1"/><circle cx="-.6" cy="-.1" r=".5"/><circle cx="1.85" cy="-.5" r=".18"/><circle cx="1.85" cy=".5" r=".18"/>';
+const clefIcon = t => t === 'bass'
+  ? `<svg class="clef-ic" viewBox="-1.4 -1.6 4 5.2" aria-hidden="true"><g class="clef">${F_CLEF}</g></svg>`
+  : `<svg class="clef-ic" viewBox="-1.8 -4.8 3.8 8.4" aria-hidden="true"><g class="clef">${G_CLEF}</g></svg>`;
+const accG = (t, x, y) => `<g class="acc" transform="translate(${x} ${y}) scale(${GAP})">${t === '#' ? P_SHARP : P_FLAT}</g>`;
+
+function staffSVG(o) {
+  const b = CLEF[o.clef].bottom, top = b + 8, mid = b + 4, half = GAP / 2;
+  const items = o.items || [];
+  const minS = Math.min(b, o.range[0]), maxS = Math.max(top, o.range[1]);
+  const padT = Math.max(36, (maxS - top) * half + 34);
+  const padB = Math.max(50, (b - minS) * half + 38) + (o.hints ? 16 : 0);
+  const yB = padT + 4 * GAP, H = Math.round(yB + padB);
+  const Y = st => yB - (st - b) * half;
+  const key = KEY(o.keyId), sig = key.n ? SIG[o.clef][key.t].slice(0, key.n) : [];
+  const sigX = 66, sigD = 17, first = sigX + sig.length * sigD + (sig.length ? 8 : 0) + 26;
+  const hw = GAP * .62;
+  const base = items.map(it => (it.notes.length > 1 || it.chordItem) ? 64 : ({ 1: 58, 2: 74, 4: 92 }[it.dur || 1] || 58));
+  const sum = base.reduce((a, c) => a + c, 0), barsN = items.filter(i => i.barAfter).length;
+  const minW = o.minW || 520;
+  const scale = items.length ? Math.max(1, (minW - first - 26 - barsN * 14) / sum) : 1;
+  let out = '', cx = first - 10;
+  const xs = [], ws = [];
+  items.forEach((it, i) => { const w = base[i] * scale; ws.push(w); xs.push(cx + w / 2 + 8); cx += w; if (it.barAfter) { it.bx = cx + 7; cx += 14; } });
+  const W = Math.round(items.length ? cx + 26 : 220);
+  for (let i = 0; i < 5; i++) out += `<line class="stf" x1="8" x2="${W - 8}" y1="${yB - i * GAP}" y2="${yB - i * GAP}"/>`;
+  out += o.clef === 'bass'
+    ? `<g class="clef" transform="translate(30 ${Y(24)}) scale(${GAP})">${F_CLEF}</g>`
+    : `<g class="clef" transform="translate(36 ${Y(32)}) scale(${GAP})">${G_CLEF}</g>`;
+  sig.forEach((st, i) => { out += accG(key.t, sigX + i * sigD + 6, Y(st)); });
+  items.forEach((it, i) => {
+    const c = xs[i], notes = it.notes, steps = notes.map(n => n.step), lo = Math.min(...steps), hi = Math.max(...steps);
+    const down = (lo + hi) / 2 >= mid, dur = it.dur || 1;
+    if (it.active) out += `<rect class="band" x="${c - ws[i] / 2 + 3}" y="6" width="${ws[i] - 6}" height="${H - 12}" rx="12"/>`;
+    let g = `<g class="nt ${it.fx ? 'fx-' + it.fx : ''}" data-i="${i}" style="transform-origin:${c}px ${Y(mid)}px">`;
+    const lg = new Set();
+    notes.forEach(n => { for (let s = top + 2; s <= n.step; s += 2) lg.add(s); for (let s = b - 2; s >= n.step; s -= 2) lg.add(s); });
+    lg.forEach(s => { g += `<line class="ledger" x1="${c - hw * 1.75}" x2="${c + hw * 1.75}" y1="${Y(s)}" y2="${Y(s)}"/>`; });
+    const sorted = [...notes].sort((p, q) => p.step - q.step), off = new Map();
+    if (!down) { for (let k = 1; k < sorted.length; k++) if (sorted[k].step - sorted[k - 1].step === 1 && !off.get(sorted[k - 1])) off.set(sorted[k], 1); }
+    else { for (let k = sorted.length - 2; k >= 0; k--) if (sorted[k + 1].step - sorted[k].step === 1 && !off.get(sorted[k + 1])) off.set(sorted[k], -1); }
+    sorted.forEach(n => {
+      const ox = (off.get(n) || 0) * hw * 1.9, hx = c + ox, hy = Y(n.step), st = n.state || (it.active ? 'active' : 'idle');
+      if (n.acc) g += accG(n.acc > 0 ? '#' : 'b', hx - hw - 11, hy);
+      if (dur >= 4) g += `<ellipse class="head hollow ${st}" cx="${hx}" cy="${hy}" rx="${hw * 1.15}" ry="${GAP * .48}" data-pc="${pcOf(n, o.keyId)}"/>`;
+      else g += `<ellipse class="head ${dur === 2 ? 'hollow ' : ''}${st}" cx="${hx}" cy="${hy}" rx="${hw}" ry="${GAP * .46}" transform="rotate(-22 ${hx} ${hy})" data-pc="${pcOf(n, o.keyId)}"/>`;
+    });
+    if (dur < 4) {
+      const sx = down ? c - hw * .92 : c + hw * .92, len = GAP * 3.4, yl = Y(lo), yh = Y(hi);
+      const sc = notes.every(n => n.state === 'correct') ? 'correct' : it.active ? 'active' : 'idle';
+      g += `<line class="stem ${sc}" x1="${sx}" x2="${sx}" y1="${down ? yh : yl}" y2="${down ? yl + len : yh - len}"/>`;
+    }
+    out += g + '</g>';
+    if (o.hints && notes.length === 1 && !it.chordItem) out += `<text class="hint" x="${c}" y="${H - 8}" text-anchor="middle">${esc(noteName(notes[0], o.keyId, o.naming) + (o.naming === 'en' ? '' : ''))}</text>`;
+    if (it.label) out += `<text class="clabel" x="${c}" y="18" text-anchor="middle">${esc(it.label)}</text>`;
+    if (it.barAfter) out += `<line class="barline" x1="${it.bx}" x2="${it.bx}" y1="${yB - 4 * GAP}" y2="${yB}"/>`;
+  });
+  if (items.length) {
+    if (o.finalBar) out += `<line class="barline" x1="${W - 16}" x2="${W - 16}" y1="${yB - 4 * GAP}" y2="${yB}"/><line class="barline thick" x1="${W - 10}" x2="${W - 10}" y1="${yB - 4 * GAP}" y2="${yB}"/>`;
+    else out += `<line class="barline" x1="${W - 10}" x2="${W - 10}" y1="${yB - 4 * GAP}" y2="${yB}"/>`;
+  }
+  return { svg: `<svg class="stf-svg" viewBox="0 0 ${W} ${H}" style="max-width:${Math.round(W * 1.5)}px" role="img" aria-label="Notensystem">${out}</svg>`, W, H };
+}
+
+/* ---------------------------------------------------------------
+   UI-Helfer: Toasts, Modals, Konfetti
+   --------------------------------------------------------------- */
+function toast({ title, text = '', ic = 'award', kind = '' }) {
+  const el = document.createElement('div'); el.className = 'toast ' + kind;
+  el.innerHTML = `<div class="t-ic">${icon(ic, 22)}</div><div><b>${esc(title)}</b><span>${esc(text)}</span></div>`;
+  $('#toasts').appendChild(el);
+  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 420); }, 3800);
+}
+function openModal(html, wide) {
+  closeModal();
+  const bd = document.createElement('div'); bd.className = 'modal-bd';
+  bd.innerHTML = `<div class="modal glass${wide ? ' wide' : ''}" role="dialog" aria-modal="true">${html}</div>`;
+  bd.addEventListener('pointerdown', e => { if (e.target === bd) closeModal(); });
+  document.body.appendChild(bd); return bd.firstElementChild;
+}
+function closeModal() { $$('.modal-bd').forEach(n => n.remove()); }
+const FX = {
+  cv: null, cx: null, p: [], on: false,
+  init() { this.cv = $('#fx'); this.cx = this.cv.getContext && this.cv.getContext('2d'); const r = () => { this.cv.width = innerWidth * (devicePixelRatio || 1); this.cv.height = innerHeight * (devicePixelRatio || 1); }; r(); addEventListener('resize', r); },
+  burst(n = 110) {
+    if (!this.cx || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    const d = devicePixelRatio || 1, W = this.cv.width, H = this.cv.height, cols = ['#8b6bff', '#22d3ee', '#34d399', '#fbbf24', '#f472b6'];
+    for (let i = 0; i < n; i++) this.p.push({ x: W / 2, y: H * .35, vx: (Math.random() - .5) * 16 * d, vy: (-Math.random() * 14 - 4) * d, g: .35 * d, s: (4 + Math.random() * 5) * d, r: Math.random() * 6, vr: (Math.random() - .5) * .4, c: pick(cols), l: 90 + Math.random() * 50 });
+    if (!this.on) { this.on = true; requestAnimationFrame(() => this.tick()); }
+  },
+  tick() {
+    const { cx, cv } = this; cx.clearRect(0, 0, cv.width, cv.height);
+    this.p = this.p.filter(p => p.l > 0 && p.y < cv.height + 40);
+    for (const p of this.p) { p.vy += p.g; p.x += p.vx; p.y += p.vy; p.vx *= .99; p.r += p.vr; p.l--; cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r); cx.fillStyle = p.c; cx.globalAlpha = Math.min(1, p.l / 30); cx.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * .6); cx.restore(); }
+    if (this.p.length) requestAnimationFrame(() => this.tick()); else { this.on = false; cx.clearRect(0, 0, cv.width, cv.height); }
+  }
+};
+
+/* ---------------------------------------------------------------
+   Erfolge & Level
+   --------------------------------------------------------------- */
+const ACH = [
+  { id: 'first', name: 'Erster Schritt', desc: 'Beantworte deine erste Note richtig.', ic: 'music', test: s => s.totalCorrect >= 1 },
+  { id: 'streak10', name: 'Serientäter', desc: '10 richtige Antworten in Folge.', ic: 'flame', test: s => s.bestStreak >= 10 },
+  { id: 'streak30', name: 'Unaufhaltsam', desc: '30 richtige Antworten in Folge.', ic: 'flame', test: s => s.bestStreak >= 30 },
+  { id: 'master', name: 'Noten-Meister', desc: '250 Noten richtig beantwortet.', ic: 'crown', test: s => s.totalCorrect >= 250 },
+  { id: 'blitz', name: 'Blitzmerker', desc: '5 Noten in Folge in unter 1,5 Sekunden.', ic: 'zap', test: (s, g) => g && g.fastRun >= 5 },
+  { id: 'perfect', name: 'Saubere Zeile', desc: 'Eine komplette Zeile ohne Fehler.', ic: 'check', test: (s, g) => g && g.perfectLines >= 1 },
+  { id: 'speed20', name: 'Rennfahrer', desc: '20 Treffer in einem Speedrun.', ic: 'clock', test: (s, g) => s.high.speedrun >= 20 || (g && g.mode === 'speedrun' && g.correct >= 20) },
+  { id: 'song1', name: 'Hobby-Musikant', desc: 'Spiele dein erstes Lied durch.', ic: 'music', test: s => Object.keys(s.songsDone).length >= 1 },
+  { id: 'song5', name: 'Repertoire', desc: 'Fünf verschiedene Lieder gemeistert.', ic: 'star', test: s => Object.keys(s.songsDone).length >= 5 },
+  { id: 'chord10', name: 'Akkordarbeiter', desc: '10 Akkorde vollständig gespielt.', ic: 'layers', test: s => s.chordsDone >= 10 },
+  { id: 'chord50', name: 'Harmoniker', desc: '50 Akkorde vollständig gespielt.', ic: 'layers', test: s => s.chordsDone >= 50 },
+  { id: 'bass', name: 'Tiefgang', desc: '50 richtige Noten im Bassschlüssel.', ic: 'target', test: s => s.bassCorrect >= 50 },
+  { id: 'keys', name: 'Tonart-Entdecker', desc: 'Spiele in 5 verschiedenen Tonarten.', ic: 'award', test: s => Object.keys(s.keysUsed).length >= 5 },
+  { id: 'lvl5', name: 'Aufsteiger', desc: 'Erreiche Level 5.', ic: 'trophy', test: s => lvlOf(s.xp) >= 5 },
+  { id: 'lvl10', name: 'Virtuose', desc: 'Erreiche Level 10.', ic: 'trophy', test: s => lvlOf(s.xp) >= 10 }
+];
+function checkAch() {
+  ACH.forEach(a => {
+    if (!S.ach[a.id] && a.test(S, G)) { S.ach[a.id] = Date.now(); toast({ title: 'Erfolg: ' + a.name, text: a.desc, ic: a.ic }); Snd.ach(); }
+  });
+}
+function addXP(n) {
+  const before = lvlOf(S.xp); S.xp += n; const after = lvlOf(S.xp);
+  if (after > before) { toast({ title: 'Level ' + after + '!', text: 'Du bist aufgestiegen.', ic: 'trophy', kind: 'level' }); Snd.up(); FX.burst(); }
+  renderLevel();
+}
+function renderLevel() {
+  const L = lvlOf(S.xp), a = xpAt(L), b = xpAt(L + 1);
+  $('#lvl-badge').textContent = L; $('#lvl-bar').style.width = Math.round(100 * (S.xp - a) / (b - a)) + '%';
+  $('#lvl-txt').textContent = fmt(S.xp - a) + ' / ' + fmt(b - a) + ' XP';
+}
+
+/* ---------------------------------------------------------------
+   Spiel
+   --------------------------------------------------------------- */
+let G = null, raf = 0, last = 0;
+const MODE_MULT = { learn: 1, speedrun: 1.3, songs: 1.2, chords: 1.5 };
+const MODE_TITLE = { learn: 'Einfaches Lernen', speedrun: 'Speedrun', songs: 'Lieder', chords: 'Akkordtrainer' };
+
+function startGame(mode, o = {}) {
+  Snd.init(); closeModal();
+  const st = S.settings;
+  G = {
+    mode, o, t: 0, noteT: 0, paused: false, over: false, locked: false, completed: false,
+    correct: 0, wrong: 0, streak: 0, bestStreak: 0, fastRun: 0, perfectLines: 0, xpGain: 0, score: 0, lines: 0, chordsDone: 0, roundChords: 10,
+    limit: mode === 'speedrun' ? 0 : (mode === 'songs' && o.level === 3 ? (st.limit ? Math.min(st.limit, 4) : 4) : (mode === 'songs' && o.level < 3 ? 0 : st.limit)),
+    total: 60
+  };
+  if (mode === 'songs') {
+    const song = o.song; G.song = song;
+    G.clef = st.clef === 'bass' ? 'bass' : 'treble';
+    const shift = G.clef === 'bass' ? -7 : 0;
+    const bars = parseSong(song.s).map(b => b.map(n => ({ ...n, step: n.step + shift })));
+    const withCh = o.level === 4 && !song.noChords, tonic = KEY(song.key).li;
+    const per = Math.min(st.perLine, innerWidth < 520 ? 6 : 8);
+    const rows = []; let cur = [], cnt = 0, lo = 99, hi = 0;
+    bars.forEach((bar, bi) => {
+      const last = bi === bars.length - 1, items = [];
+      bar.forEach((n, ni) => { lo = Math.min(lo, n.step); hi = Math.max(hi, n.step); items.push({ notes: [{ step: n.step, acc: n.acc }], dur: n.dur, barAfter: !withCh && ni === bar.length - 1 && !last }); });
+      if (withCh) {
+        const t = triadFor(G.clef, song.key, autoHarmony(bar, tonic, last));
+        lo = Math.min(lo, t.notes[0].step); hi = Math.max(hi, t.notes[2].step);
+        items.push({ notes: t.notes, dur: 1, chordItem: true, label: t.name, info: { name: t.name, inv: 0 }, barAfter: !last });
+      }
+      if (cnt && cnt + items.length > per) { rows.push(cur); cur = []; cnt = 0; }
+      cur = cur.concat(items); cnt += items.length;
+    });
+    if (cur.length) rows.push(cur);
+    G.rows = rows; G.rowIdx = 0; G.range = [lo, hi];
+  }
+  show('game'); renderPiano(); newLine(); updateHud();
+  cancelAnimationFrame(raf); last = 0; raf = requestAnimationFrame(loop);
+}
+function newLine() {
+  const st = S.settings; let clef, keyId, items;
+  if (G.mode === 'songs') { clef = G.clef; keyId = G.song.key; items = G.rows[G.rowIdx].map(it => ({ ...it, notes: it.notes.map(n => ({ ...n })) })); G.line = { clef, keyId, items, idx: 0, errors: 0, range: G.range }; }
+  else {
+    clef = st.clef === 'mixed' ? pick(['treble', 'bass']) : st.clef;
+    keyId = st.key === 'ALL' ? pick(KEYS).id : st.key;
+    if (G.mode === 'chords') {
+      items = []; const lvl = G.o.level, n = 3;
+      for (let i = 0; i < n; i++) { const c = makeChord(clef, keyId, lvl, st.naming); items.push({ notes: c.notes, dur: 1, info: { name: c.name, inv: c.inv } }); }
+      G.line = { clef, keyId, items, idx: 0, errors: 0, range: [CLEF[clef].bottom - 4, CLEF[clef].bottom + 12] };
+    } else {
+      const n = Math.min(st.perLine, innerWidth < 520 ? 6 : 8), p = pool(clef, st.diff); items = [];
+      for (let i = 0; i < n; i++) { let s, t = 0; do { s = pick(p); t++; } while (items.length && s === items[items.length - 1].notes[0].step && p.length > 1 && t < 8); items.push({ notes: [{ step: s, acc: 0 }], dur: 1 }); }
+      G.line = { clef, keyId, items, idx: 0, errors: 0, range: rangeOf(clef, st.diff) };
+    }
+  }
+  G.noteT = 0; G.locked = false; render();
+}
+function render() {
+  const L = G.line;
+  L.items.forEach((it, i) => { it.active = i === L.idx; });
+  const { svg } = staffSVG({ clef: L.clef, keyId: L.keyId, items: L.items, range: L.range, hints: G.mode === 'songs' && G.o.level === 1, naming: S.settings.naming, finalBar: G.mode === 'songs' && G.rowIdx === G.rows.length - 1 });
+  $('#staff').innerHTML = svg;
+  L.items.forEach(it => { it.fx = null; });
+  const info = L.items[L.idx] && L.items[L.idx].info;
+  $('#chord-label').textContent = info && (G.mode === 'chords' ? S.settings.chordNames : true) && info.name ? (G.mode === 'songs' ? 'Akkord: ' : '') + info.name + (G.mode === 'chords' ? ' · ' + INV[info.inv] : '') : '';
+  const kn = KEY(L.keyId).name;
+  $('#stage-label').textContent = G.mode === 'songs' ? `${G.song.title} · Zeile ${G.rowIdx + 1}/${G.rows.length}` : `${CLEF[L.clef].name} · ${kn}` + (G.mode === 'chords' ? ` · Akkord ${Math.min(G.chordsDone + 1, G.roundChords)}/${G.roundChords}` : '');
+}
+function curLimit() { const it = G.line.items[G.line.idx]; return G.limit * (it && it.notes.length > 1 ? it.notes.length : 1); }
+function loop(ts) {
+  raf = requestAnimationFrame(loop);
+  if (!G) return;
+  const dt = Math.min(250, ts - (last || ts)); last = ts;
+  if (G.paused || G.over) return;
+  G.t += dt; G.noteT += dt;
+  const bar = $('#timer-bar'); let frac = 1;
+  if (G.mode === 'speedrun') {
+    const left = G.total * 1000 - G.t; if (left <= 0) { G.completed = true; endGame(); return; }
+    frac = left / (G.total * 1000); setText('#hud-time', Math.ceil(left / 1000) + ' s');
+  } else if (G.limit) {
+    const lim = curLimit() * 1000; if (G.noteT >= lim && !G.locked) { timeout(); return; }
+    frac = 1 - G.noteT / lim; setText('#hud-time', Math.ceil((lim - G.noteT) / 1000) + ' s');
+  } else { const s = Math.floor(G.t / 1000); setText('#hud-time', Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0')); }
+  bar.style.transform = `scaleX(${Math.max(0, frac)})`; bar.classList.toggle('low', frac < .25 && (G.limit || G.mode === 'speedrun') > 0);
+}
+function setText(sel, t) { const e = $(sel); if (e.textContent !== t) e.textContent = t; }
+function updateHud() {
+  const sv = $('#hud-streak'); const html = icon('flame', 22) + G.streak;
+  if (sv.dataset.s !== String(G.streak)) { sv.innerHTML = html; sv.dataset.s = G.streak; sv.classList.remove('bump'); void sv.offsetWidth; if (G.streak) sv.classList.add('bump'); }
+  setText('#hud-hit', String(G.correct));
+  const tot = G.correct + G.wrong; setText('#hud-acc', tot ? Math.round(100 * G.correct / tot) + '%' : '–');
+  setText('#hud-time-k', G.mode === 'speedrun' ? 'Restzeit' : G.limit ? 'Überlegzeit' : 'Zeit');
+}
+function fb(t, kind) { const el = $('#feedback'); el.textContent = t; el.className = 'feedback ' + kind; void el.offsetWidth; el.classList.add('pop'); }
+function floatXP(n) { const e = document.createElement('div'); e.className = 'xpf'; e.textContent = '+' + n + ' XP'; $('#stage').appendChild(e); setTimeout(() => e.remove(), 950); }
+function flashKey(pc, kind) {
+  $$('#piano [data-pc="' + pc + '"]').slice(0, 1).forEach(el => { el.classList.add(kind); setTimeout(() => el.classList.remove(kind), kind === 'hint' ? 1100 : 280); });
+}
+function recWeak(clef, step, ok) { const k = clef[0] + step, w = S.weak[k] || [0, 0]; w[ok ? 0 : 1]++; S.weak[k] = w; }
+function award(tms) {
+  const g = Math.round((10 + Math.min(G.streak, 15) + (tms < 1500 ? 5 : 0)) * DIFFS[S.settings.diff - 1].mult * MODE_MULT[G.mode]);
+  G.xpGain += g; G.score += g; addXP(g); floatXP(g); return g;
+}
+function submit(pc, ctx) {
+  if (!G || G.paused || G.over || G.locked) return;
+  const L = G.line, it = L.items[L.idx]; if (!it) return;
+  if (it.notes.length > 1) return submitChord(pc, it);
+  const n = it.notes[0];
+  if (pcOf(n, L.keyId) === pc) {
+    const tms = G.noteT;
+    G.correct++; G.streak++; G.bestStreak = Math.max(G.bestStreak, G.streak); S.bestStreak = Math.max(S.bestStreak, G.streak);
+    S.totalCorrect++; if (L.clef === 'bass') S.bassCorrect++; S.keysUsed[L.keyId] = 1; recWeak(L.clef, n.step, true);
+    G.fastRun = tms < 1500 ? G.fastRun + 1 : 0;
+    award(tms); n.state = 'correct'; it.fx = 'pop'; Snd.note(midiOf(n, L.keyId));
+    fb(G.streak >= 5 ? G.streak + ' in Folge!' : 'Richtig!', 'ok'); flashKey(pc, 'ok');
+    updateHud(); checkAch(); save(); advance();
+  } else {
+    G.wrong++; S.totalWrong++; G.streak = 0; G.fastRun = 0; L.errors++; recWeak(L.clef, n.step, false);
+    if (G.mode === 'speedrun') G.t += 2000;
+    n.state = 'wrong'; it.fx = 'shake'; Snd.bad();
+    fb(S.settings.help ? 'Nicht ganz – gesucht: ' + noteName(n, L.keyId, S.settings.naming) : 'Nicht ganz – versuch es nochmal', 'bad');
+    flashKey(pc, 'bad'); if (S.settings.help) flashKey(pcOf(n, L.keyId), 'hint');
+    render(); updateHud(); save();
+    const g = G; setTimeout(() => { if (G === g && n.state === 'wrong') { n.state = null; render(); } }, 520);
+  }
+}
+function submitChord(pc, it) {
+  const L = G.line, hit = it.notes.find(n => n.state !== 'correct' && pcOf(n, L.keyId) === pc);
+  if (!hit) {
+    if (it.notes.some(n => n.state === 'correct' && pcOf(n, L.keyId) === pc)) return;
+    G.wrong++; S.totalWrong++; G.streak = 0; G.fastRun = 0; L.errors++; it.fx = 'shake'; Snd.bad();
+    fb('Dieser Ton gehört nicht zum Akkord.', 'bad'); flashKey(pc, 'bad'); render(); updateHud(); save(); return;
+  }
+  const tms = G.noteT;
+  hit.state = 'correct'; G.correct++; G.streak++; G.bestStreak = Math.max(G.bestStreak, G.streak); S.bestStreak = Math.max(S.bestStreak, G.streak);
+  S.totalCorrect++; if (L.clef === 'bass') S.bassCorrect++; S.keysUsed[L.keyId] = 1; recWeak(L.clef, hit.step, true);
+  G.fastRun = tms < 1500 * it.notes.length ? G.fastRun + 1 : 0;
+  award(tms / it.notes.length); Snd.note(midiOf(hit, L.keyId)); flashKey(pc, 'ok');
+  if (it.notes.every(n => n.state === 'correct')) {
+    G.chordsDone++; S.chordsDone++; it.fx = 'pop'; fb('Akkord komplett!', 'ok'); updateHud(); checkAch(); save(); advance();
+  } else { fb('Weiter – noch ' + it.notes.filter(n => n.state !== 'correct').length + ' Ton/Töne', 'ok'); render(); updateHud(); checkAch(); save(); }
+}
+function timeout() {
+  const L = G.line, it = L.items[L.idx], g = G; G.locked = true;
+  it.notes.forEach(n => { if (n.state !== 'correct') { n.state = 'wrong'; G.wrong++; S.totalWrong++; recWeak(L.clef, n.step, false); } });
+  G.streak = 0; G.fastRun = 0; L.errors++; it.fx = 'shake'; Snd.bad();
+  fb('Zeit abgelaufen – ' + (it.notes.length > 1 ? (it.info && it.info.name) : 'gesucht: ' + noteName(it.notes[0], L.keyId, S.settings.naming)), 'bad');
+  render(); updateHud(); save();
+  setTimeout(() => { if (G === g && !G.over) advance(true); }, 900);
+}
+function advance() {
+  const L = G.line; L.idx++; G.noteT = 0; G.locked = false;
+  const it = L.items[L.idx - 1];
+  if (G.mode === 'chords' && it.notes.length > 1 && G.chordsDone >= G.roundChords) { render(); G.locked = true; const g = G; setTimeout(() => { if (G === g) { G.completed = true; endGame(); } }, 650); return; }
+  if (L.idx >= L.items.length) { render(); finishLine(); } else render();
+}
+function finishLine() {
+  const L = G.line, g = G; G.lines++;
+  if (L.errors === 0) { G.perfectLines++; const b = 15; G.xpGain += b; G.score += b; addXP(b); fb('Saubere Zeile! +' + b + ' XP', 'ok'); }
+  checkAch(); save(); G.locked = true;
+  if (G.mode === 'songs') { G.rowIdx++; if (G.rowIdx >= G.rows.length) { setTimeout(() => { if (G === g) { G.completed = true; endGame(); } }, 650); return; } }
+  setTimeout(() => { if (G === g && !G.over) newLine(); }, 480);
+}
+function setPause(p) { if (!G || G.over) return; G.paused = p; $('#pause-ov').hidden = !p; }
+function endGame() {
+  if (!G || G.over) return; const g = G; g.over = true; cancelAnimationFrame(raf);
+  const tot = g.correct + g.wrong, acc = tot ? Math.round(100 * g.correct / tot) : 0, rec = []; let stars = 0;
+  if (g.mode === 'learn' && g.bestStreak > S.high.learn) { S.high.learn = g.bestStreak; if (g.bestStreak > 0) rec.push('Neue Bestserie: ' + g.bestStreak); }
+  if (g.mode === 'speedrun' && g.completed && g.correct > S.high.speedrun) { S.high.speedrun = g.correct; rec.push('Neuer Rekord: ' + g.correct + ' Treffer'); }
+  if (g.mode === 'chords' && g.completed && g.score > S.high.chords) { S.high.chords = g.score; rec.push('Neuer Bestwert: ' + g.score + ' Punkte'); }
+  if (g.mode === 'songs' && g.completed) {
+    stars = acc >= 95 ? 3 : acc >= 80 ? 2 : 1; S.songsDone[g.song.id] = 1;
+    const k = g.song.id + '_' + g.o.level, old = S.high.songs[k];
+    if (!old || stars > old.stars || (stars === old.stars && acc > old.acc)) { S.high.songs[k] = { stars, acc }; if (!old || stars > old.stars) rec.push('Neue Bestwertung: ' + '★'.repeat(stars)); }
+  }
+  checkAch(); save(); G = g; // checkAch nutzt G
+  const title = g.mode === 'songs' ? (g.completed ? 'Lied geschafft!' : 'Lied abgebrochen') : g.mode === 'speedrun' ? (g.completed ? 'Zeit abgelaufen!' : 'Speedrun beendet') : g.mode === 'chords' ? (g.completed ? 'Runde geschafft!' : 'Runde beendet') : 'Runde beendet';
+  if (!tot) { G = null; show('home'); return; }
+  const secs = Math.round(g.t / 1000);
+  const starsHTML = stars ? `<div class="stars" style="font-size:1.6rem;margin:6px 0">${[1, 2, 3].map(i => i <= stars ? '★' : '<span class="off">★</span>').join('')}</div>` : '';
+  const m = openModal(`<h2>${esc(title)}</h2><p class="sub">${esc(MODE_TITLE[g.mode])}${g.song ? ' · ' + esc(g.song.title) : ''}</p>${starsHTML}
+    <div class="tiles"><div class="tile"><div class="k">Treffer</div><div class="v">${g.correct}</div></div><div class="tile"><div class="k">Genauigkeit</div><div class="v">${acc}%</div></div>
+    <div class="tile"><div class="k">Beste Serie</div><div class="v">${g.bestStreak}</div></div><div class="tile"><div class="k">XP</div><div class="v">+${g.xpGain}</div></div>
+    <div class="tile"><div class="k">Zeit</div><div class="v">${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}</div></div></div>
+    ${rec.length ? `<div class="rec">${icon('trophy', 20)}<span>${rec.join(' · ')}</span></div>` : ''}
+    <div class="row"><button class="btn primary" data-act="again">Nochmal</button><button class="btn" data-act="home">Zum Menü</button></div>`);
+  m.dataset.last = JSON.stringify({ mode: g.mode, level: g.o.level, song: g.song ? g.song.id : null });
+  G = null; if (rec.length || stars === 3) FX.burst(); renderAll();
+}
+
+/* ---------------------------------------------------------------
+   Klaviatur & Eingabe
+   --------------------------------------------------------------- */
+function renderPiano() {
+  const st = S.settings, nm = st.naming;
+  const white = [['C', 0], ['D', 2], ['E', 4], ['F', 5], ['G', 7], ['A', 9], ['B', 11], ['C', 0]];
+  const wl = l => nm === 'de' && l === 'B' ? 'H' : l;
+  const black = [[0, 1, 'C♯/D♭'], [1, 3, 'D♯/E♭'], [3, 6, 'F♯/G♭'], [4, 8, 'G♯/A♭'], [5, 10, 'A♯/B♭']];
+  const bl = n => nm === 'de' ? n.replace('C♯', 'Cis').replace('D♯', 'Dis').replace('F♯', 'Fis').replace('G♯', 'Gis').replace('A♯', 'Ais').replace('D♭', 'Des').replace('E♭', 'Es').replace('G♭', 'Ges').replace('A♭', 'As').replace('B♭', 'B') : n;
+  $('#piano').innerHTML = `<div class="keys">${white.map(([l, pc]) => `<button class="wk" data-pc="${pc}" aria-label="${wl(l)}">${st.labels ? wl(l) : ''}</button>`).join('')}${black.map(([i, pc, n]) => `<button class="bk" data-pc="${pc}" style="left:${(i + 1) * 12.5}%" aria-label="${n}">${st.labels ? bl(n) : ''}</button>`).join('')}</div>`;
+}
+$('#piano').addEventListener('pointerdown', e => {
+  const k = e.target.closest('[data-pc]'); if (!k) return; e.preventDefault(); Snd.init(); submit(Number(k.dataset.pc), { el: k });
+});
+const KEYMAP = { KeyC: 'C', KeyD: 'D', KeyE: 'E', KeyF: 'F', KeyG: 'G', KeyA: 'A', KeyH: 'B', KeyB: 'B' };
+document.addEventListener('keydown', e => {
+  if (e.repeat || e.ctrlKey || e.metaKey) return;
+  if ($('.modal-bd')) { if (e.key === 'Escape') closeModal(); return; }
+  if (!G || G.over) return;
+  if (e.key === 'Escape') { setPause(!G.paused); return; }
+  const L = KEYMAP[e.code]; if (!L) return;
+  e.preventDefault(); Snd.init();
+  submit(pcFromLetter(L, G.line.keyId, e.shiftKey ? 'sharp' : e.altKey ? 'flat' : null), { key: true });
+});
+
+/* ---------------------------------------------------------------
+   Ansichten
+   --------------------------------------------------------------- */
+function show(v) { $$('.view').forEach(s => s.classList.toggle('active', s.id === 'view-' + v)); scrollTo(0, 0); if (v === 'home') renderHome(); if (v === 'profile') renderProfile(); }
+function renderAll() { renderLevel(); renderAuth(); renderSoundBtn(); const a = $('.view.active'); if (a && a.id === 'view-home') renderHome(); if (a && a.id === 'view-profile') renderProfile(); }
+function renderSoundBtn() { $('#btn-sound').innerHTML = icon(S.settings.sound ? 'vol' : 'mute', 20); }
+function renderAuth() {
+  const el = $('#auth'), u = Cloud.user;
+  if (u) {
+    const img = u.photoURL ? `<img class="avatar" referrerpolicy="no-referrer" alt="" src="${esc(u.photoURL)}">` : `<div class="avatar">${esc((u.displayName || '?')[0])}</div>`;
+    el.innerHTML = `<button data-act="account" aria-label="Konto" style="display:block">${img}</button>`;
+  } else el.innerHTML = `<button class="btn google sm" data-act="login">${GOOGLE}<span>Anmelden</span></button>`;
+}
+const MODE_CARDS = [
+  { id: 'learn', ic: 'grad', t: 'Einfaches Lernen', d: 'Endlos Zeilen lesen – in deinem Tempo, mit Serie und XP.', st: () => 'Beste Serie: ' + S.high.learn },
+  { id: 'speedrun', ic: 'zap', t: 'Speedrun', d: '60 Sekunden, so viele Noten wie möglich. Fehler kosten 2 Sekunden.', st: () => 'Rekord: ' + S.high.speedrun + ' Treffer' },
+  { id: 'songs', ic: 'music', t: 'Bekannte Lieder', d: 'Melodien Note für Note spielen – von leicht bis mit Akkordbegleitung.', st: () => Object.keys(S.songsDone).length + '/' + SONGS.length + ' gemeistert' },
+  { id: 'chords', ic: 'layers', t: 'Akkordtrainer', d: 'Akkorde lesen und Ton für Ton spielen – Dreiklänge bis Septakkorde.', st: () => 'Bestwert: ' + S.high.chords }
+];
+function renderHome() {
+  $('#modes').innerHTML = MODE_CARDS.map(m => `<button class="mode glass" data-act="mode" data-mode="${m.id}"><div class="mi">${icon(m.ic, 24)}</div><h3>${m.t}</h3><p>${m.d}</p><span class="st">${m.st()}</span></button>`).join('');
+  const st = S.settings;
+  const seg = (k, opts) => `<div class="seg" data-k="${k}">${opts.map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="${String(v) === String(st[k])}">${l}</button>`).join('')}</div>`;
+  const tog = (k, l) => `<button class="switch" role="switch" data-toggle="${k}" aria-checked="${!!st[k]}"><i></i><span>${l}</span></button>`;
+  $('#settings').innerHTML = `
+    <div class="card glass">
+      <div class="field"><span class="lb">Notenschlüssel</span><div class="seg" data-k="clef">
+        <button data-v="treble" aria-pressed="${st.clef === 'treble'}">${clefIcon('treble')} Violin</button>
+        <button data-v="bass" aria-pressed="${st.clef === 'bass'}">${clefIcon('bass')} Bass</button>
+        <button data-v="mixed" aria-pressed="${st.clef === 'mixed'}">Gemischt</button></div></div>
+      <div class="field"><span class="lb">Schwierigkeit</span>${seg('diff', DIFFS.map(d => [d.id, d.name]))}<p class="hint-txt">${DIFFS[st.diff - 1].desc} (XP ×${DIFFS[st.diff - 1].mult})</p></div>
+      <div class="field"><span class="lb">Tonleiter</span><div class="chips" data-k="key">${KEYS.map(k => `<button class="chip" data-v="${k.id}" aria-pressed="${st.key === k.id}">${k.name}<small>${k.n ? k.n + (k.t === '#' ? '♯' : '♭') : 'ohne Vorzeichen'}</small></button>`).join('')}<button class="chip" data-v="ALL" aria-pressed="${st.key === 'ALL'}">Alle<small>zufällig pro Zeile</small></button></div></div>
+    </div>
+    <div class="card glass">
+      <div class="field"><span class="lb">Überlegdauer pro Note</span>${seg('limit', [[0, 'Unbegrenzt'], [8, '8 s'], [5, '5 s'], [3, '3 s'], [2, '2 s']])}</div>
+      <div class="field"><span class="lb">Noten pro Zeile</span>${seg('perLine', [[4, '4'], [6, '6'], [8, '8']])}</div>
+      <div class="field"><span class="lb">Notennamen</span>${seg('naming', [['de', 'Deutsch (H)'], ['en', 'International (B)']])}</div>
+      <div class="field">${tog('labels', 'Tasten beschriften')}${tog('help', 'Richtige Taste nach Fehler zeigen')}${tog('sound', 'Sound')}</div>
+      <div class="preview" id="preview"></div>
+    </div>`;
+  const prev = (st.clef === 'mixed' ? ['treble', 'bass'] : [st.clef]).map(c => staffSVG({ clef: c, keyId: st.key === 'ALL' ? 'C' : st.key, items: [], range: [CLEF[c].bottom, CLEF[c].bottom + 8], minW: 220 }).svg).join('');
+  $('#preview').innerHTML = prev;
+}
+$('#settings').addEventListener('click', e => {
+  const t = e.target.closest('[data-toggle]');
+  if (t) { const k = t.dataset.toggle; S.settings[k] = !S.settings[k]; if (k === 'sound') { Snd.init(); renderSoundBtn(); } save(); renderHome(); return; }
+  const b = e.target.closest('button[data-v]'); if (!b) return;
+  const k = b.parentElement.dataset.k, raw = b.dataset.v;
+  S.settings[k] = ['diff', 'limit', 'perLine'].includes(k) ? Number(raw) : raw; save(); renderHome();
+});
+function renderProfile() {
+  const L = lvlOf(S.xp), a = xpAt(L), b = xpAt(L + 1), pr = (S.xp - a) / (b - a), C = 2 * Math.PI * 52, tot = S.totalCorrect + S.totalWrong;
+  const u = Cloud.user, nm = S.settings.naming;
+  const weak = Object.entries(S.weak).map(([k, [c, w]]) => ({ k, c, w, n: c + w })).filter(x => x.n >= 3 && x.w > 0).sort((x, y) => (y.w / y.n) - (x.w / x.n)).slice(0, 5);
+  const wname = k => { const step = Number(k.slice(1)); return (k[0] === 't' ? 'Violin' : 'Bass') + ' · ' + noteName({ step, acc: 0 }, 'C', nm) + octOf(step); };
+  $('#view-profile').innerHTML = `
+    <div class="hud"><button class="btn sm" data-act="home">${icon('arrow', 18)} Menü</button><div class="hud-title">Profil &amp; Erfolge</div><span style="width:40px"></span></div>
+    <div class="card glass"><div class="ring-wrap">
+      <svg viewBox="0 0 120 120"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b6bff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs><circle class="ring-bg" cx="60" cy="60" r="52"/><circle class="ring" cx="60" cy="60" r="52" transform="rotate(-90 60 60)" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - pr)}"/><text x="60" y="58" text-anchor="middle" fill="#9aa3c7" font-size="11" font-weight="800">LEVEL</text><text x="60" y="82" text-anchor="middle" fill="#fff" font-size="28" font-weight="850">${L}</text></svg>
+      <div style="flex:1;min-width:220px"><h2>${u ? esc(u.displayName || 'Musiker:in') : 'Gast'}</h2><p class="hint-txt">${fmt(S.xp)} XP gesamt · noch ${fmt(b - S.xp)} XP bis Level ${L + 1}</p>
+        <p class="hint-txt" id="sync-state" style="margin-top:10px">${syncHTML()}</p>
+        <div class="row" style="margin-top:12px">${u ? `<button class="btn sm" data-act="logout">${icon('logout', 16)} Abmelden</button>` : `<button class="btn google sm" data-act="login">${GOOGLE}<span>Mit Google anmelden</span></button>`}</div></div></div>
+      ${!FIREBASE_READY ? `<div class="notice" style="margin-top:16px">Cloud-Speicherung ist noch nicht eingerichtet: Trage deine Firebase-Daten oben in <b>index.html</b> ein (siehe Anleitung). Bis dahin wird lokal gespeichert.</div>` : ''}
+    </div>
+    <div class="sect">Statistik</div>
+    <div class="tiles" style="margin-top:0">
+      <div class="tile"><div class="k">Noten gespielt</div><div class="v">${fmt(tot)}</div></div>
+      <div class="tile"><div class="k">Genauigkeit</div><div class="v">${tot ? Math.round(100 * S.totalCorrect / tot) : 0}%</div></div>
+      <div class="tile"><div class="k">Beste Serie</div><div class="v">${S.bestStreak}</div></div>
+      <div class="tile"><div class="k">Speedrun-Rekord</div><div class="v">${S.high.speedrun}</div></div>
+      <div class="tile"><div class="k">Lieder</div><div class="v">${Object.keys(S.songsDone).length}/${SONGS.length}</div></div>
+      <div class="tile"><div class="k">Akkorde</div><div class="v">${fmt(S.chordsDone)}</div></div>
+    </div>
+    ${weak.length ? `<div class="sect">Deine Problemnoten</div><div class="list">${weak.map(x => `<div class="li"><div class="grow"><b>${wname(x.k)}</b><small>${x.w} von ${x.n} Versuchen falsch</small></div><span class="tag">${Math.round(100 * x.c / x.n)}% richtig</span></div>`).join('')}</div>` : ''}
+    <div class="sect">Erfolge (${Object.keys(S.ach).length}/${ACH.length})</div>
+    <div class="ach-grid">${ACH.map(x => `<div class="ach ${S.ach[x.id] ? '' : 'locked'}"><div class="ai">${icon(S.ach[x.id] ? x.ic : 'lock', 22)}</div><div><b>${x.name}</b><small>${x.desc}</small></div></div>`).join('')}</div>
+    <div class="row" style="margin-top:30px"><button class="btn danger sm" data-act="reset">${icon('trash', 16)} Fortschritt zurücksetzen</button></div>`;
+}
+
+/* ---------------------------------------------------------------
+   Dialoge
+   --------------------------------------------------------------- */
+function infoNoCloud() {
+  openModal(`<h2>Gastmodus</h2><p class="sub">Die Google-Anmeldung ist noch nicht eingerichtet. Deine Daten werden vorerst in diesem Browser gespeichert (localStorage).</p>
+    <p class="hint-txt">Zum Aktivieren: Firebase-Projekt anlegen und <b>apiKey</b>, <b>authDomain</b> und <b>projectId</b> oben in <b>index.html</b> bei <code>firebaseConfig</code> eintragen. Die Schritte stehen in der ANLEITUNG.md.</p>
+    <div class="row"><button class="btn primary" data-act="closeModal">Verstanden</button></div>`);
+}
+function accountModal() {
+  const u = Cloud.user; if (!u) return;
+  openModal(`<h2>${esc(u.displayName || 'Konto')}</h2><p class="sub">${esc(u.email || '')}</p><p class="hint-txt" id="sync-state">${syncHTML()}</p>
+    <div class="row"><button class="btn" data-act="profile">${icon('user', 16)} Profil</button><button class="btn danger" data-act="logout">${icon('logout', 16)} Abmelden</button></div>`);
+}
+function songPicker() {
+  const lv = S.settings.songLevel;
+  const m = openModal(`<h2>Lied wählen</h2><p class="sub">Alle Melodien sind vereinfacht und ohne Taktangaben notiert.</p>
+    <div class="seg" id="song-lv">${SONG_LEVELS.map(l => `<button data-v="${l.id}" aria-pressed="${l.id === lv}">${l.name}</button>`).join('')}</div>
+    <p class="hint-txt" id="song-lv-d">${SONG_LEVELS[lv - 1].desc}</p>
+    <div class="list" style="margin-top:14px" id="song-list"></div>`, true);
+  const draw = () => {
+    const lvl = S.settings.songLevel; $('#song-lv-d', m).textContent = SONG_LEVELS[lvl - 1].desc;
+    $$('#song-lv button', m).forEach(b => b.setAttribute('aria-pressed', Number(b.dataset.v) === lvl));
+    $('#song-list', m).innerHTML = SONGS.map(s => {
+      const best = S.high.songs[s.id + '_' + lvl], off = lvl === 4 && s.noChords;
+      return `<button class="li" data-act="startSong" data-id="${s.id}" ${off ? 'disabled style="opacity:.45;cursor:not-allowed"' : ''}><div class="grow"><b>${esc(s.title)}</b><small>${KEY(s.key).name} · ${s.s.split(/\s+/).filter(t => t !== '|').length} Töne · ${['', 'leicht', 'mittel', 'schwer'][s.lv]}${off ? ' · ohne Akkordstufe' : ''}</small></div><span class="stars">${best ? [1, 2, 3].map(i => i <= best.stars ? '★' : '<span class="off">★</span>').join('') : '<span class="off">★★★</span>'}</span></button>`;
+    }).join('');
+  };
+  $('#song-lv', m).addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; S.settings.songLevel = Number(b.dataset.v); save(); draw(); });
+  draw();
+}
+function chordPicker() {
+  const lv = S.settings.chordLevel;
+  const m = openModal(`<h2>Akkordtrainer</h2><p class="sub">Zehn Akkorde pro Runde. Spiele jeden Ton des Akkords – die Reihenfolge ist egal.</p>
+    <div class="list" id="chord-list"></div><div class="field" style="margin-top:12px"><button class="switch" role="switch" id="chord-names" aria-checked="${S.settings.chordNames}"><i></i><span>Akkordnamen anzeigen</span></button></div>
+    <p class="hint-txt">Tonart &amp; Schlüssel kommen aus den Einstellungen im Menü.</p>
+    <div class="row"><button class="btn primary" data-act="startChords">Starten</button></div>`);
+  const draw = () => { $('#chord-list', m).innerHTML = CHORD_LEVELS.map(l => `<button class="li" data-lv="${l.id}" aria-pressed="${l.id === S.settings.chordLevel}"><div class="grow"><b>${l.name}</b><small>${l.desc}</small></div></button>`).join(''); };
+  $('#chord-list', m).addEventListener('click', e => { const b = e.target.closest('[data-lv]'); if (!b) return; S.settings.chordLevel = Number(b.dataset.lv); save(); draw(); });
+  $('#chord-names', m).addEventListener('click', e => { S.settings.chordNames = !S.settings.chordNames; e.currentTarget.setAttribute('aria-checked', S.settings.chordNames); save(); });
+  draw();
+}
+
+/* ---------------------------------------------------------------
+   Aktionen (Event-Delegation)
+   --------------------------------------------------------------- */
+const ACT = {
+  home() { closeModal(); if (G && !G.over) { G.over = true; cancelAnimationFrame(raf); } G = null; show('home'); },
+  profile() { closeModal(); if (G && !G.over) return; show('profile'); },
+  mode(el) {
+    const m = el.dataset.mode;
+    if (m === 'songs') songPicker(); else if (m === 'chords') chordPicker(); else startGame(m);
+  },
+  startSong(el) { const s = SONGS.find(x => x.id === el.dataset.id); if (s) startGame('songs', { song: s, level: S.settings.songLevel }); },
+  startChords() { startGame('chords', { level: S.settings.chordLevel }); },
+  again() { const m = $('.modal'); const d = m && m.dataset.last ? JSON.parse(m.dataset.last) : null; closeModal(); if (!d) return show('home'); if (d.mode === 'songs') startGame('songs', { song: SONGS.find(x => x.id === d.song), level: d.level }); else startGame(d.mode, d.level ? { level: d.level } : {}); },
+  quit() { if (!G || G.over) return show('home'); setPause(true); const m = openModal(`<h2>Runde beenden?</h2><p class="sub">Dein bisheriger Fortschritt (XP, Statistik) bleibt erhalten.</p><div class="row"><button class="btn primary" data-act="confirmQuit">Beenden &amp; Ergebnis</button><button class="btn" data-act="resumeClose">Weiterspielen</button></div>`); },
+  confirmQuit() { closeModal(); if (G) endGame(); },
+  resumeClose() { closeModal(); setPause(false); },
+  pause() { if (G && !G.over) setPause(!G.paused); },
+  resume() { setPause(false); },
+  sound() { Snd.init(); S.settings.sound = !S.settings.sound; save(); renderSoundBtn(); const t = $('[data-toggle="sound"]'); if (t) t.setAttribute('aria-checked', S.settings.sound); },
+  login() { closeModal(); Cloud.login(); },
+  logout() { closeModal(); Cloud.logout(); },
+  account() { accountModal(); },
+  closeModal() { closeModal(); },
+  reset() { openModal(`<h2>Fortschritt löschen?</h2><p class="sub">XP, Highscores und Erfolge werden zurückgesetzt${Cloud.user ? ' – auch in der Cloud' : ''}. Das lässt sich nicht rückgängig machen.</p><div class="row"><button class="btn danger" data-act="confirmReset">Ja, alles löschen</button><button class="btn" data-act="closeModal">Abbrechen</button></div>`); },
+  confirmReset() { const s = S.settings; S = DEFAULTS(); S.settings = s; save(); closeModal(); renderAll(); toast({ title: 'Zurückgesetzt', text: 'Du startest wieder bei Level 1.', ic: 'check' }); }
+};
+document.addEventListener('click', e => { const a = e.target.closest('[data-act]'); if (a && ACT[a.dataset.act]) ACT[a.dataset.act](a, e); });
+document.addEventListener('pointerdown', () => Snd.init(), { once: true });
+$('#btn-quit').innerHTML = icon('x', 16) + ' Beenden';
+$('#btn-pause').innerHTML = icon('pause', 18);
+$('#btn-resume').innerHTML = icon('play', 18) + ' Weiter';
+$('#hud-streak').innerHTML = icon('flame', 22) + '0';
+
+/* ---------------------------------------------------------------
+   Start
+   --------------------------------------------------------------- */
+FX.init();
+renderAll();
+Cloud.init();
+})();
+</script>
+</body>
+</html>
