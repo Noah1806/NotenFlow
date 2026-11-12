@@ -367,6 +367,8 @@ th{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.
 
 .in-game #toasts{top:auto;bottom:16px}
 @media (max-width:860px){.in-game #toasts{bottom:76px}}
+
+.bk{width:8.6%}
 </style>
 </head>
 <body>
@@ -673,7 +675,7 @@ const DEFAULTS = () => ({
     theme: 'auto', bg: true, sound: true, naming: 'de', labels: true, help: true, showPlayed: true,
     soundSet: 'klavier', volNote: 80, volFx: 30,
     modes: {
-      learn: { clef: 'treble', diff: 1, key: 'C', limit: 0, perLine: 6 },
+      learn: { clef: 'treble', diff: 1, key: 'C', limit: 0, perLine: 6, lines: 4 },
       speedrun: { clef: 'treble', diff: 1, key: 'C', dur: 60, perLine: 6 },
       songs: { clef: 'treble', level: 1 },
       chords: { clef: 'treble', key: 'C', level: 1, names: true }
@@ -740,6 +742,7 @@ function sanitize() {
   fix(M.chords, 'key', 'key', 'C');
   fix(M.chords, 'level', 'chordLv', 1); fix(M.songs, 'level', 'songLv', 1);
   if (![30, 60, 120].includes(M.speedrun.dur)) M.speedrun.dur = 60;
+  if (![3, 4, 5, 6, 8, 10].includes(M.learn.lines)) M.learn.lines = 4;
   st.volNote = Math.max(0, Math.min(100, st.volNote)); st.volFx = Math.max(0, Math.min(100, st.volFx));
 }
 
@@ -759,15 +762,17 @@ function logAnswer(mode, ok, ms) {
 /* ---------------------------------------------------------------
    Cloud (Firebase Auth + Firestore)
    --------------------------------------------------------------- */
+const withTimeout = (pr, ms) => Promise.race([pr, new Promise((_, rej) => setTimeout(() => rej({ code: 'timeout' }), ms))]);
 const Cloud = {
-  on: false, user: null, status: 'local', auth: null, db: null, A: null, F: null,
+  on: false, user: null, status: 'local', err: '', toasted: {}, auth: null, db: null, A: null, F: null,
   async init() {
     if (!FIREBASE_READY) { renderAuth(); return; }
     try {
       const base = 'https://www.gstatic.com/firebasejs/' + FIREBASE_SDK_VERSION + '/';
       const [app, au, fs] = await Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-firestore.js')]);
       const a = app.initializeApp(firebaseConfig);
-      this.A = au; this.F = fs; this.auth = au.getAuth(a); this.db = fs.getFirestore(a); this.on = true;
+      this.A = au; this.F = fs; this.auth = au.getAuth(a); try { this.db = fs.initializeFirestore(a, { experimentalAutoDetectLongPolling: true }); } catch (e) { this.db = fs.getFirestore(a); }
+      this.on = true; addEventListener('online', () => { if (this.user) this.push(); });
       au.onAuthStateChanged(this.auth, u => this.onUser(u));
     } catch (e) {
       console.error('Firebase konnte nicht geladen werden', e);
@@ -779,7 +784,10 @@ const Cloud = {
   async onUser(u) {
     if (u) {
       this.user = u; this.setStatus('syncing'); renderAuth();
-      try { await this.pull(u); } catch (e) { this.fail(e); }
+      const cache = readLocal('uid:' + u.uid); if (cache) S = fill(DEFAULTS(), cache);   // sofort lokalen Stand zeigen, nicht auf die Cloud warten
+      renderAll();
+      this.pull(u).catch(e => this.fail(e));
+      return;
     } else {
       this.user = null; this.status = 'local';
       S = fill(DEFAULTS(), readLocal('guest'));
@@ -787,26 +795,29 @@ const Cloud = {
     renderAuth(); renderAll();
   },
   async pull(u) {
-    const ref = this.F.doc(this.db, 'users', u.uid), snap = await this.F.getDoc(ref);
+    const ref = this.F.doc(this.db, 'users', u.uid), snap = await withTimeout(this.F.getDoc(ref), 15000);
     const cloud = snap.exists() ? snap.data().data : null, cache = readLocal('uid:' + u.uid), guest = readLocal('guest');
     let m = fill(DEFAULTS(), cloud);
     if (hasProgress(cache)) m = mergeData(m, cache);
     if (hasProgress(guest)) { m = mergeData(m, guest); writeLocal('guest', DEFAULTS()); }
-    S = m; writeLocal('uid:' + u.uid, S);
-    await this.push();
+    S = m; writeLocal('uid:' + u.uid, S); renderAll();
+    this.push();
   },
   async push() {
     if (!this.user) return;
     try {
       this.setStatus('syncing');
-      await this.F.setDoc(this.F.doc(this.db, 'users', this.user.uid), { data: JSON.parse(JSON.stringify(S)), name: this.user.displayName || '', updatedAt: this.F.serverTimestamp() });
-      this.setStatus('synced');
+      await withTimeout(this.F.setDoc(this.F.doc(this.db, 'users', this.user.uid), { data: JSON.parse(JSON.stringify(S)), name: this.user.displayName || '', updatedAt: this.F.serverTimestamp() }), 15000);
+      this.err = ''; this.setStatus('synced');
     } catch (e) { this.fail(e); }
   },
   fail(e) {
-    console.error(e); this.setStatus('error');
-    const perm = e && e.code === 'permission-denied';
-    toast({ title: 'Cloud-Speicherung fehlgeschlagen', text: perm ? 'Firestore-Regeln prüfen (siehe Anleitung). Fortschritt ist lokal gesichert.' : 'Fortschritt ist lokal gesichert.', ic: 'lock' });
+    console.error('Cloud-Fehler', e); const c = (e && e.code) || 'unbekannt'; this.err = c; this.setStatus('error');
+    if (this.toasted[c]) return; this.toasted[c] = 1;
+    const txt = c === 'permission-denied' ? 'Die Firestore-Regeln fehlen oder sind falsch (siehe Anleitung, Teil 2 Schritt 10).'
+      : (c === 'timeout' || c === 'unavailable') ? 'Firestore antwortet nicht. Wurde unter „Firestore Database“ eine Datenbank angelegt? Auch Adblocker können die Verbindung blockieren.'
+      : 'Fehlercode: ' + c;
+    toast({ title: 'Cloud-Speicherung fehlgeschlagen', text: txt + ' Dein Fortschritt ist lokal gesichert.', ic: 'lock' });
   },
   async login() {
     if (!this.on) { infoNoCloud(); return; }
@@ -822,7 +833,7 @@ const Cloud = {
   async logout() { flush(); if (this.on) await this.A.signOut(this.auth); }
 };
 function syncHTML() {
-  const m = { local: 'Gastmodus – lokal gespeichert', pending: 'Änderungen werden gleich gespeichert …', syncing: 'Synchronisiere …', synced: 'Cloud synchronisiert', error: 'Cloud-Fehler – lokal gesichert' };
+  const m = { local: 'Gastmodus – lokal gespeichert', pending: 'Änderungen werden gleich gespeichert …', syncing: 'Synchronisiere …', synced: 'Cloud synchronisiert', error: 'Cloud-Fehler' + (Cloud.err ? ' (' + Cloud.err + ')' : '') + ' – lokal gesichert' };
   return `<span class="dot ${Cloud.status}"></span>${m[Cloud.status] || ''}`;
 }
 
@@ -1204,7 +1215,7 @@ function startGame(mode, o = {}) {
   $('#pause-ov').hidden = true; $('#btn-pause').innerHTML = icon('pause', 18); $('#played').className = 'played'; $('#feedback').textContent = '';
   $('#hud-title').textContent = MODE_TITLE[mode];
   G = {
-    st, timers: [], rtSum: 0, rtN: 0, mode, o, t: 0, noteT: 0, paused: false, over: false, locked: false, completed: false,
+    st, timers: [], rtSum: 0, rtN: 0, miss: {}, maxLines: mode === 'learn' ? (st.lines || 4) : 0, mode, o, t: 0, noteT: 0, paused: false, over: false, locked: false, completed: false,
     correct: 0, wrong: 0, streak: 0, bestStreak: 0, fastRun: 0, perfectLines: 0, xpGain: 0, score: 0, lines: 0, chordsDone: 0, roundChords: 10,
     limit: mode === 'speedrun' || mode === 'chords' ? 0 : mode === 'songs' ? (o.level === 3 ? 4 : 0) : st.limit,
     total: st.dur || 60
@@ -1262,7 +1273,7 @@ function render() {
   const info = L.items[L.idx] && L.items[L.idx].info;
   $('#chord-label').textContent = info && (G.mode === 'chords' ? G.st.names : true) && info.name ? (G.mode === 'songs' ? 'Akkord: ' : '') + info.name + (G.mode === 'chords' ? ' · ' + INV[info.inv] : '') : '';
   const kn = KEY(L.keyId).name;
-  $('#stage-label').textContent = G.mode === 'songs' ? `${G.song.title} · Zeile ${G.rowIdx + 1}/${G.rows.length}` : `${CLEF[L.clef].name} · ${kn}` + (G.mode === 'chords' ? ` · Akkord ${Math.min(G.chordsDone + 1, G.roundChords)}/${G.roundChords}` : '');
+  $('#stage-label').textContent = G.mode === 'songs' ? `${G.song.title} · Zeile ${G.rowIdx + 1}/${G.rows.length}` : `${CLEF[L.clef].name} · ${kn}` + (G.mode === 'chords' ? ` · Akkord ${Math.min(G.chordsDone + 1, G.roundChords)}/${G.roundChords}` : '') + (G.maxLines ? ` · Zeile ${Math.min(G.lines + 1, G.maxLines)}/${G.maxLines}` : '');
 }
 function later(ms, fn) { G.timers.push({ t: ms, fn }); }
 function curLimit() { const it = G.line.items[G.line.idx]; return G.limit * (it && it.notes.length > 1 ? it.notes.length : 1); }
@@ -1325,7 +1336,7 @@ function submit(pc, ctx) {
     fb(G.streak >= 5 ? G.streak + ' in Folge!' : 'Richtig!', 'ok'); flashKey(pc, 'ok'); showPlayed(pcName(pc, L.keyId), 'ok');
     updateHud(); checkAch(); save(); advance();
   } else {
-    G.wrong++; S.totalWrong++; G.streak = 0; G.fastRun = 0; L.errors++; recWeak(L.clef, n.step, false); logAnswer(G.mode, false, 0);
+    G.wrong++; S.totalWrong++; G.streak = 0; G.fastRun = 0; L.errors++; recWeak(L.clef, n.step, false); logAnswer(G.mode, false, 0); G.miss[L.clef[0] + n.step] = (G.miss[L.clef[0] + n.step] || 0) + 1;
     if (G.mode === 'speedrun') G.t += 2000;
     n.state = 'wrong'; it.fx = 'shake'; Snd.bad();
     fb(S.settings.help ? 'Nicht ganz – gesucht: ' + noteName(n, L.keyId, S.settings.naming) : 'Nicht ganz – versuch es nochmal', 'bad');
@@ -1352,7 +1363,7 @@ function submitChord(pc, it) {
 }
 function timeout() {
   const L = G.line, it = L.items[L.idx]; G.locked = true;
-  it.notes.forEach(n => { if (n.state !== 'correct') { n.state = 'wrong'; G.wrong++; S.totalWrong++; recWeak(L.clef, n.step, false); logAnswer(G.mode, false, 0); } });
+  it.notes.forEach(n => { if (n.state !== 'correct') { n.state = 'wrong'; G.wrong++; S.totalWrong++; recWeak(L.clef, n.step, false); logAnswer(G.mode, false, 0); G.miss[L.clef[0] + n.step] = (G.miss[L.clef[0] + n.step] || 0) + 1; } });
   G.streak = 0; G.fastRun = 0; L.errors++; it.fx = 'shake'; Snd.bad();
   fb('Zeit abgelaufen – ' + (it.notes.length > 1 ? (it.info && it.info.name) : 'gesucht: ' + noteName(it.notes[0], L.keyId, S.settings.naming)), 'bad');
   render(); updateHud(); save();
@@ -1368,6 +1379,7 @@ function finishLine() {
   const L = G.line; G.lines++;
   if (L.errors === 0) { G.perfectLines++; const b = 5; S.extra.perfect++; G.xpGain += b; G.score += b; addXP(b); fb('Saubere Zeile! +' + b + ' XP', 'ok'); }
   checkAch(); save(); G.locked = true;
+  if (G.maxLines && G.lines >= G.maxLines) { later(650, () => { G.completed = true; endGame(); }); return; }
   if (G.mode === 'songs') { G.rowIdx++; if (G.rowIdx >= G.rows.length) { later(650, () => { G.completed = true; endGame(); }); return; } }
   later(480, () => newLine());
 }
@@ -1397,14 +1409,17 @@ function endGame() {
   }
   $('#pause-ov').hidden = true;
   checkAch(); save(); G = g; // checkAch nutzt G
-  const title = g.mode === 'songs' ? (g.completed ? 'Lied geschafft!' : 'Lied abgebrochen') : g.mode === 'speedrun' ? (g.completed ? 'Zeit abgelaufen!' : 'Speedrun beendet') : g.mode === 'chords' ? (g.completed ? 'Runde geschafft!' : 'Runde beendet') : 'Runde beendet';
+  const title = g.mode === 'songs' ? (g.completed ? 'Lied geschafft!' : 'Lied abgebrochen') : g.mode === 'speedrun' ? (g.completed ? 'Zeit abgelaufen!' : 'Speedrun beendet') : g.mode === 'chords' ? (g.completed ? 'Runde geschafft!' : 'Runde beendet') : (g.completed ? 'Training abgeschlossen' : 'Training beendet');
   if (!tot) { G = null; show('home'); return; }
-  const secs = Math.round(g.t / 1000);
+  const secs = Math.round(g.t / 1000), avg = g.rtN ? (g.rtSum / g.rtN / 1000).toFixed(1) + ' s' : '–';
+  const verdict = acc >= 95 ? 'Ausgezeichnet – fast fehlerfrei!' : acc >= 80 ? 'Sehr gut – das sitzt schon richtig gut.' : acc >= 60 ? 'Gut – mit etwas Übung wird es sicher.' : 'Übung macht den Meister – bleib dran!';
+  const missList = Object.entries(g.miss).sort((x, y) => y[1] - x[1]).slice(0, 4).map(([k, c]) => (k[0] === 't' ? 'Violin ' : 'Bass ') + noteName({ step: Number(k.slice(1)), acc: 0 }, 'C', S.settings.naming) + octOf(Number(k.slice(1))) + ' (' + c + '×)');
+  const extraTiles = `<div class="tile"><div class="k">Ø pro Note</div><div class="v">${avg}</div></div>` + (g.mode === 'learn' ? `<div class="tile"><div class="k">Fehlerfreie Zeilen</div><div class="v">${g.perfectLines}/${g.lines}</div></div>` : '');
   const starsHTML = stars ? `<div class="stars" style="font-size:1.6rem;margin:6px 0">${[1, 2, 3].map(i => i <= stars ? '★' : '<span class="off">★</span>').join('')}</div>` : '';
-  const m = openModal(`<h2>${esc(title)}</h2><p class="sub">${esc(MODE_TITLE[g.mode])}${g.song ? ' · ' + esc(g.song.title) : ''}</p>${starsHTML}
+  const m = openModal(`<h2>${esc(title)}</h2><p class="sub">${esc(MODE_TITLE[g.mode])}${g.song ? ' · ' + esc(g.song.title) : ''}</p><p style="margin:-8px 0 8px;font-weight:650">${verdict}</p>${starsHTML}
     <div class="tiles"><div class="tile"><div class="k">Treffer</div><div class="v">${g.correct}</div></div><div class="tile"><div class="k">Genauigkeit</div><div class="v">${acc}%</div></div>
     <div class="tile"><div class="k">Beste Serie</div><div class="v">${g.bestStreak}</div></div><div class="tile"><div class="k">XP</div><div class="v">+${g.xpGain}</div></div>
-    <div class="tile"><div class="k">Zeit</div><div class="v">${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}</div></div></div>
+    <div class="tile"><div class="k">Zeit</div><div class="v">${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}</div></div>${extraTiles}</div>${missList.length ? `<div class="notice" style="margin-top:14px">Das wackelt noch: ${missList.join(', ')}</div>` : ''}
     ${rec.length ? `<div class="rec">${icon('trophy', 20)}<span>${rec.join(' · ')}</span></div>` : ''}
     <div class="row"><button class="btn primary" data-act="again">Nochmal</button><button class="btn" data-act="home">Zum Menü</button></div>`);
   m.dataset.last = JSON.stringify({ mode: g.mode, level: g.o.level, song: g.song ? g.song.id : null });
@@ -1416,11 +1431,11 @@ function endGame() {
    --------------------------------------------------------------- */
 function renderPiano() {
   const st = S.settings, nm = st.naming;
-  const white = [['C', 0], ['D', 2], ['E', 4], ['F', 5], ['G', 7], ['A', 9], ['B', 11], ['C', 0]];
+  const white = [['C', 0], ['D', 2], ['E', 4], ['F', 5], ['G', 7], ['A', 9], ['B', 11]];
   const wl = l => nm === 'de' && l === 'B' ? 'H' : l;
   const black = [[0, 1, 'C♯/D♭'], [1, 3, 'D♯/E♭'], [3, 6, 'F♯/G♭'], [4, 8, 'G♯/A♭'], [5, 10, 'A♯/B♭']];
   const bl = n => nm === 'de' ? n.replace('C♯', 'Cis').replace('D♯', 'Dis').replace('F♯', 'Fis').replace('G♯', 'Gis').replace('A♯', 'Ais').replace('D♭', 'Des').replace('E♭', 'Es').replace('G♭', 'Ges').replace('A♭', 'As').replace('B♭', 'B') : n;
-  $('#piano').innerHTML = `<div class="keys">${white.map(([l, pc]) => `<button class="wk" data-pc="${pc}" aria-label="${wl(l)}">${st.labels ? wl(l) : ''}</button>`).join('')}${black.map(([i, pc, n]) => `<button class="bk" data-pc="${pc}" style="left:${(i + 1) * 12.5}%" aria-label="${n}">${st.labels ? bl(n) : ''}</button>`).join('')}</div>`;
+  $('#piano').innerHTML = `<div class="keys">${white.map(([l, pc]) => `<button class="wk" data-pc="${pc}" aria-label="${wl(l)}">${st.labels ? wl(l) : ''}</button>`).join('')}${black.map(([i, pc, n]) => `<button class="bk" data-pc="${pc}" style="left:${(i + 1) * 100 / 7}%" aria-label="${n}">${st.labels ? bl(n) : ''}</button>`).join('')}</div>`;
 }
 $('#piano').addEventListener('pointerdown', e => {
   const k = e.target.closest('[data-pc]'); if (!k) return; e.preventDefault(); Snd.init(); submit(Number(k.dataset.pc), { el: k });
@@ -1549,6 +1564,7 @@ function renderSetup() {
     if (m === 'learn') main += f('Überlegdauer pro Note', seg(m, 'limit', [[0, 'Unbegrenzt'], [8, '8 s'], [5, '5 s'], [3, '3 s'], [2, '2 s']]));
     else main += f('Dauer', seg(m, 'dur', [[30, '30 s'], [60, '60 s'], [120, '2 min']]));
     main += f('Noten pro Zeile', seg(m, 'perLine', [[4, '4'], [6, '6'], [8, '8']]));
+    if (m === 'learn') main += f('Zeilen pro Training', seg(m, 'lines', [[3, '3'], [4, '4'], [5, '5'], [6, '6'], [8, '8'], [10, '10']]), 'Danach endet das Training mit einer Auswertung.');
     rec = m === 'learn' ? ['Beste Serie', S.high.learn] : ['Rekord', S.high.speedrun + ' Treffer'];
   } else if (m === 'chords') {
     main += f('Stufe', `<div class="list">${CHORD_LEVELS.map(l => { const lk = lockLevel('chordLv', l.id), lock = curLevel() < lk;
@@ -1583,7 +1599,7 @@ $('#view-setup').addEventListener('click', e => {
   const st = e.target.closest('[data-set]');
   if (st) {
     const [m, k] = st.dataset.set.split('.'), raw = st.dataset.v;
-    S.settings.modes[m][k] = ['diff', 'limit', 'perLine', 'dur', 'level'].includes(k) ? Number(raw) : raw; save(); renderSetup(); return;
+    S.settings.modes[m][k] = ['diff', 'limit', 'perLine', 'dur', 'level', 'lines'].includes(k) ? Number(raw) : raw; save(); renderSetup(); return;
   }
   const sw = e.target.closest('[data-sw]'); if (sw) { const [m, k] = sw.dataset.sw.split('.'); S.settings.modes[m][k] = !S.settings.modes[m][k]; save(); renderSetup(); return; }
   const sg = e.target.closest('[data-song]');
@@ -1696,7 +1712,7 @@ function renderProfile() {
       <div style="flex:1;min-width:200px"><p class="eyebrow">Level ${L}</p><h2>${u ? esc(u.displayName || 'Musiker:in') : 'Gast'} · ${esc(levelTitle(L))}</h2>
         <span class="xpline wide" style="margin-top:8px"><i style="width:${Math.round(100 * (S.xp - a) / (b - a))}%"></i></span>
         <p class="hint-txt">${fmt(S.xp)} XP gesamt · noch ${fmt(b - S.xp)} XP bis Level ${L + 1}</p></div>
-      <div><p class="hint-txt" id="sync-state" style="margin:0 0 8px">${syncHTML()}</p>${u ? `<button class="btn sm" data-act="logout">${icon('logout', 16)} Abmelden</button>` : `<button class="btn google sm" data-act="login">${GOOGLE}<span>Mit Google anmelden</span></button>`}</div>
+      <div><p class="hint-txt" id="sync-state" style="margin:0 0 8px">${syncHTML()}</p>${u && Cloud.status === 'error' ? `<button class="btn sm" data-act="retry" style="margin-right:6px">Erneut versuchen</button>` : ''}${u ? `<button class="btn sm" data-act="logout">${icon('logout', 16)} Abmelden</button>` : `<button class="btn google sm" data-act="login">${GOOGLE}<span>Mit Google anmelden</span></button>`}</div>
     </div>
     ${!FIREBASE_READY ? `<div class="notice" style="margin-top:14px">Cloud-Speicherung ist noch nicht eingerichtet – bis dahin wird lokal gespeichert.</div>` : u ? '' : `<p class="hint-txt" style="margin-top:12px">Melde dich an, damit Level, Erfolge und Einstellungen auf allen Geräten verfügbar sind.</p>`}</div>
     <div class="sect">Darstellung</div>
@@ -1942,6 +1958,7 @@ const ACT = {
   login() { closeModal(); Cloud.login(); },
   logout() { closeModal(); Cloud.logout(); },
   account() { accountModal(); },
+  retry() { if (Cloud.user) { Cloud.toasted = {}; Cloud.push(); } },
   closeModal() { closeModal(); },
   reset() { openModal(`<h2>Fortschritt löschen?</h2><p class="sub">XP, Statistik und Erfolge werden zurückgesetzt${Cloud.user ? ' – auch in der Cloud' : ''}. Einstellungen bleiben. Das lässt sich nicht rückgängig machen.</p><div class="row"><button class="btn danger" data-act="confirmReset">Ja, alles löschen</button><button class="btn" data-act="closeModal">Abbrechen</button></div>`); },
   confirmReset() { const s = S.settings; S = DEFAULTS(); S.settings = s; sanitize(); save(); closeModal(); renderAll(); toast({ title: 'Zurückgesetzt', text: 'Du startest wieder bei Level 1.', ic: 'check' }); }
