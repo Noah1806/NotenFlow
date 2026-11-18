@@ -324,7 +324,6 @@ button.li:hover{border-color:var(--accent);transform:translateX(3px)}
   .nav button:hover{transform:none}
   .nav-ind{top:0;height:3px;width:var(--iw,0);border:0;border-radius:0 0 3px 3px;background:var(--accent);transform:translateX(var(--ix,0))}
   main{padding-bottom:96px}
-  .brand-name{display:none}
   .doc{grid-template-columns:1fr}
   .toc{position:static;flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:6px}
   .toc a{border:1px solid var(--line);border-radius:99px;white-space:nowrap;padding:5px 12px}
@@ -369,6 +368,96 @@ th{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.
 @media (max-width:860px){.in-game #toasts{bottom:76px}}
 
 .bk{width:8.6%}
+
+.brand-name{}
+@media (max-width:1060px){.brand-name{display:none}.nav button{padding:7px 10px}}
+
+/* ---- Reise, Lektionen, Einführung ---- */
+.les{max-width:760px;margin:0 auto}
+.les-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.lbar{flex:1;height:8px;border-radius:9px;background:var(--surface2);overflow:hidden}
+.lbar i{display:block;height:100%;background:var(--accent);border-radius:9px;transition:width .5s var(--ease)}
+.les-count{color:var(--muted);font-size:.85rem;font-variant-numeric:tabular-nums}
+.les-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);animation:rise .35s var(--ease)}
+.les-card.center{text-align:center}
+.les-t{font-family:var(--serif);font-size:1.55rem;font-weight:600;margin:0 0 12px}
+.les-body p{margin:0 0 12px;line-height:1.65;color:var(--ink)}
+.les-body ul{margin:0 0 12px;padding-left:1.2em;line-height:1.7}
+.les-body li{margin-bottom:4px}
+.les-body table{border-collapse:collapse;width:100%;margin:8px 0 14px;font-size:.92rem}
+.les-body td,.les-body th{border-bottom:1px solid var(--line);padding:7px 10px;text-align:left}
+.les-body th{color:var(--muted);font-weight:650}
+.les-body .tip{border-left:3px solid var(--accent);background:var(--accent-soft);padding:10px 14px;border-radius:0 10px 10px 0;margin:12px 0}
+.les-body kbd,.intro kbd,.opt kbd{font:600 .78rem var(--sans);border:1px solid var(--line2);border-bottom-width:2px;border-radius:6px;padding:1px 6px;background:var(--surface2)}
+.mentor{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.mentor .av{flex:none;width:38px;height:38px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:1.2rem;font-weight:800}
+.mentor>div{flex:1;min-width:0}
+.les-q{margin:0;font-size:1.08rem;line-height:1.55;font-weight:600;padding-top:6px}
+.opts{display:grid;gap:10px;margin-top:14px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;padding:12px 14px;border-radius:12px;border:1px solid var(--line2);background:var(--surface2);font-weight:550;line-height:1.4;transition:border-color .2s,transform .2s var(--ease),background .2s}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(3px)}
+.opt:disabled{cursor:default}
+.opt.ok{background:color-mix(in srgb,var(--ok) 22%,var(--surface2));border-color:var(--ok)}
+.opt.bad{background:color-mix(in srgb,var(--bad) 22%,var(--surface2));border-color:var(--bad)}
+.opt kbd{flex:none}
+.fbp{margin-top:14px;padding:12px 16px;border-radius:12px;border:1px solid;animation:rise .3s var(--ease)}
+.fbp p{margin:6px 0 0;line-height:1.55}
+.fbp.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.fbp.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.fbp .rt{font-size:.95rem}
+.les-foot{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.les-kb{margin-top:14px}
+.les-kb .keys{height:120px}
+.les-kb:not(.live){pointer-events:none}
+.les .fig{margin:14px auto}
+.rest-svg{width:56px;height:38px;vertical-align:middle}
+.stars.big{font-size:2.2rem;letter-spacing:6px;margin:6px 0 14px;color:var(--faint)}
+.stars.big .on{color:var(--accent)}
+.missed-list{display:grid;gap:10px;text-align:left}
+.missed{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface2)}
+.missed p{margin:4px 0 0;color:var(--muted);font-size:.92rem;line-height:1.5}
+.story-card{display:flex;align-items:center;gap:16px;width:100%;text-align:left;padding:16px 20px;border-radius:var(--radius);margin:6px 0 10px;transition:transform .25s var(--ease),border-color .25s}
+.story-card:hover{transform:translateY(-2px);border-color:var(--accent)}
+.story-card h3{font-family:var(--serif);font-size:1.2rem;margin:2px 0 8px}
+.story-card .mi{width:46px;height:46px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
+.story-card .go{color:var(--accent)}
+.grow{flex:1;min-width:0}
+.rank-bar{display:flex;align-items:center;gap:0;margin:6px 0 18px;overflow-x:auto;padding:4px 2px}
+.rk{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--faint);font-size:.74rem;font-weight:650;min-width:74px;text-align:center}
+.rk i{width:30px;height:30px;border-radius:50%;border:2px solid var(--line2);display:grid;place-items:center;font-style:normal;font-size:.8rem;background:var(--surface)}
+.rk.done{color:var(--ink)}.rk.done i{background:var(--ok);border-color:var(--ok);color:#06241a}
+.rk.cur{color:var(--accent)}.rk.cur i{border-color:var(--accent);color:var(--accent);animation:pulse 2s infinite}
+.rk-ln{flex:1;min-width:14px;height:2px;background:var(--line2);margin-bottom:22px}
+.story-hero{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.story-hero h2{font-family:var(--serif);font-size:1.5rem;margin:2px 0 4px}
+.col-btns{display:flex;flex-direction:column;gap:8px;min-width:210px}
+.chap{margin-top:26px}
+.chap-h{display:flex;gap:14px;align-items:center;margin-bottom:10px}
+.chap-h h3{font-family:var(--serif);font-size:1.25rem;margin:0}
+.chap-h h3 small{color:var(--accent);font-family:var(--sans);font-size:.8rem;font-weight:650}
+.chap-h p{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+.chap-n{width:38px;height:38px;border-radius:50%;background:var(--surface2);border:1px solid var(--line2);display:grid;place-items:center;font-weight:800;flex:none}
+.chap-c{color:var(--muted);font-size:.85rem;font-variant-numeric:tabular-nums}
+.path{display:grid;gap:8px;margin-left:19px;padding-left:22px;border-left:2px dashed var(--line2)}
+.node{display:flex;align-items:center;gap:12px;text-align:left;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);transition:transform .2s var(--ease),border-color .2s}
+.node:hover{transform:translateX(4px);border-color:var(--line2)}
+.node .nb{width:30px;height:30px;border-radius:50%;background:var(--surface2);display:grid;place-items:center;font-weight:800;font-size:.85rem;flex:none;color:var(--muted)}
+.node b{display:block}.node small{color:var(--muted)}
+.node.done .nb{background:var(--ok);color:#06241a}
+.node.next{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.node.next .nb{background:var(--accent);color:var(--accent-ink);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--accent-soft)}50%{box-shadow:0 0 0 7px transparent}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.intro .mentor{align-items:center}
+.intro-body p{line-height:1.65;margin:0 0 12px}
+.intro-cards{display:grid;gap:10px}
+.intro-cards>div{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--surface2)}
+.intro-cards p{margin:4px 0 0;color:var(--muted);font-size:.92rem}
+.intro-cards b{display:flex;gap:8px;align-items:center}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:14px}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--line2)}.dots i.on{background:var(--accent)}
+.tsig{fill:var(--ink);font:700 30px var(--serif)}
+@media (max-width:520px){.les-card{padding:16px}.col-btns{width:100%}}
 </style>
 </head>
 <body>
@@ -381,10 +470,11 @@ th{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.
       <span class="brand-name">NotenFlow</span>
     </a>
     <nav class="nav" id="nav" aria-label="Hauptnavigation">
-      <button data-go="home"><span class="ni" data-ic="grid"></span><span>Training</span></button>
+      <button data-go="story"><span class="ni" data-ic="flag"></span><span>Reise</span></button>
+      <button data-go="home"><span class="ni" data-ic="grid"></span><span>Üben</span></button>
       <button data-go="stats"><span class="ni" data-ic="chart"></span><span>Statistik</span></button>
       <button data-go="ach"><span class="ni" data-ic="trophy"></span><span>Erfolge</span></button>
-      <button data-go="learn"><span class="ni" data-ic="book"></span><span>Lernen</span></button>
+      <button data-go="learn"><span class="ni" data-ic="book"></span><span>Wissen</span></button>
       <button data-go="profile"><span class="ni" data-ic="user"></span><span>Profil</span></button>
       <i class="nav-ind" id="nav-ind"></i>
     </nav>
@@ -402,6 +492,8 @@ th{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.
 
 <main class="wrap">
   <section id="view-home" class="view active"></section>
+  <section id="view-story" class="view"></section>
+  <section id="view-lesson" class="view"></section>
   <section id="view-setup" class="view"></section>
 
   <section id="view-game" class="view">
@@ -474,6 +566,7 @@ const fmt = n => new Intl.NumberFormat('de-DE').format(n);
 const FIREBASE_READY = !!(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId) && !/DEIN|YOUR|\.\.\./i.test(JSON.stringify(firebaseConfig));
 
 const IC = {
+  flag: '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
   flame: '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
   zap: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
   trophy: '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
@@ -570,7 +663,7 @@ const curLevel = () => lvlOf(S.xp);
 
 /* Freischaltungen: ab welchem Level ist etwas verfügbar? */
 const UNLOCK = {
-  mode: { learn: 1, songs: 2, speedrun: 3, chords: 5 },
+  mode: { quiz: 1, learn: 1, songs: 2, speedrun: 3, chords: 5 },
   clef: { treble: 1, bass: 3, mixed: 6 },
   diff: { 1: 1, 2: 2, 3: 4, 4: 7 },
   key: { C: 1, G: 2, F: 3, D: 4, Bb: 5, A: 6, Eb: 7, E: 8, Ab: 9, ALL: 10 },
@@ -669,6 +762,7 @@ const DEFAULTS = () => ({
   days: {},
   modes: { learn: modeStat(), speedrun: modeStat(), songs: modeStat(), chords: modeStat() },
   hist: [],
+  story: { intro: 0, done: {}, quizC: 0, quizW: 0, quizRounds: 0, topics: {} },
   streakDays: { last: '', n: 0, best: 0 },
   extra: { perfect: 0, rounds: 0, acc95: 0, acc100: 0, sept: 0, mixed: 0, night: 0, early: 0, learn: 0, sound: 0, theme: 0 },
   settings: {
@@ -709,6 +803,8 @@ function mergeData(a, b) {
   m.days = maxObj(a.days, b.days, (x, y) => x.map((v, i) => Math.max(v, y[i] || 0)));
   m.extra = maxObj(a.extra, b.extra, Math.max);
   MODE_IDS.forEach(id => { const o = {}; for (const k in modeStat()) o[k] = Math.max(a.modes[id][k], b.modes[id][k]); m.modes[id] = o; });
+  m.story = { intro: Math.max(a.story.intro, b.story.intro), quizC: Math.max(a.story.quizC, b.story.quizC), quizW: Math.max(a.story.quizW, b.story.quizW), quizRounds: Math.max(a.story.quizRounds, b.story.quizRounds),
+    done: maxObj(a.story.done, b.story.done, Math.max), topics: maxObj(a.story.topics, b.story.topics, (x, y) => [Math.max(x[0], y[0]), Math.max(x[1], y[1])]) };
   const seen = new Set(); m.hist = a.hist.concat(b.hist).filter(h => h && !seen.has(h.t) && seen.add(h.t)).sort((x, y) => x.t - y.t).slice(-80);
   const sd = a.streakDays.last >= b.streakDays.last ? a.streakDays : b.streakDays;
   m.streakDays = { last: sd.last, n: sd.n, best: Math.max(a.streakDays.best, b.streakDays.best) };
@@ -735,7 +831,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) { wri
 function sanitize() {
   const st = S.settings, M = st.modes;
   if (!['de', 'en'].includes(st.naming)) st.naming = 'de';
-  if (!isOpen('sound', st.soundSet) || !UNLOCK.sound[st.soundSet]) st.soundSet = 'klavier';
+  if (UNLOCK.sound[st.soundSet] === undefined) { if (Snd.manifestReady) st.soundSet = 'klavier'; } else if (!isOpen('sound', st.soundSet)) st.soundSet = 'klavier';
   const fix = (c, k, type, dflt) => { if (c[k] === undefined || !isOpen(type, c[k]) || UNLOCK[type][c[k]] === undefined) c[k] = dflt; };
   ['learn', 'speedrun', 'songs', 'chords'].forEach(m => fix(M[m], 'clef', 'clef', 'treble'));
   ['learn', 'speedrun'].forEach(m => { fix(M[m], 'diff', 'diff', 1); fix(M[m], 'key', 'key', 'C'); });
@@ -800,7 +896,7 @@ const Cloud = {
     let m = fill(DEFAULTS(), cloud);
     if (hasProgress(cache)) m = mergeData(m, cache);
     if (hasProgress(guest)) { m = mergeData(m, guest); writeLocal('guest', DEFAULTS()); }
-    S = m; writeLocal('uid:' + u.uid, S); renderAll();
+    S = m; writeLocal('uid:' + u.uid, S); renderAll(); if (typeof maybeIntro === 'function') maybeIntro();
     this.push();
   },
   async push() {
@@ -843,7 +939,7 @@ function syncHTML() {
    Eigene Aufnahmen: sounds/<set>/C4.mp3 usw. (siehe ANLEITUNG.md)
    --------------------------------------------------------------- */
 const SOUND_SETS = {
-  klavier: { name: 'Grand Piano', desc: 'Klassischer Flügel – der Standard.' },
+  klavier: { name: 'Klavier', desc: 'Klassischer Flügel – der Standard.' },
   epiano: { name: 'E-Piano', desc: 'Weicher, warmer Elektro-Klang.' },
   rock: { name: 'Rock-Piano', desc: 'Hell, druckvoll, mit etwas Biss.' },
   spieluhr: { name: 'Spieluhr', desc: 'Zart und glockenhell.' },
@@ -885,6 +981,7 @@ const Snd = {
     g.gain.setValueAtTime(amp, t0); g.gain.exponentialRampToValueAtTime(.0001, t0 + .04); s.connect(bp); bp.connect(g); g.connect(dest); s.start(t0);
   },
   voice(set, m, t0) {
+    if (!['klavier', 'epiano', 'rock', 'spieluhr', 'orgel'].includes(set)) set = 'klavier';   // eigene Klänge ohne Datei: Klavier-Synth als Notlösung
     const f = this.hz(m), low = Math.pow(262 / f, .3);
     if (set === 'klavier') {
       const base = Math.max(1.4, Math.min(4.6, 3.4 * low)), dest = this.lp(Math.min(9000, f * 9 + 1800), this.nb);
@@ -923,11 +1020,11 @@ const Snd = {
     if (smp && !o.synth) {
       const keys = Object.keys(smp).map(Number), base = keys.reduce((p, k) => Math.abs(k - m) < Math.abs(p - m) ? k : p, keys[0]);
       const s = this.ctx.createBufferSource(), g = this.ctx.createGain(); s.buffer = smp[base]; s.playbackRate.value = Math.pow(2, (m - base) / 12);
-      g.gain.value = .9; s.connect(g); g.connect(this.nb); s.start(t0); return;
+      g.gain.value = .9 * ((SOUND_SETS[set] && SOUND_SETS[set].gain) || 1); s.connect(g); g.connect(this.nb); s.start(t0); return;
     }
     this.voice(set, m, t0);
   },
-  preview(set) { this.init(); [60, 64, 67, 72].forEach((m, i) => this.note(m, { set, delay: i * .17, force: true })); },
+  preview(set) { this.init(); this.loadSet(set).then(() => [60, 64, 67, 72].forEach((m, i) => this.note(m, { set, delay: i * .17, force: true }))); },
   /* Effekte: bewusst leise und weich (eigener Lautstärkeregler) */
   fx(kind) {
     if (!this.ctx || !S.settings.sound) return;
@@ -937,8 +1034,28 @@ const Snd = {
     else if (kind === 'bad') this.osc('sine', 190, t, .22, .5, d, { slide: 120, attack: .006 });
   },
   bad() { this.fx('bad'); },
-  async loadSet(id) {
-    if (this.loading[id] || !this.ctx) return; this.loading[id] = true; const base = 'sounds/' + id + '/';
+  manifestReady: false,
+  /* Eigene Instrumente: sounds/instruments.json (siehe ANLEITUNG.md) */
+  async loadManifest() {
+    try {
+      const r = await fetch('sounds/instruments.json', { cache: 'no-cache' });
+      if (r.ok) {
+        const list = await r.json();
+        for (const e of (Array.isArray(list) ? list : [])) {
+          if (!e || !/^[a-z0-9_-]{1,24}$/.test(e.id || '') || (SOUND_SETS[e.id] && !SOUND_SETS[e.id].custom)) continue;
+          SOUND_SETS[e.id] = { name: String(e.name || e.id).slice(0, 30), desc: String(e.desc || 'Eigener Klang').slice(0, 80), custom: true, gain: Math.max(.1, Math.min(3, Number(e.gain) || 1)), missing: false };
+          UNLOCK.sound[e.id] = Math.max(1, Math.min(30, Math.floor(Number(e.level) || 1)));
+        }
+        await Promise.all(Object.keys(SOUND_SETS).filter(k => SOUND_SETS[k].custom).map(async k => {
+          try { const h = await fetch('sounds/' + k + '/C4.mp3', { method: 'HEAD' }); SOUND_SETS[k].missing = !h.ok; } catch (e) { SOUND_SETS[k].missing = true; }
+        }));
+      }
+    } catch (e) { /* kein Manifest oder fehlerhaftes JSON: nur die eingebauten Klänge */ }
+    this.manifestReady = true;
+  },
+  loadSet(id) { if (!this.ctx) return Promise.resolve(); return this.loading[id] || (this.loading[id] = this.fetchSet(id)); },
+  async fetchSet(id) {
+    const base = 'sounds/' + id + '/';
     try {
       const probe = await fetch(base + 'C4.mp3'); if (!probe.ok) return;
       const out = {};
@@ -971,7 +1088,7 @@ function staffSVG(o) {
   const yB = padT + 4 * GAP, H = Math.round(yB + padB);
   const Y = st => yB - (st - b) * half;
   const key = KEY(o.keyId), sig = key.n ? SIG[o.clef][key.t].slice(0, key.n) : [];
-  const sigX = 66, sigD = 17, first = sigX + sig.length * sigD + (sig.length ? 8 : 0) + 26;
+  const sigX = 66, sigD = 17, tsX = sigX + sig.length * sigD + (sig.length ? 8 : 0), tsW = o.timeSig ? 34 : 0, first = tsX + 26 + tsW;
   const hw = GAP * .62;
   const base = items.map(it => (it.notes.length > 1 || it.chordItem) ? 64 : ({ 1: 58, 2: 74, 4: 92 }[it.dur || 1] || 58));
   const sum = base.reduce((a, c) => a + c, 0), barsN = items.filter(i => i.barAfter).length;
@@ -986,6 +1103,7 @@ function staffSVG(o) {
     ? `<g class="clef" transform="translate(30 ${Y(24)}) scale(${GAP})">${F_CLEF}</g>`
     : `<g class="clef" transform="translate(36 ${Y(32)}) scale(${GAP})">${G_CLEF}</g>`;
   sig.forEach((st, i) => { out += accG(key.t, sigX + i * sigD + 6, Y(st)); });
+  if (o.timeSig) { out += `<text class="tsig" x="${tsX + 14}" y="${yB - 3 * GAP + 10}" text-anchor="middle">${o.timeSig[0]}</text><text class="tsig" x="${tsX + 14}" y="${yB - GAP + 10}" text-anchor="middle">${o.timeSig[1]}</text>`; }
   items.forEach((it, i) => {
     const c = xs[i], notes = it.notes, steps = notes.map(n => n.step), lo = Math.min(...steps), hi = Math.max(...steps);
     const down = (lo + hi) / 2 >= mid, dur = it.dur || 1;
@@ -1089,7 +1207,7 @@ function moveInd() {
   n.style.setProperty('--iw', b.offsetWidth + 'px'); n.style.setProperty('--ih', b.offsetHeight + 'px');
 }
 function setNavActive(view) {
-  const tgt = { setup: 'home', game: 'home' }[view] || view;
+  const tgt = { setup: 'home', game: 'home', lesson: (typeof LSN !== 'undefined' && LSN && LSN.meta.quiz) ? 'home' : 'story' }[view] || view;
   $$('#nav button').forEach(b => { if (b.dataset.go === tgt) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
   moveInd();
 }
@@ -1160,6 +1278,15 @@ const ACH = [
   // Entdecken
   { id: 'learn', cat: 'Entdecken', name: 'Schlaumeier', desc: 'Die Seite „Lernen“ besucht.', ic: 'book', test: s => s.extra.learn >= 1 },
   { id: 'sound', cat: 'Entdecken', name: 'Klangforscher', desc: 'Einen anderen Klang ausgewählt.', ic: 'vol', test: s => s.extra.sound >= 1 },
+  { id: 'intro', cat: 'Reise', name: 'Willkommen an Bord', desc: 'Die Einführung bis zum Ende gesehen.', ic: 'flag', test: s => s.story.intro >= 2 },
+  { id: 'st1', cat: 'Reise', name: 'Erste Lektion', desc: 'Eine Lektion der Reise abgeschlossen.', ic: 'flag', test: s => Object.keys(s.story.done).length >= 1 },
+  { id: 'st5', cat: 'Reise', name: 'Auf dem Weg', desc: '5 Lektionen der Reise abgeschlossen.', ic: 'flag', test: s => Object.keys(s.story.done).length >= 5 },
+  { id: 'stch1', cat: 'Reise', name: 'Kapitel 1 geschafft', desc: 'Das erste Kapitel der Reise beendet.', ic: 'check', test: s => chapterDone(0) },
+  { id: 'stch3', cat: 'Reise', name: 'Halbzeit', desc: 'Die ersten drei Kapitel der Reise beendet.', ic: 'award', test: s => chapterDone(0) && chapterDone(1) && chapterDone(2) },
+  { id: 'st3', cat: 'Reise', name: 'Sternstunde', desc: 'Eine Lektion mit drei Sternen abgeschlossen.', ic: 'star', test: s => Object.values(s.story.done).some(v => v >= 3) },
+  { id: 'stAll', cat: 'Reise', name: 'Vom Neuling zum Profi', desc: 'Alle Kapitel der Reise beendet.', ic: 'crown', test: s => CHAPTERS.length > 0 && CHAPTERS.every((c, i) => chapterDone(i)) },
+  { id: 'quiz25', cat: 'Reise', name: 'Wissbegierig', desc: '25 Quizfragen richtig beantwortet.', ic: 'grad', test: s => s.story.quizC >= 25 },
+  { id: 'quiz100', cat: 'Reise', name: 'Quizprofi', desc: '100 Quizfragen richtig beantwortet.', ic: 'grad', test: s => s.story.quizC >= 100 },
   { id: 'theme', cat: 'Entdecken', name: 'Lichtschalter', desc: 'Zwischen Hell und Dunkel gewechselt.', ic: 'sun', test: s => s.extra.theme >= 1 }
 ];
 function checkAch() {
@@ -1205,7 +1332,7 @@ function renderLevel() {
    --------------------------------------------------------------- */
 let G = null, raf = 0, last = 0;
 const MODE_MULT = { learn: 1, speedrun: 1.3, songs: 1.2, chords: 1.5 };
-const MODE_TITLE = { learn: 'Einfaches Lernen', speedrun: 'Speedrun', songs: 'Lieder', chords: 'Akkordtrainer' };
+const MODE_TITLE = { quiz: 'Wissensquiz', learn: 'Einfaches Lernen', speedrun: 'Speedrun', songs: 'Lieder', chords: 'Akkordtrainer' };
 
 function startGame(mode, o = {}) {
   Snd.init(); closeModal(); sanitize();
@@ -1470,12 +1597,12 @@ function renderAch() {
 /* ---------------------------------------------------------------
    Router, Startseite, Modus-Einstellungen
    --------------------------------------------------------------- */
-const RENDER = { home: () => renderHome(), setup: () => renderSetup(), stats: () => renderStats(), ach: () => renderAch(), learn: () => renderLearn(), profile: () => renderProfile() };
+const RENDER = { story: () => renderStory(), home: () => renderHome(), setup: () => renderSetup(), stats: () => renderStats(), ach: () => renderAch(), learn: () => renderLearn(), profile: () => renderProfile() };
 let curView = 'home', setupMode = 'learn';
 function show(v) {
   curView = v; document.body.classList.toggle('in-game', v === 'game'); $$('.view').forEach(s => s.classList.toggle('active', s.id === 'view-' + v)); setNavActive(v); scrollTo(0, 0);
   if (RENDER[v]) RENDER[v]();
-  try { if (v !== 'game' && v !== 'setup') history.replaceState(null, '', '#/' + v); } catch (e) { /* file:// o. Ä. */ }
+  try { if (v !== 'game' && v !== 'setup' && v !== 'lesson') history.replaceState(null, '', '#/' + v); } catch (e) { /* file:// o. Ä. */ }
 }
 function go(v) { if (G && !G.over) { ACT.quit(); return; } closeModal(); show(v); }
 function renderAll() { sanitize(); applyTheme(); Snd.vol(); renderLevel(); renderAuth(); renderSoundBtn(); if (RENDER[curView]) RENDER[curView](); }
@@ -1499,6 +1626,7 @@ const MOTIVATION = [
 ];
 let quote = pick(MOTIVATION);
 const MODE_CARDS = [
+  { id: 'quiz', ic: 'grad', t: 'Wissensquiz', d: 'Fragen zu Noten, Takt und Harmonie – mit Erklärung, warum eine Antwort falsch war.', st: () => S.story.quizC + ' richtig beantwortet' },
   { id: 'learn', ic: 'grad', t: 'Einfaches Lernen', d: 'Zeile für Zeile Noten lesen – in deinem Tempo, ohne Zeitdruck.', st: () => 'Beste Serie: ' + S.high.learn },
   { id: 'songs', ic: 'music', t: 'Bekannte Lieder', d: 'Melodien Note für Note nachspielen, später mit Akkordbegleitung.', st: () => Object.keys(S.songsDone).length + ' von ' + SONGS.length + ' gemeistert' },
   { id: 'speedrun', ic: 'zap', t: 'Speedrun', d: 'So viele Noten wie möglich in der Zeit. Fehler kosten 2 Sekunden.', st: () => 'Rekord: ' + S.high.speedrun + ' Treffer' },
@@ -1520,6 +1648,7 @@ function renderHome() {
       <span class="xpline wide"><i id="greet-xp"></i></span>
       <p class="hint-txt" id="greet-xp-t"></p>
     </div>
+    ${storyCard()}
     <div class="sect">Spielmodi</div>
     <div class="modes">${MODE_CARDS.map(m => { const lv = UNLOCK.mode[m.id], lock = L < lv;
       return `<button class="mode glass ${lock ? 'locked' : ''}" data-act="mode" data-mode="${m.id}"><div class="mi">${icon(lock ? 'lock' : m.ic, 22)}</div><h3>${m.t}</h3><p>${m.d}</p><span class="st"><span>${lock ? 'Ab Level ' + lv : m.st()}</span><span class="go">${icon('arrowr', 18)}</span></span></button>`; }).join('')}</div>
@@ -1610,10 +1739,10 @@ $('#view-setup').addEventListener('click', e => {
    Lernen: Grundwissen zum Notenlesen (fürs Klavier)
    --------------------------------------------------------------- */
 const N = (step, acc = 0) => ({ step, acc });
-function fig(clef, keyId, items, caption, minW = 420) {
+function fig(clef, keyId, items, caption, minW = 420, ex = {}) {
   const steps = items.flatMap(i => i.notes.map(n => n.step)), b = CLEF[clef].bottom;
   const range = [Math.min(b, ...(steps.length ? steps : [b])), Math.max(b + 8, ...(steps.length ? steps : [b]))];
-  return `<figure class="fig">${staffSVG({ clef, keyId, items, range, minW, naming: S.settings.naming }).svg}<figcaption>${caption}</figcaption></figure>`;
+  return `<figure class="fig">${staffSVG({ clef, keyId, items, range, minW, naming: S.settings.naming, timeSig: ex.timeSig, finalBar: ex.finalBar }).svg}<figcaption>${caption}</figcaption></figure>`;
 }
 function posText(clef, step) {
   const p = step - CLEF[clef].bottom;
@@ -1700,6 +1829,205 @@ $('#view-learn').addEventListener('click', e => {
 });
 
 /* ---------------------------------------------------------------
+   Lektions-Engine (Reise + Wissensquiz)
+   --------------------------------------------------------------- */
+const CHAPTERS = [];
+const lessonList = () => CHAPTERS.flatMap(c => c.lessons);
+const chapterDone = i => !!CHAPTERS[i] && CHAPTERS[i].lessons.every(l => S.story.done[l.id]);
+const tx = s => String(s == null ? '' : s).replace(/\{H\}/g, S.settings.naming === 'en' ? 'B' : 'H');
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const PCN_DE = ['C', 'Cis', 'D', 'Es', 'E', 'F', 'Fis', 'G', 'As', 'A', 'B', 'H'], PCN_EN = ['C', 'C♯', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'A♭', 'A', 'B♭', 'B'];
+const lpcName = pc => (S.settings.naming === 'en' ? PCN_EN : PCN_DE)[((pc % 12) + 12) % 12];
+const nameOf = (step, acc, keyId) => noteName(N(step, acc || 0), keyId || 'C', S.settings.naming);
+
+/* Schritt-Bausteine */
+const INFO = (title, html, figs) => ({ t: 'info', title, html, figs: figs || [] });
+const QZ = (q, opts, a, why, o = {}) => Object.assign({ t: 'quiz', q, opts, a, why }, o);
+const NOTE = (clef, step, o = {}) => Object.assign({ t: 'note', clef, step, acc: 0, keyId: 'C' }, o);
+const KEYQ = (q, pcs, o = {}) => Object.assign({ t: 'key', q, pcs }, o);
+const SEQ = (q, clef, steps, o = {}) => Object.assign({ t: 'seq', q, clef, steps, keyId: 'C' }, o);
+const CHORD = (q, clef, notes, o = {}) => Object.assign({ t: 'chord', q, clef, notes: notes.map(n => Array.isArray(n) ? N(n[0], n[1]) : N(n)), keyId: 'C' }, o);
+/* Abbildungen: items = Zahl (Note), Array (Akkord) oder fertiges Item */
+const FG = (clef, items, cap, o = {}) => Object.assign({ clef, items, cap: cap || '', keyId: 'C' }, o);
+const KB = (hi, lab = true) => ({ kb: { hi, lab } });
+const toItems = (items, dur = 1) => items.map(s => typeof s === 'number' ? { notes: [N(s)], dur } : Array.isArray(s) ? { notes: s.map(x => Array.isArray(x) ? N(x[0], x[1]) : N(x)), dur, chordItem: true } : s);
+function figHTML(d) {
+  if (d.kb) return keysHTML({ hi: d.kb.hi, lab: d.kb.lab });
+  if (d.html) return `<figure class="fig">${d.html}<figcaption>${tx(d.cap)}</figcaption></figure>`;
+  return fig(d.clef, d.keyId || 'C', toItems(d.items, d.dur || 1).map(it => it.label ? Object.assign({}, it, { label: tx(it.label) }) : it), tx(d.cap), d.minW || 420, { timeSig: d.timeSig, finalBar: d.finalBar });
+}
+function keysHTML(o = {}) {
+  const nm = S.settings.naming, wl = l => nm === 'de' && l === 'B' ? 'H' : l;
+  const white = [['C', 0], ['D', 2], ['E', 4], ['F', 5], ['G', 7], ['A', 9], ['B', 11]], black = [[0, 1], [1, 3], [3, 6], [4, 8], [5, 10]];
+  const cls = pc => (o.hi && o.hi.includes(pc) ? ' hint' : '') + (o.st && o.st[pc] ? ' ' + o.st[pc] : '');
+  return `<div class="piano glass les-kb${o.live ? ' live' : ''}"><div class="keys">${white.map(([l, pc]) => `<button class="wk${cls(pc)}" data-pc="${pc}" tabindex="-1" aria-label="${wl(l)}">${o.lab ? wl(l) : ''}</button>`).join('')}${black.map(([i, pc]) => `<button class="bk${cls(pc)}" data-pc="${pc}" tabindex="-1" aria-label="${lpcName(pc)}" style="left:${(i + 1) * 100 / 7}%"></button>`).join('')}</div></div>`;
+}
+const restSVG = (kind) => `<svg class="rest-svg" viewBox="0 0 60 40" aria-hidden="true"><line x1="4" x2="56" y1="${kind === 'whole' ? 12 : 28}" y2="${kind === 'whole' ? 12 : 28}" stroke="var(--stf)" stroke-width="2"/><rect x="22" y="${kind === 'whole' ? 12 : 18}" width="16" height="10" fill="var(--ink)"/></svg>`;
+const restQ = () => `<svg class="rest-svg" viewBox="0 0 60 40" aria-hidden="true"><path d="M26 6l9 9-6 7 8 8-5 5" fill="none" stroke="var(--ink)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+/* ---------------- Sitzung ---------------- */
+let LSN = null;
+function startSession(meta, steps) {
+  LSN = { meta, q: steps.map(s => Object.assign({}, s)), i: 0, c: 0, w: 0, missed: [], cur: null, xpDone: false };
+  show('lesson');
+}
+function openLesson(id) {
+  const l = lessonList().find(x => x.id === id); if (!l) return;
+  closeModal(); if (G && !G.over) { G.over = true; cancelAnimationFrame(raf); } G = null;
+  startSession({ id: l.id, title: l.title, exam: !!l.exam, lab: !!l.lab }, l.exam ? genQuiz(12, true) : l.steps);
+}
+function openQuiz() {
+  closeModal(); if (G && !G.over) { G.over = true; cancelAnimationFrame(raf); } G = null;
+  startSession({ quiz: true, title: 'Wissensquiz' }, genQuiz(10, false));
+}
+const pcsOf = s => s.t === 'note' ? [pcOf(N(s.step, s.acc), s.keyId)] : s.t === 'key' ? s.pcs : s.t === 'chord' ? s.notes.map(n => pcOf(n, s.keyId)) : [];
+const seqPcs = s => s.steps.map((st, k) => pcOf(N(st, s.accs ? s.accs[k] || 0 : 0), s.keyId));
+function ansText(s) {
+  if (s.t === 'quiz') return tx(s.opts[s.a]);
+  if (s.t === 'note') return nameOf(s.step, s.acc, s.keyId);
+  if (s.t === 'key') return s.pcs.map(lpcName).join(' / ');
+  if (s.t === 'seq') return seqPcs(s).map(lpcName).join(' – ');
+  return pcsOf(s).map(lpcName).join(' – ');
+}
+const qText = s => tx(s.q || (s.t === 'note' ? 'Spiele die gezeigte Note.' : ''));
+
+function renderStep() {
+  if (!LSN) { show('story'); return; }
+  const s = LSN.q[LSN.i], tot = LSN.q.length;
+  LSN.cur = { s, first: null, done: s.t === 'info', pos: 0, got: [], st: {}, msg: null, order: s.t === 'quiz' ? shuffle(s.opts.map((_, i) => i)) : null, sel: -1 };
+  $('#view-lesson').innerHTML = `<div class="les">
+    <div class="les-head"><button class="btn ghost sm" data-act="lessonExit">${icon('arrow', 16)} Beenden</button><div class="lbar"><i style="width:${Math.round(100 * LSN.i / tot)}%"></i></div><span class="les-count">${LSN.i + 1} / ${tot}</span></div>
+    <p class="eyebrow">${esc(LSN.meta.quiz ? 'Wissensquiz' : LSN.meta.title)}</p>
+    <div id="les-dyn"></div></div>`;
+  paint(); scrollTo(0, 0);
+}
+function mentor(html) { return `<div class="mentor"><span class="av">♪</span><div>${html}</div></div>`; }
+function paint() {
+  const c = LSN.cur, s = c.s, last = LSN.i >= LSN.q.length - 1;
+  let h = '';
+  const figs = s.fig ? [s.fig] : [];
+  if (s.t === 'info') {
+    h = `<div class="les-card"><h2 class="les-t">${tx(s.title)}</h2><div class="les-body">${tx(s.html)}</div>${s.figs.map(figHTML).join('')}</div>`;
+  } else if (s.t === 'quiz') {
+    h = `<div class="les-card">${mentor(`<p class="les-q">${tx(s.q)}</p>`)}${figs.map(figHTML).join('')}
+      <div class="opts">${c.order.map(i => `<button class="opt${c.done ? (i === s.a ? ' ok' : i === c.sel ? ' bad' : '') : ''}" data-opt="${i}" ${c.done ? 'disabled' : ''}><kbd>${c.order.indexOf(i) + 1}</kbd>${tx(s.opts[i])}</button>`).join('')}</div>`;
+    if (c.done) {
+      const ok = c.sel === s.a, wo = s.wo && s.wo[c.sel];
+      h += ok ? `<div class="fbp ok"><b>Richtig!</b>${s.why ? `<p>${tx(s.why)}</p>` : ''}</div>`
+        : `<div class="fbp bad"><b>Nicht ganz – darum:</b>${wo ? `<p>${tx(wo)}</p>` : ''}<p>${tx(s.why)}</p><p class="rt">Richtig wäre: <b>${tx(s.opts[s.a])}</b></p></div>`;
+    }
+    h += '</div>';
+  } else {
+    const live = !c.done, hi = c.hi || [];
+    let figHtml = '';
+    if (s.t === 'note') figHtml = figHTML(FG(s.clef, [{ notes: [N(s.step, s.acc)], dur: 1 }], '', { keyId: s.keyId, minW: 260 }));
+    else if (s.t === 'seq') figHtml = figHTML(FG(s.clef, s.steps.map((st, k) => ({ notes: [Object.assign(N(st, s.accs ? s.accs[k] || 0 : 0), { state: k < c.pos ? 'correct' : undefined })], dur: 1, active: k === c.pos && !c.done })), '', { keyId: s.keyId, minW: Math.max(360, s.steps.length * 56) }));
+    else if (s.t === 'chord') figHtml = figHTML(FG(s.clef, [{ notes: s.notes.map(n => Object.assign({}, n, { state: c.got.includes(pcOf(n, s.keyId)) ? 'correct' : undefined })), dur: 1, chordItem: true }], '', { keyId: s.keyId, minW: 240 }));
+    else figHtml = figs.map(figHTML).join('');
+    const q = s.t === 'note' ? (s.q || 'Welche Note ist das? Spiele sie auf der Klaviatur.') : s.q;
+    const st = Object.assign({}, c.st);
+    h = `<div class="les-card">${mentor(`<p class="les-q">${tx(q)}</p>`)}${figHtml}${keysHTML({ live: true, lab: LSN.meta.lab || S.settings.labels, st })}`;
+    if (c.msg) h += `<div class="fbp ${c.msg.k}"><b>${c.msg.k === 'ok' ? 'Richtig!' : 'Nicht ganz – darum:'}</b><p>${c.msg.h}</p></div>`;
+    else if (s.t === 'seq' && !c.done) h += `<p class="hint-txt">Spiele die Noten von links nach rechts (${c.pos} von ${s.steps.length}).</p>`;
+    else if (s.t === 'chord' && !c.done) h += `<p class="hint-txt">Spiele alle Töne des Akkords – die Reihenfolge ist egal (${c.got.length} von ${s.notes.length}).</p>`;
+    h += '</div>';
+  }
+  h += `<div class="les-foot"><span></span><button class="btn primary lg" id="les-next" data-act="lessonNext2" ${c.done ? '' : 'disabled'}>${last ? 'Fertig' : 'Weiter'} ${icon('arrowr', 16)}</button></div>`;
+  $('#les-dyn').innerHTML = h;
+  if (c.done && s.t !== 'info') { const b = $('#les-next'); if (b) b.focus({ preventScroll: true }); }
+}
+function firstTry(ok, why) {
+  const c = LSN.cur; if (c.first !== null || c.s.rq) { if (c.first === null) c.first = ok ? 'c' : 'w'; return; }
+  c.first = ok ? 'c' : 'w';
+  if (ok) LSN.c++; else { LSN.w++; LSN.missed.push({ s: c.s, why }); }
+  const t = c.s.topic; if (t) { const e = S.story.topics[t] || (S.story.topics[t] = [0, 0]); e[ok ? 0 : 1]++; }
+}
+function pickOpt(i) {
+  const c = LSN.cur, s = c.s; if (c.done || s.t !== 'quiz') return;
+  c.sel = i; c.done = true; const ok = i === s.a; firstTry(ok, tx((s.wo && s.wo[i] ? s.wo[i] + ' ' : '') + s.why));
+  Snd.init(); ok ? Snd.fx('ach') : Snd.bad(); paint();
+}
+function explain(s, pc) {
+  const nm = S.settings.naming, c = LSN.cur;
+  if (s.t === 'note' || s.t === 'seq') {
+    const st = s.t === 'note' ? s.step : s.steps[c.pos], ac = s.t === 'note' ? s.acc : (s.accs ? s.accs[c.pos] || 0 : 0), tgt = pcOf(N(st, ac), s.keyId), nmT = nameOf(st, ac, s.keyId);
+    let d = ((pc - tgt) % 12 + 12) % 12; if (d > 6) d -= 12;
+    const dist = d === 0 ? '' : ` Das ist ${Math.abs(d)} Halbton${Math.abs(d) > 1 ? 'schritte' : ''} ${d > 0 ? 'zu hoch' : 'zu tief'}.`;
+    const kacc = accOf(N(st, 0), s.keyId) && !ac ? ` Beachte: die Vorzeichen der Tonart gelten, deshalb ist es ${nmT}.` : '';
+    return `Diese Note sitzt ${posText(s.clef, st)} und heißt <b>${nmT}</b>. Du hast <b>${lpcName(pc)}</b> gespielt.${dist}${kacc}${s.why ? ' ' + tx(s.why) : ''}`;
+  }
+  if (s.t === 'key') return `Gesucht war <b>${s.pcs.map(lpcName).join(' / ')}</b>, du hast <b>${lpcName(pc)}</b> gespielt.${s.why ? ' ' + tx(s.why) : ''}`;
+  const have = c.got.includes(pc);
+  return `${have ? `<b>${lpcName(pc)}</b> hast du schon gespielt.` : `<b>${lpcName(pc)}</b> gehört nicht zu diesem Akkord.`} Gesucht: <b>${pcsOf(s).map(lpcName).join(' – ')}</b>.${s.why ? ' ' + tx(s.why) : ''}`;
+}
+function press(pc) {
+  if (!LSN || curView !== 'lesson') return; const c = LSN.cur, s = c.s;
+  if (!['note', 'key', 'seq', 'chord'].includes(s.t) || c.done) return;
+  Snd.init(); Snd.note((s.clef === 'bass' ? 48 : 60) + pc);
+  let ok;
+  if (s.t === 'seq') ok = pc === seqPcs(s)[c.pos];
+  else if (s.t === 'chord') ok = pcsOf(s).includes(pc) && !c.got.includes(pc);
+  else ok = pcsOf(s).includes(pc);
+  if (!ok) { const m = explain(s, pc); firstTry(false, m.replace(/<[^>]+>/g, '')); c.msg = { k: 'bad', h: m }; c.st = Object.assign({}, c.got.reduce((o, p) => (o[p] = 'ok', o), {}), { [pc]: 'bad' }); Snd.bad(); paint(); return; }
+  if (s.t === 'seq') { c.pos++; c.done = c.pos >= s.steps.length; if (!c.done) c.msg = null; c.st = { [pc]: 'ok' }; }
+  else if (s.t === 'chord') { c.got.push(pc); c.done = c.got.length >= s.notes.length; c.st = c.got.reduce((o, p) => (o[p] = 'ok', o), {}); if (!c.done) c.msg = null; }
+  else { c.done = true; c.st = { [pc]: 'ok' }; }
+  if (c.done) { firstTry(true); c.msg = { k: 'ok', h: tx(s.why || (s.t === 'note' ? `Das ist ${nameOf(s.step, s.acc, s.keyId)}: ${posText(s.clef, s.step)}.` : 'Sehr gut!')) }; Snd.fx('ach'); }
+  paint();
+}
+function nextStep() {
+  const c = LSN.cur; if (!c || !c.done) return;
+  if (c.first === 'w' && !c.s.rq && c.s.t !== 'info') LSN.q.push(Object.assign({}, c.s, { rq: true }));
+  LSN.i++;
+  if (LSN.i >= LSN.q.length) finishSession(); else renderStep();
+}
+function finishSession() {
+  const M = LSN.meta, scored = LSN.c + LSN.w, pct = scored ? LSN.c / scored : 1;
+  let stars = pct >= .9 ? 3 : pct >= .7 ? 2 : 1, xp = 0, passed = true, newChapter = '', first = false;
+  touchDay();
+  if (M.quiz) {
+    S.story.quizC += LSN.c; S.story.quizW += LSN.w; S.story.quizRounds++; xp = 10 + 2 * LSN.c;
+  } else {
+    passed = !M.exam || pct >= .7;
+    if (passed) {
+      const prev = S.story.done[M.id] || 0, was = CHAPTERS.map((_, i) => chapterDone(i)); first = !prev;
+      xp = first ? 25 + 10 * stars : (stars > prev ? 10 : 5); S.story.done[M.id] = Math.max(prev, stars);
+      CHAPTERS.forEach((c, i) => { if (!was[i] && chapterDone(i)) newChapter = c.name; });
+    } else xp = 5;
+  }
+  save(); addXP(xp); checkAch();
+  if (newChapter) { toast({ title: 'Kapitel geschafft!', text: newChapter, ic: 'flag' }); FX.burst(120); Snd.fx('up'); } else if (stars === 3 && passed) FX.burst(70);
+  const list = lessonList(), idx = M.id ? list.findIndex(l => l.id === M.id) : -1, nxt = idx >= 0 ? list[idx + 1] : null;
+  const starHTML = [1, 2, 3].map(i => `<span class="${i <= stars && passed ? 'on' : ''}">★</span>`).join('');
+  const missed = LSN.missed.map(m => `<div class="missed"><b>${esc(qText(m.s) || 'Aufgabe')}</b><p>Richtig: <b>${esc(ansText(m.s))}</b></p><p>${esc(m.why)}</p></div>`).join('');
+  const title = M.quiz ? 'Quiz geschafft' : !passed ? 'Fast – noch nicht bestanden' : first ? 'Lektion geschafft' : 'Lektion wiederholt';
+  $('#view-lesson').innerHTML = `<div class="les"><div class="les-card center">
+    <p class="eyebrow">${esc(M.title)}</p><h2 class="les-t">${title}</h2>
+    ${M.quiz ? '' : `<div class="stars big">${starHTML}</div>`}
+    <div class="tiles"><div class="tile"><div class="k">Richtig beim 1. Versuch</div><div class="v">${LSN.c} / ${scored}</div></div><div class="tile"><div class="k">Quote</div><div class="v">${Math.round(pct * 100)} %</div></div><div class="tile"><div class="k">XP</div><div class="v">+${xp}</div></div></div>
+    ${!passed ? '<p class="hint-txt">Für die Prüfung brauchst du mindestens 70 %. Wiederhole die Kapitel mit dem Wissensquiz und versuch es erneut.</p>' : ''}
+    ${missed ? `<div class="sect" style="margin-top:22px">Warum lag ich falsch?</div><div class="missed-list">${missed}</div>` : '<p class="hint-txt" style="margin-top:14px">Alles auf Anhieb richtig – stark!</p>'}
+    <div class="row" style="margin-top:22px;justify-content:center">${M.quiz ? `<button class="btn primary" data-act="lessonAgain">Noch eine Runde</button><button class="btn" data-go="home">Zum Üben</button>` : `${passed && nxt ? `<button class="btn primary" data-act="lesson" data-id="${nxt.id}">Nächste: ${esc(nxt.title)}</button>` : ''}<button class="btn ${passed && nxt ? '' : 'primary'}" data-act="lessonAgain">Nochmal</button><button class="btn" data-go="story">Zur Reise</button>`}</div>
+  </div></div>`;
+  scrollTo(0, 0);
+}
+RENDER.lesson = () => renderStep();
+$('#view-lesson').addEventListener('pointerdown', e => {
+  const k = e.target.closest('.les-kb.live [data-pc]'); if (k) { e.preventDefault(); press(Number(k.dataset.pc)); }
+});
+$('#view-lesson').addEventListener('click', e => {
+  const o = e.target.closest('[data-opt]'); if (o) { pickOpt(Number(o.dataset.opt)); return; }
+  if (e.target.closest('#les-next')) nextStep();
+});
+document.addEventListener('keydown', e => {
+  if (curView !== 'lesson' || !LSN || !LSN.cur || e.repeat || e.ctrlKey || e.metaKey || $('.modal-bd')) return;
+  if (e.key === 'Enter') { const b = $('#les-next'); if (b && !b.disabled) { e.preventDefault(); nextStep(); } return; }
+  if (/^[1-6]$/.test(e.key)) { const o = $$('.opt')[Number(e.key) - 1]; if (o && !o.disabled) pickOpt(Number(o.dataset.opt)); return; }
+  const L = KEYMAP[e.code]; if (!L) return; e.preventDefault();
+  press(pcFromLetter(L, LSN.cur.s.keyId || 'C', e.shiftKey ? 'sharp' : e.altKey ? 'flat' : null));
+});
+
+/* ---------------------------------------------------------------
    Profil & Einstellungen (werden mit dem Google-Konto gespeichert)
    --------------------------------------------------------------- */
 function renderProfile() {
@@ -1727,9 +2055,9 @@ function renderProfile() {
       <div class="field"><span class="lb">Lautstärke Effekte (Erfolge, Level)</span><div class="range-row"><input type="range" min="0" max="100" value="${st.volFx}" data-vol="volFx" aria-label="Lautstärke Effekte"><output>${st.volFx} %</output></div></div>
     </div></div>
     <div class="sect">Klang</div>
-    <div class="list">${Object.keys(SOUND_SETS).map(id => { const lk = lockLevel('sound', id), lock = L < lk, cur = st.soundSet === id;
-      return `<div class="li ${lock ? 'locked' : ''}" ${cur ? 'aria-pressed="true"' : ''}><div class="grow"><b>${lock ? lockIc() : ''}${SOUND_SETS[id].name}</b><small>${lock ? 'Ab Level ' + lk + ' · ' : ''}${SOUND_SETS[id].desc}</small></div><button class="btn sm" data-sndprev="${id}" aria-label="Probehören">${icon('play', 14)} Hören</button><button class="btn sm ${cur ? '' : 'primary'}" data-sndset="${id}" ${cur ? 'disabled' : ''}>${cur ? 'Aktiv' : lock ? 'Gesperrt' : 'Wählen'}</button></div>`; }).join('')}</div>
-    <div class="row" style="margin-top:30px"><button class="btn danger sm" data-act="reset">${icon('trash', 16)} Fortschritt zurücksetzen</button></div>`;
+    <div class="list">${Object.keys(SOUND_SETS).map(id => { const lk = lockLevel('sound', id), lock = L < lk, cur = st.soundSet === id, miss = !!SOUND_SETS[id].missing;
+      return `<div class="li ${lock ? 'locked' : ''}" ${cur ? 'aria-pressed="true"' : ''}><div class="grow"><b>${lock ? lockIc() : ''}${esc(SOUND_SETS[id].name)}${SOUND_SETS[id].custom ? ' <span class="tag">eigen</span>' : ''}</b><small>${lock ? 'Ab Level ' + lk + ' · ' : ''}${esc(SOUND_SETS[id].desc)}${miss ? ' · Datei sounds/' + id + '/C4.mp3 fehlt' : ''}</small></div><button class="btn sm" data-sndprev="${id}" aria-label="Probehören" ${miss ? 'disabled' : ''}>${icon('play', 14)} Hören</button><button class="btn sm ${cur ? '' : 'primary'}" data-sndset="${id}" ${cur || miss ? 'disabled' : ''}>${cur ? 'Aktiv' : miss ? 'Datei fehlt' : lock ? 'Gesperrt' : 'Wählen'}</button></div>`; }).join('')}</div>
+    <div class="row" style="margin-top:30px"><button class="btn sm" data-act="intro">${icon('flag', 16)} Einführung ansehen</button><button class="btn danger sm" data-act="reset">${icon('trash', 16)} Fortschritt zurücksetzen</button></div>`;
 }
 $('#view-profile').addEventListener('click', e => {
   const st = S.settings, t = e.target.closest('[data-theme-set]');
@@ -1918,6 +2246,277 @@ document.addEventListener('pointermove', tipMove); document.addEventListener('po
 addEventListener('scroll', () => tipEl.classList.remove('on'), { passive: true });
 
 /* ---------------------------------------------------------------
+   Reise (Story-Modus) & Einführung
+   --------------------------------------------------------------- */
+function weakTopic() {
+  let best = null;
+  for (const t in S.story.topics) { const [c, w] = S.story.topics[t], n = c + w; if (n >= 3 && TOPIC_NAME[t] && (!best || c / n < best.r)) best = { t, r: c / n, n }; }
+  return best && best.r < .75 ? best : null;
+}
+function storyCard() {
+  const list = lessonList(), nx = list.find(l => !S.story.done[l.id]), n = list.filter(l => S.story.done[l.id]).length, pct = list.length ? Math.round(100 * n / list.length) : 0;
+  return `<button class="story-card glass" data-go="story"><div class="mi">${icon('flag', 22)}</div><div class="grow"><p class="eyebrow">Deine Reise · ${n} von ${list.length} Lektionen</p><h3>${nx ? (n ? 'Weiter mit: ' : 'Starte hier: ') + esc(nx.title) : 'Du hast die ganze Reise geschafft!'}</h3><span class="xpline wide"><i style="width:${pct}%"></i></span></div><span class="go">${icon('arrowr', 20)}</span></button>`;
+}
+function renderStory() {
+  const list = lessonList(), done = S.story.done, nDone = list.filter(l => done[l.id]).length, nx = list.find(l => !done[l.id]);
+  const cur = Math.max(0, CHAPTERS.findIndex((c, i) => !chapterDone(i))), allDone = !nx, wk = weakTopic();
+  const stars = Object.values(done).reduce((a, b) => a + b, 0);
+  $('#view-story').innerHTML = `
+    <div class="greet"><p class="eyebrow">Deine Reise</p><h1>Vom Neuling zum Profi</h1>
+      <p class="quote">Schritt für Schritt – du brauchst keine Vorkenntnisse. Mezzo begleitet dich.</p></div>
+    <div class="rank-bar" role="list">${CHAPTERS.map((c, i) => `<div class="rk ${chapterDone(i) ? 'done' : i === cur && !allDone ? 'cur' : ''}" role="listitem"><i>${chapterDone(i) ? icon('check', 14) : i + 1}</i><span>${esc(c.rank)}</span></div>`).join('<b class="rk-ln"></b>')}</div>
+    <div class="story-hero card">
+      <div class="grow"><p class="eyebrow">${nx ? (nDone ? 'Weiter geht’s' : 'Los geht’s') : 'Geschafft'}</p>
+        <h2>${nx ? esc(nx.title) : 'Alle Lektionen abgeschlossen'}</h2>
+        <p class="sub">${nx ? esc(nx.sub) : 'Du kannst jede Lektion wiederholen, um mehr Sterne zu sammeln – oder frei üben.'}</p>
+        <span class="xpline wide" style="margin-top:10px"><i style="width:${Math.round(100 * nDone / Math.max(1, list.length))}%"></i></span>
+        <p class="hint-txt">${nDone} von ${list.length} Lektionen · ${stars} ★ gesammelt</p></div>
+      <div class="col-btns">${nx ? `<button class="btn primary lg" data-act="lesson" data-id="${nx.id}">${icon('play', 16)} ${nDone ? 'Fortsetzen' : 'Erste Lektion starten'}</button>` : ''}
+        <button class="btn" data-go="home">Freies Üben</button><button class="btn" data-act="mode" data-mode="quiz">Wissensquiz</button></div>
+    </div>
+    ${wk ? `<div class="notice" style="margin-top:14px">Dein schwächstes Thema: <b>${esc(TOPIC_NAME[wk.t])}</b> (${Math.round(wk.r * 100)} % richtig). Ein Wissensquiz hilft beim Auffrischen. <button class="btn sm" data-act="mode" data-mode="quiz" style="margin-left:8px">Quiz starten</button></div>` : ''}
+    ${CHAPTERS.map((c, ci) => { const n = c.lessons.filter(l => done[l.id]).length, nextId = nx && nx.id;
+      return `<section class="chap"><div class="chap-h"><span class="chap-n">${ci + 1}</span><div class="grow"><h3>${esc(c.name)} <small>· ${esc(c.rank)}</small></h3><p>${esc(c.sub)}</p></div><span class="chap-c">${n}/${c.lessons.length}</span></div>
+      <div class="path">${c.lessons.map((l, li) => { const st = done[l.id] || 0;
+        return `<button class="node ${st ? 'done' : ''} ${l.id === nextId ? 'next' : ''}" data-act="lesson" data-id="${l.id}"><span class="nb">${st ? icon('check', 16) : l.exam ? icon('flag', 16) : li + 1}</span><span class="grow"><b>${esc(l.title)}</b><small>${esc(l.sub)}</small></span><span class="stars">${[1, 2, 3].map(i => i <= st ? '★' : '<span class="off">★</span>').join('')}</span></button>`; }).join('')}</div></section>`; }).join('')}
+    <div class="row" style="margin-top:18px"><button class="btn sm" data-act="intro">${icon('flag', 16)} Einführung ansehen</button></div>`;
+}
+
+/* Einführung */
+const INTRO = [
+  { t: 'Willkommen bei NotenFlow!', h: () => `<p>Hi, ich bin <b>Mezzo</b> und zeige dir, wie man Noten liest und am Klavier spielt. Du brauchst <b>keinerlei Vorkenntnisse</b>.</p><p>Notenlesen ist keine Zauberei: Es ist eine Schrift mit wenigen Regeln. Die lernst du hier Schritt für Schritt – mit kleinen Aufgaben und ohne Druck.</p>`, v: () => figHTML(FG('treble', [32, 35, 37, 36, 32], '', { minW: 300, finalBar: true })) },
+  { t: 'Zwei Wege zum Ziel', h: () => `<div class="intro-cards"><div><b>${icon('flag', 16)} Reise</b><p>Die geführte Hauptgeschichte vom Neuling zum Profi: Notenschlüssel, Takt, Vorzeichen, Akkorde …</p></div><div><b>${icon('grid', 16)} Üben</b><p>Freies Training, Speedrun, Lieder und Akkorde – jederzeit verfügbar, auch mitten in der Reise.</p></div><div><b>${icon('grad', 16)} Wissensquiz</b><p>Fragen mit Erklärung, <i>warum</i> eine Antwort falsch war.</p></div></div>` },
+  { t: 'So spielst du', h: () => `<p>Tippe auf die Klaviatur unten – oder nutze die Computertastatur: <kbd>C</kbd> <kbd>D</kbd> <kbd>E</kbd> <kbd>F</kbd> <kbd>G</kbd> <kbd>A</kbd> <kbd>H</kbd>. Mit <kbd>⇧</kbd> wird ein Ton höher (♯), mit <kbd>Alt</kbd> tiefer (♭).</p><p>Für Aufgaben bekommst du <b>XP</b>, steigst im Level auf und schaltest neue Dinge frei. Fehler sind okay: Ich erkläre dir jedes Mal, warum es anders richtig ist.</p>`, v: () => keysHTML({ hi: [0, 4, 7], lab: true }) },
+  { t: 'Bereit?', h: () => `<p>Die erste Lektion dauert etwa fünf Minuten. Du kannst jederzeit abbrechen und später genau dort weitermachen.</p>`, last: true }
+];
+function openIntro(i = 0) {
+  const s = INTRO[i], dots = INTRO.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('');
+  openModal(`<div class="intro"><div class="mentor"><span class="av">♪</span><h2 class="les-t" style="margin:0">${s.t}</h2></div><div class="intro-body">${s.h()}${s.v ? s.v() : ''}</div>
+    <div class="dots">${dots}</div>
+    <div class="row" style="justify-content:space-between;margin-top:14px"><button class="btn ghost" data-act="introEnd" data-skip="1">${s.last ? '' : 'Überspringen'}</button>
+    <div class="row">${i > 0 ? `<button class="btn" data-act="introGo" data-i="${i - 1}">Zurück</button>` : ''}${s.last ? `<button class="btn primary lg" data-act="introEnd" data-start="1">Erste Lektion starten</button>` : `<button class="btn primary" data-act="introGo" data-i="${i + 1}">Weiter ${icon('arrowr', 16)}</button>`}</div></div></div>`, true);
+}
+function maybeIntro() {
+  if (S.story.intro || S.xp > 0 || Object.keys(S.story.done).length || $('.modal-bd') || !['story', 'home'].includes(curView) || (G && !G.over)) return;
+  openIntro(0);
+}
+
+/* ---------------------------------------------------------------
+   Reise – Kapitel 1 bis 3
+   --------------------------------------------------------------- */
+const LN = (step, label, dur) => ({ notes: [N(step)], dur: dur || 1, label });
+const lblItems = (steps, names) => steps.map((s, i) => LN(s, names[i]));
+
+CHAPTERS.push({
+  id: 'c1', name: 'Die Klaviatur erwacht', rank: 'Newbie', sub: 'Tasten, Notensystem und dein erster Notenschlüssel – wirklich bei null gestartet.',
+  lessons: [
+    { id: 'k1', title: 'Willkommen am Klavier', sub: 'Weiße und schwarze Tasten, das Musik-Alphabet', lab: true, steps: [
+      INFO('Das Klavier auf einen Blick', `<p>Ein Klavier hat <b>weiße</b> und <b>schwarze</b> Tasten. Die schwarzen sind in <b>Zweier- und Dreiergruppen</b> angeordnet – daran kannst du dich immer orientieren.</p><p>Die weißen Tasten heißen nach den ersten Buchstaben des Alphabets: <b>C D E F G A {H}</b> – danach geht es wieder bei C los.</p><div class="tip">Finde-Trick: <b>C</b> liegt immer direkt <b>links von der Zweiergruppe</b> schwarzer Tasten.</div>`, [KB([0])]),
+      QZ('Wo findest du auf dem Klavier immer ein C?', ['Links von der Zweiergruppe schwarzer Tasten', 'Links von der Dreiergruppe schwarzer Tasten', 'Ganz rechts außen', 'Zwischen zwei schwarzen Tasten'], 0, 'Die Zweiergruppe beginnt immer rechts neben einem C. Das gilt in jeder Oktave.', { topic: 'basics', wo: { 1: 'Links neben der Dreiergruppe liegt ein F, nicht das C.' } }),
+      KEYQ('Spiele ein <b>C</b> – links von der Zweiergruppe.', [0], { topic: 'basics', why: 'Genau, das ist das C.' }),
+      KEYQ('Jetzt das <b>E</b> – es liegt rechts neben dem D, am Ende der Zweiergruppe.', [4], { topic: 'basics' }),
+      KEYQ('Spiele ein <b>G</b>.', [7], { topic: 'basics' }),
+      KEYQ('Spiele ein <b>A</b>.', [9], { topic: 'basics' })
+    ] },
+    { id: 'k2', title: 'Hoch und tief', sub: 'Tonhöhe und Oktave', lab: true, steps: [
+      INFO('Links tief, rechts hoch', `<p>Je weiter links du spielst, desto <b>tiefer</b> klingt der Ton, je weiter rechts, desto <b>höher</b>.</p><p>Nach den sieben Buchstaben beginnt das Alphabet von vorn. Von einem C bis zum nächsten C sind es <b>acht</b> weiße Tasten. Diesen Abstand nennt man <b>Oktave</b> (lat. „octo“ = acht). Beide C klingen verwandt, nur eines höher.</p><p>Auf deinem Bildschirm siehst du eine Oktave. Gespielt wird immer der Buchstabe – in welcher Oktave, zeigt dir später die Note im Notensystem.</p>`, [KB([0])]),
+      QZ('Du spielst Tasten immer weiter nach rechts. Was passiert mit dem Ton?', ['Er wird höher', 'Er wird tiefer', 'Er wird lauter', 'Er bleibt gleich'], 0, 'Rechts = hoch, links = tief. Lautstärke ist etwas anderes: die bestimmst du mit der Anschlagstärke.', { topic: 'basics' }),
+      QZ('Wie viele weiße Tasten umfasst eine Oktave von C bis zum nächsten C (beide mitgezählt)?', ['8', '7', '12', '5'], 0, 'C D E F G A {H} C sind acht Töne – deshalb „Oktave“.', { topic: 'basics', wo: { 1: 'Sieben verschiedene Buchstaben gibt es, aber mit dem zweiten C sind es acht Tasten.' } }),
+      KEYQ('Spiele ein <b>F</b> – links neben der Dreiergruppe.', [5], { topic: 'basics' }),
+      KEYQ('Spiele ein <b>{H}</b>. Es ist die letzte weiße Taste vor dem nächsten C.', [11], { topic: 'basics', why: 'In Deutschland heißt dieser Ton H, international B.' }),
+      SEQ('Spiele die Tonleiter von C bis zum nächsten C: C D E F G A {H} C.', 'treble', [28, 29, 30, 31, 32, 33, 34, 35], { topic: 'basics' })
+    ] },
+    { id: 'k3', title: 'Das Notensystem', sub: 'Fünf Linien und vier Zwischenräume', steps: [
+      INFO('Wo Noten wohnen', `<p>Noten werden auf <b>fünf Linien</b> geschrieben, dem <b>Notensystem</b>. Dazwischen liegen <b>vier Zwischenräume</b>.</p><p>Man zählt <b>von unten nach oben</b>: 1. Linie ist die unterste. Eine Note kann auf einer Linie sitzen oder in einem Zwischenraum. Je höher sie sitzt, desto höher ist der Ton.</p>`, [FG('treble', [LN(30, '1. Linie'), LN(31, '1. Raum'), LN(32, '2. Linie'), LN(33, '2. Raum'), LN(34, '3. Linie')], 'Von unten nach oben: Linie, Raum, Linie, Raum …', { minW: 480 })]),
+      QZ('Wie viele Linien hat das Notensystem?', ['5', '4', '6', '8'], 0, 'Fünf Linien und dazwischen vier Zwischenräume.', { topic: 'basics' }),
+      QZ('Von wo aus zählt man die Linien?', ['Von unten nach oben', 'Von oben nach unten', 'Von der Mitte aus', 'Egal'], 0, 'Je höher die Note, desto höher der Ton – deshalb zählt man auch von unten nach oben.', { topic: 'basics' }),
+      QZ('Wo sitzt diese Note?', ['Im 2. Zwischenraum', 'Auf der 2. Linie', 'Im 3. Zwischenraum', 'Auf der 3. Linie'], 0, 'Zähle von unten: Linie 1, Raum 1, Linie 2, Raum 2 – dort sitzt die Note.', { topic: 'basics', fig: FG('treble', [33], '', { minW: 260 }) }),
+      QZ('Wo sitzt diese Note?', ['Auf der 3. Linie', 'Im 3. Zwischenraum', 'Auf der 2. Linie', 'Auf der 4. Linie'], 0, 'Eine Note auf einer Linie wird von der Linie „durchstochen“. Hier ist es die dritte von unten, also die mittlere.', { topic: 'basics', fig: FG('treble', [34], '', { minW: 260 }) })
+    ] },
+    { id: 'k4', title: 'Der Violinschlüssel', sub: 'Was ist eigentlich ein Notenschlüssel?', steps: [
+      INFO('Was bedeutet der Schnörkel am Anfang?', `<p>Die fünf Linien allein sagen noch nicht, <i>welcher</i> Ton gemeint ist. Dafür gibt es den <b>Notenschlüssel</b> am Zeilenanfang. Er legt fest, welche Linie welchen Ton hat.</p><p>Der <b>Violinschlüssel</b> (auch G-Schlüssel) ist der häufigste. Sein Schnörkel <b>kreist die 2. Linie ein</b> – und genau diese Linie ist das <b>G</b>. Von da aus kannst du alle anderen Noten ablesen.</p><div class="tip">Meist spielt die <b>rechte Hand</b> im Violinschlüssel – die höheren Töne.</div>`, [FG('treble', [LN(32, 'G')], 'Die 2. Linie ist das G.', { minW: 280 })]),
+      QZ('Welche Linie umkreist der Violinschlüssel?', ['Die 2. Linie von unten', 'Die 1. Linie', 'Die mittlere (3.) Linie', 'Die oberste Linie'], 0, 'Der Schnörkel dreht sich um die 2. Linie. Dort sitzt das G – deshalb „G-Schlüssel“.', { topic: 'treble' }),
+      QZ('Wofür steht ein Notenschlüssel?', ['Er legt fest, welche Linie welchen Ton hat', 'Er gibt das Tempo vor', 'Er zeigt an, wie laut gespielt wird', 'Er zeigt an, welche Tonart gespielt wird'], 0, 'Ohne Schlüssel wüsste man nicht, welcher Ton auf welcher Linie sitzt.', { topic: 'treble' }),
+      NOTE('treble', 32, { topic: 'treble', q: 'Das ist die Linie des Violinschlüssels. Welcher Ton sitzt hier? Spiele ihn.' }),
+      NOTE('treble', 32, { topic: 'treble', q: 'Und noch mal: Welcher Ton ist das?' })
+    ] },
+    { id: 'k5', title: 'Noten auf den Linien', sub: 'E G H D F – mit Eselsbrücke', steps: [
+      INFO('Die fünf Linien im Violinschlüssel', `<p>Von unten nach oben heißen die Linien <b>E – G – {H} – D – F</b>.</p><div class="tip">Merksatz: <b>E</b>s <b>g</b>eht <b>h</b>urtig <b>d</b>urch <b>F</b>eld.</div><p>Die Linien liegen jeweils zwei Stufen auseinander, dazwischen sitzen die Zwischenräume. Das G kennst du schon – von dort aus findest du die anderen.</p>`, [FG('treble', lblItems([30, 32, 34, 36, 38], ['E', 'G', '{H}', 'D', 'F']), 'Die Linien von unten nach oben', { minW: 480 })]),
+      NOTE('treble', 30, { topic: 'treble' }), NOTE('treble', 34, { topic: 'treble' }), NOTE('treble', 38, { topic: 'treble' }), NOTE('treble', 36, { topic: 'treble' }), NOTE('treble', 32, { topic: 'treble' }),
+      QZ('Welchen Ton hat die unterste Linie im Violinschlüssel?', ['E', 'G', 'C', 'F'], 0, 'Merksatz: Es geht hurtig durch Feld – die unterste Linie ist das E.', { topic: 'treble', fig: FG('treble', [30], '', { minW: 260 }) }),
+      SEQ('Spiele alle fünf Linien nacheinander von unten nach oben.', 'treble', [30, 32, 34, 36, 38], { topic: 'treble' })
+    ] },
+    { id: 'k6', title: 'Noten in den Zwischenräumen', sub: 'F A C E – wie das englische Wort', steps: [
+      INFO('Die vier Zwischenräume', `<p>Von unten nach oben heißen die Zwischenräume <b>F – A – C – E</b>. Das ergibt das Wort <b>FACE</b> (englisch „Gesicht“) – leicht zu merken.</p><p>Linien und Zwischenräume wechseln sich ab, und die Töne gehen im Alphabet einfach weiter: E (Linie), F (Raum), G (Linie), A (Raum), {H} (Linie), C (Raum) …</p>`, [FG('treble', lblItems([30, 31, 32, 33, 34, 35, 36, 37, 38], ['E', 'F', 'G', 'A', '{H}', 'C', 'D', 'E', 'F']), 'Linien und Zwischenräume im Wechsel', { minW: 600 })]),
+      NOTE('treble', 31, { topic: 'treble' }), NOTE('treble', 35, { topic: 'treble' }), NOTE('treble', 33, { topic: 'treble' }), NOTE('treble', 37, { topic: 'treble' }),
+      NOTE('treble', 36, { topic: 'treble' }), NOTE('treble', 31, { topic: 'treble' }), NOTE('treble', 34, { topic: 'treble' }),
+      SEQ('Spiele die vier Zwischenräume von unten nach oben (FACE).', 'treble', [31, 33, 35, 37], { topic: 'treble' }),
+      SEQ('Zum Abschluss: Spiele die ganze Reihe von E bis F.', 'treble', [30, 31, 32, 33, 34, 35, 36, 37, 38], { topic: 'treble' })
+    ] }
+  ]
+});
+
+CHAPTERS.push({
+  id: 'c2', name: 'Töne sicher lesen', rank: 'Anfänger', sub: 'Hilfslinien, der Bassschlüssel und beide Hände.',
+  lessons: [
+    { id: 't1', title: 'Hilfslinien & das mittlere C', sub: 'Wenn die fünf Linien nicht reichen', steps: [
+      INFO('Noten über und unter dem System', `<p>Reichen die fünf Linien nicht, schreibt man kurze <b>Hilfslinien</b> darüber oder darunter. Man zählt sie weiter vom System weg.</p><p>Das berühmteste Beispiel: das <b>mittlere C</b>. Es sitzt im Violinschlüssel auf einer Hilfslinie <b>unter</b> dem System. Direkt darüber liegt das D, noch eine Stufe höher das E auf der untersten Linie.</p><div class="tip">Das mittlere C liegt ungefähr in der Mitte der Klaviatur – hier treffen sich rechte und linke Hand.</div>`, [FG('treble', lblItems([28, 29, 30], ['C', 'D', 'E']), 'Mittleres C, D und E', { minW: 360 }), FG('treble', lblItems([39, 40, 41], ['G', 'A', '{H}']), 'Auch oben gibt es Hilfslinien', { minW: 360 })]),
+      NOTE('treble', 28, { topic: 'ledger' }), NOTE('treble', 29, { topic: 'ledger' }), NOTE('treble', 40, { topic: 'ledger' }), NOTE('treble', 39, { topic: 'ledger' }),
+      QZ('Wo sitzt das mittlere C im Violinschlüssel?', ['Auf einer Hilfslinie unter dem System', 'Auf der untersten Linie', 'Im untersten Zwischenraum', 'Über dem System'], 0, 'Die unterste Linie ist das E. Zwei Stufen darunter – auf einer Hilfslinie – sitzt das C.', { topic: 'ledger', fig: FG('treble', [28], '', { minW: 260 }) })
+    ] },
+    { id: 't2', title: 'Der Bassschlüssel', sub: 'Die linke Hand und die tiefen Töne', steps: [
+      INFO('Der F-Schlüssel', `<p>Für tiefe Töne gibt es den <b>Bassschlüssel</b> (F-Schlüssel). Die <b>zwei Punkte</b> umschließen die 4. Linie – das ist das <b>F</b>.</p><p>Meist spielt die <b>linke Hand</b> im Bassschlüssel. Die Linien haben hier andere Namen als im Violinschlüssel, aber das Prinzip ist gleich: Linie, Raum, Linie …</p>`, [FG('bass', [LN(24, 'F')], 'Die 4. Linie ist das F.', { minW: 280 })]),
+      QZ('Welche Linie wird von den zwei Punkten des Bassschlüssels umschlossen?', ['Die 4. Linie (F)', 'Die 2. Linie (G)', 'Die 1. Linie', 'Die mittlere Linie'], 0, 'Die Punkte sitzen links und rechts der 4. Linie. Sie ist das F – deshalb F-Schlüssel.', { topic: 'bass' }),
+      QZ('Welche Hand spielt meist im Bassschlüssel?', ['Die linke Hand', 'Die rechte Hand', 'Beide', 'Keine'], 0, 'Die tiefen Töne spielt man meist links, die hohen rechts.', { topic: 'bass' }),
+      NOTE('bass', 24, { topic: 'bass', q: 'Das ist die Linie des Bassschlüssels. Welcher Ton ist das? Spiele ihn.' }),
+      NOTE('bass', 24, { topic: 'bass' })
+    ] },
+    { id: 't3', title: 'Noten im Bassschlüssel', sub: 'G H D F A und A C E G', steps: [
+      INFO('Linien und Zwischenräume im Bass', `<p>Von unten nach oben heißen die <b>Linien: G – {H} – D – F – A</b>.</p><div class="tip"><b>G</b>roße <b>B</b>rüder <b>d</b>ürfen <b>f</b>ast <b>a</b>lles.</div><p>Die <b>Zwischenräume: A – C – E – G</b>.</p><div class="tip"><b>A</b>lle <b>C</b>horknaben <b>e</b>ssen <b>g</b>ern.</div><p>Vergleich mit dem Violinschlüssel: Alles liegt im Bass zwei Töne „verrutscht“ – die unterste Linie ist hier G statt E.</p>`, [FG('bass', lblItems([18, 19, 20, 21, 22, 23, 24, 25, 26], ['G', 'A', '{H}', 'C', 'D', 'E', 'F', 'G', 'A']), 'Von der untersten Linie bis zur obersten', { minW: 600 })]),
+      NOTE('bass', 18, { topic: 'bass' }), NOTE('bass', 22, { topic: 'bass' }), NOTE('bass', 26, { topic: 'bass' }), NOTE('bass', 19, { topic: 'bass' }), NOTE('bass', 21, { topic: 'bass' }), NOTE('bass', 25, { topic: 'bass' }),
+      QZ('Welchen Ton hat die unterste Linie im Bassschlüssel?', ['G', 'E', 'A', 'F'], 0, 'Große Brüder dürfen fast alles – die unterste Linie ist das G.', { topic: 'bass', fig: FG('bass', [18], '', { minW: 260 }) }),
+      SEQ('Spiele die Linien im Bass von unten nach oben (G {H} D F A).', 'bass', [18, 20, 22, 24, 26], { topic: 'bass' })
+    ] },
+    { id: 't4', title: 'Beide Hände', sub: 'Das Grand Staff und das mittlere C als Brücke', steps: [
+      INFO('Zwei Systeme, eine Klaviatur', `<p>Klaviernoten bestehen meist aus <b>zwei Systemen</b>: oben der Violinschlüssel (rechte Hand), unten der Bassschlüssel (linke Hand).</p><p>Das mittlere C ist die <b>Brücke</b>: Im Violinschlüssel sitzt es auf der Hilfslinie <b>unter</b> dem System, im Bassschlüssel auf der Hilfslinie <b>über</b> dem System. Es ist <b>dieselbe Taste</b>.</p>`, [FG('treble', [LN(28, 'C')], 'Violinschlüssel: Hilfslinie unten', { minW: 260 }), FG('bass', [LN(28, 'C')], 'Bassschlüssel: Hilfslinie oben', { minW: 260 })]),
+      QZ('Sind die beiden gezeigten Noten (Violin unten, Bass oben) dieselbe Taste?', ['Ja, beide sind das mittlere C', 'Nein, die Bass-Note ist tiefer', 'Nein, die Violin-Note ist höher', 'Das hängt von der Tonart ab'], 0, 'Das mittlere C kann in beiden Systemen geschrieben werden – es ist ein und derselbe Ton.', { topic: 'ledger' }),
+      NOTE('treble', 33, { topic: 'treble' }), NOTE('bass', 23, { topic: 'bass' }), NOTE('treble', 36, { topic: 'treble' }), NOTE('bass', 20, { topic: 'bass' }), NOTE('bass', 28, { topic: 'ledger' }), NOTE('treble', 31, { topic: 'treble' })
+    ] }
+  ]
+});
+
+const bar = (steps, dur, last) => steps.map((s, i) => ({ notes: [N(s)], dur, barAfter: i === steps.length - 1 && !last }));
+CHAPTERS.push({
+  id: 'c3', name: 'Rhythmus & Takt', rank: 'Rhythmiker', sub: 'Wie lang ein Ton klingt – und wie Musik in Takte gegliedert wird.',
+  lessons: [
+    { id: 'r1', title: 'Notenwerte', sub: 'Ganze, halbe und Viertelnoten', steps: [
+      INFO('Wie lang ist eine Note?', `<p>Die <b>Form</b> einer Note zeigt ihre Dauer. Wir zählen in <b>Schlägen</b> (wie ein Herzschlag oder Fußtippen).</p><table><tr><th>Note</th><th>Aussehen</th><th>Dauer</th></tr><tr><td>Ganze Note</td><td>hohl, ohne Hals</td><td>4 Schläge</td></tr><tr><td>Halbe Note</td><td>hohl, mit Hals</td><td>2 Schläge</td></tr><tr><td>Viertelnote</td><td>ausgefüllt, mit Hals</td><td>1 Schlag</td></tr><tr><td>Achtelnote</td><td>ausgefüllt, Hals mit Fähnchen</td><td>½ Schlag</td></tr></table>`, [FG('treble', [{ notes: [N(34)], dur: 4, label: '4' }, { notes: [N(34)], dur: 2, label: '2' }, { notes: [N(34)], dur: 1, label: '1' }], 'Ganze, halbe, Viertelnote', { minW: 420 })]),
+      QZ('Wie viele Schläge dauert eine halbe Note?', ['2', '1', '4', '½'], 0, 'Zwei halbe Noten ergeben eine ganze (4 Schläge) – also dauert jede 2.', { topic: 'rhythm', fig: FG('treble', [{ notes: [N(34)], dur: 2 }], '', { minW: 260 }) }),
+      QZ('Welche Note ist das?', ['Ganze Note', 'Halbe Note', 'Viertelnote', 'Achtelnote'], 0, 'Hohl und ohne Hals: die ganze Note, 4 Schläge lang.', { topic: 'rhythm', fig: FG('treble', [{ notes: [N(34)], dur: 4 }], '', { minW: 260 }) }),
+      QZ('Welche Note ist das?', ['Viertelnote', 'Halbe Note', 'Ganze Note', 'Pause'], 0, 'Ausgefüllter Kopf plus Hals: Viertelnote, 1 Schlag.', { topic: 'rhythm', fig: FG('treble', [{ notes: [N(34)], dur: 1 }], '', { minW: 260 }) }),
+      QZ('Wie viele Viertelnoten passen in eine ganze Note?', ['4', '2', '8', '3'], 0, 'Eine ganze Note dauert 4 Schläge, eine Viertel 1 Schlag.', { topic: 'rhythm' }),
+      QZ('Eine Halbe wird gespielt, zwei Schläge lang gehalten. Welche Notenfolge dauert genauso lang?', ['Zwei Viertel', 'Eine Viertel', 'Eine ganze', 'Drei Viertel'], 0, 'Zwei Viertel = 2 Schläge = eine halbe Note.', { topic: 'rhythm' })
+    ] },
+    { id: 'r2', title: 'Takt & Taktstrich', sub: 'Musik in gleich lange Abschnitte teilen', steps: [
+      INFO('Der Taktstrich', `<p>Damit Noten übersichtlich bleiben, wird die Musik in <b>Takte</b> geteilt. Ein senkrechter Strich durch das System, der <b>Taktstrich</b>, trennt sie.</p><p>Am Ende eines Stücks steht ein <b>Schlussstrich</b> (ein dünner und ein dicker Strich). Jeder Takt enthält gleich viele Schläge.</p>`, [FG('treble', [...bar([32, 34, 35, 34], 1), ...bar([32, 34, 35, 34], 1), ...bar([36], 4, true)], 'Drei Takte, am Ende der Schlussstrich', { minW: 560, finalBar: true })]),
+      QZ('Wozu dient der Taktstrich?', ['Er teilt die Musik in gleich lange Abschnitte', 'Er zeigt das Ende des Stücks', 'Er verlängert die Note davor', 'Er zeigt eine Pause an'], 0, 'Der Schlussstrich zeigt das Stückende, der einfache Taktstrich trennt nur die Takte.', { topic: 'meter' }),
+      QZ('Wie viele Takte siehst du hier?', ['3', '2', '4', '1'], 0, 'Ein Takt endet immer mit einem Taktstrich oder dem Schlussstrich. Hier: Takt 1, Takt 2, Takt 3.', { topic: 'meter', fig: FG('treble', [...bar([34, 34, 36, 36], 1), ...bar([36, 36], 2), ...bar([34], 4, true)], '', { minW: 520, finalBar: true }) }),
+      QZ('Was zeigt der dicke Doppelstrich am Ende an?', ['Das Ende des Stücks', 'Einen neuen Takt', 'Eine Pause', 'Lauter spielen'], 0, 'Ein dünner und ein dicker Strich bilden den Schlussstrich.', { topic: 'meter' })
+    ] },
+    { id: 'r3', title: 'Taktarten', sub: '4/4, 3/4, 2/4 – die Zahlen am Anfang', steps: [
+      INFO('Die zwei Zahlen hinter dem Schlüssel', `<p>Hinter dem Schlüssel stehen zwei Zahlen, die <b>Taktart</b>.</p><ul><li>Die <b>obere</b> Zahl sagt: Wie viele Schläge hat ein Takt?</li><li>Die <b>untere</b> Zahl sagt: Welche Note ist ein Schlag? (<b>4</b> = Viertelnote)</li></ul><p><b>4/4</b>: vier Viertel pro Takt – der Standard in Pop und Rock („1-2-3-4“).<br><b>3/4</b>: drei Viertel – typisch für Walzer („1-2-3“).<br><b>2/4</b>: zwei Viertel – wie ein Marsch („1-2“).</p>`, [FG('treble', [...bar([34, 34, 36, 36], 1), ...bar([36, 36, 34, 34], 1, true)], '4/4: vier Viertel pro Takt', { minW: 480, timeSig: [4, 4], finalBar: true }), FG('treble', [...bar([34, 34, 36], 1), ...bar([36, 34], 2, true)], '3/4: drei Schläge pro Takt (Walzer)', { minW: 440, timeSig: [3, 4], finalBar: true })]),
+      QZ('Was bedeutet die obere Zahl der Taktart?', ['Wie viele Schläge ein Takt hat', 'Welche Note ein Schlag ist', 'Wie schnell gespielt wird', 'In welcher Tonart das Stück steht'], 0, 'Oben: Anzahl der Schläge. Unten: Art der Note, die einen Schlag bekommt.', { topic: 'meter' }),
+      QZ('Wie viele Viertelnoten passen in einen 3/4-Takt?', ['3', '4', '2', '6'], 0, '3/4 = drei Viertel. Genau wie beim Walzer: 1-2-3.', { topic: 'meter' }),
+      QZ('Bei welcher Taktart zählt man typischerweise „1-2-3-4“?', ['4/4', '3/4', '2/4', '6/8'], 0, '4/4 hat vier Viertelschläge pro Takt.', { topic: 'meter', wo: { 1: '3/4 hat nur drei Schläge: 1-2-3.' } }),
+      QZ('In einem 4/4-Takt stehen eine halbe Note und eine Viertelnote. Was fehlt, damit der Takt voll ist?', ['Eine Viertelnote', 'Eine halbe Note', 'Eine ganze Note', 'Nichts, er ist voll'], 0, 'Halbe (2) + Viertel (1) = 3 Schläge. Für 4 fehlt noch 1 Schlag: eine Viertelnote.', { topic: 'meter', fig: FG('treble', [{ notes: [N(34)], dur: 2 }, { notes: [N(34)], dur: 1 }], '', { minW: 360, timeSig: [4, 4] }) }),
+      QZ('Welche Taktart passt zu diesem Takt?', ['3/4', '4/4', '2/4', '5/4'], 0, 'Halbe (2) + Viertel (1) = 3 Viertelschläge.', { topic: 'meter', fig: FG('treble', [{ notes: [N(34)], dur: 2 }, { notes: [N(34)], dur: 1, barAfter: true }], '', { minW: 360 }) })
+    ] },
+    { id: 'r4', title: 'Punkt & Pausen', sub: 'Länger halten und bewusst schweigen', steps: [
+      INFO('Der Punkt verlängert', `<p>Ein <b>Punkt</b> hinter einer Note verlängert sie um die <b>Hälfte</b> ihres Werts.</p><ul><li>Halbe (2) + Punkt = <b>3 Schläge</b></li><li>Viertel (1) + Punkt = <b>1½ Schläge</b></li></ul><p>Ein Schweigen wird durch <b>Pausen</b> notiert, jede Notenlänge hat ihre eigene Pause:</p><table><tr><th>Pause</th><th>Aussehen</th><th>Dauer</th></tr><tr><td>Ganze Pause</td><td>${restSVG('whole')}</td><td>4 Schläge (hängt unter der 4. Linie)</td></tr><tr><td>Halbe Pause</td><td>${restSVG('half')}</td><td>2 Schläge (sitzt auf der 3. Linie)</td></tr><tr><td>Viertelpause</td><td>${restQ()}</td><td>1 Schlag</td></tr></table><div class="tip">Merkhilfe: Die <b>g</b>anze Pause <b>h</b>ängt (Hut hängt), die <b>h</b>albe <b>s</b>itzt (Hut sitzt auf).</div>`, []),
+      QZ('Wie lange dauert eine punktierte halbe Note?', ['3 Schläge', '2 Schläge', '4 Schläge', '2½ Schläge'], 0, 'Der Punkt addiert die Hälfte: 2 + 1 = 3 Schläge.', { topic: 'rhythm' }),
+      QZ('Wie lange dauert eine punktierte Viertelnote?', ['1½ Schläge', '2 Schläge', '1¼ Schläge', '3 Schläge'], 0, 'Der Punkt gibt die Hälfte dazu: 1 + ½ = 1½.', { topic: 'rhythm' }),
+      QZ('Was bedeutet eine Pause?', ['Während dieser Zeit wird nicht gespielt, aber weitergezählt', 'Das Stück ist zu Ende', 'Der letzte Ton wird gehalten', 'Man spielt leiser'], 0, 'Pausen sind Teil des Rhythmus: Man schweigt, zählt aber weiter.', { topic: 'rhythm' }),
+      QZ('Ein 4/4-Takt enthält eine punktierte halbe Note. Welche weitere Note füllt den Takt?', ['Eine Viertelnote', 'Eine halbe Note', 'Eine ganze Note', 'Zwei Viertelnoten'], 0, 'Punktierte Halbe = 3 Schläge, es fehlt 1 Schlag – eine Viertelnote.', { topic: 'meter' }),
+      QZ('Welche Pause dauert einen Schlag?', ['Viertelpause', 'Halbe Pause', 'Ganze Pause', 'Keine'], 0, 'Die Viertelpause entspricht der Viertelnote.', { topic: 'rhythm' })
+    ] }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   Reise – Kapitel 4 bis 6
+   --------------------------------------------------------------- */
+const AN = (step, acc, label) => ({ notes: [N(step, acc)], dur: 1, label });
+
+CHAPTERS.push({
+  id: 'c4', name: 'Vorzeichen & Tonleitern', rank: 'Fortgeschritten', sub: 'Schwarze Tasten, Tonarten und die Dur- und Moll-Tonleiter.',
+  lessons: [
+    { id: 'v1', title: 'Kreuz, B und Auflösungszeichen', sub: 'Die schwarzen Tasten im Notenbild', steps: [
+      INFO('Halbtöne und Vorzeichen', `<p>Der kleinste Abstand auf dem Klavier ist der <b>Halbton</b>: einfach die nächste Taste, ob schwarz oder weiß.</p><ul><li><b>♯ (Kreuz)</b> erhöht eine Note um einen Halbton: F wird zu <b>Fis</b>.</li><li><b>♭ (b)</b> erniedrigt um einen Halbton: {H} wird zu <b>B</b>, E zu <b>Es</b>.</li><li><b>♮ (Auflösungszeichen)</b> hebt ein Vorzeichen wieder auf.</li></ul><p>Das Zeichen steht <b>vor</b> der Note und gilt bis zum Ende des Takts. Zwischen E–F und {H}–C gibt es keine schwarze Taste: Dort ist der Halbton direkt die nächste weiße Taste.</p>`, [FG('treble', [AN(31, 1, 'Fis'), AN(34, -1, 'B'), AN(32, 1, 'Gis'), AN(33, -1, 'As')], 'Noten mit ♯ und ♭', { minW: 480 }), KB([6, 10], true)]),
+      QZ('Was bewirkt ein ♯ (Kreuz) vor einer Note?', ['Die Note wird einen Halbton höher', 'Die Note wird einen Halbton tiefer', 'Die Note wird doppelt so lang', 'Die Note wird lauter'], 0, 'Kreuz = hoch, b = tief. Merke: Das Kreuz zeigt „nach oben“ wie ein Pluszeichen.', { topic: 'acc' }),
+      QZ('Zwischen welchen weißen Tasten liegt KEINE schwarze Taste?', ['E–F und {H}–C', 'C–D und D–E', 'F–G und G–A', 'A–{H} und {H}–C'], 0, 'Die beiden natürlichen Halbtonschritte sind E–F und {H}–C.', { topic: 'acc' }),
+      NOTE('treble', 31, { acc: 1, topic: 'acc', q: 'Diese Note hat ein ♯. Welcher Ton ist das? Spiele die schwarze Taste.' }),
+      NOTE('treble', 34, { acc: -1, topic: 'acc', q: 'Diese Note hat ein ♭. Spiele sie.' }),
+      NOTE('treble', 32, { acc: 1, topic: 'acc', q: 'Spiele diese Note (G mit ♯).' }),
+      KEYQ('Spiele <b>Fis</b> (F♯).', [6], { topic: 'acc' }),
+      KEYQ('Spiele <b>Es</b> (E♭).', [3], { topic: 'acc', why: 'Es liegt einen Halbton unter E, also die schwarze Taste links vom E.' })
+    ] },
+    { id: 'v2', title: 'Tonarten & Vorzeichen', sub: 'Warum manche Stücke ♯ oder ♭ am Anfang haben', steps: [
+      INFO('Vorzeichen am Zeilenanfang', `<p>Stehen die Vorzeichen direkt hinter dem Schlüssel, gelten sie für das <b>ganze Stück</b> und für alle Noten dieses Namens – in jeder Oktave. Sie bilden die <b>Tonart</b>.</p><ul><li><b>C-Dur</b>: keine Vorzeichen</li><li><b>G-Dur</b>: ein ♯ (<b>Fis</b>)</li><li><b>F-Dur</b>: ein ♭ (<b>B</b>)</li><li><b>D-Dur</b>: zwei ♯ (<b>Fis, Cis</b>)</li></ul><div class="tip">In G-Dur ist <b>jedes F</b> ein Fis, auch wenn kein Kreuz an der Note steht!</div>`, [FG('treble', [32, 34, 36, 31], 'G-Dur: das F (4. Note) ist ein Fis', { keyId: 'G', minW: 460 }), FG('treble', [33, 34, 35], 'F-Dur: jedes {H} wird zu B', { keyId: 'F', minW: 400 })]),
+      QZ('Wie viele Vorzeichen hat G-Dur?', ['Ein ♯ (Fis)', 'Ein ♭ (B)', 'Zwei ♯', 'Keine'], 0, 'G-Dur hat genau ein Kreuz, und zwar auf dem F.', { topic: 'acc', fig: FG('treble', [], '', { keyId: 'G', minW: 220 }) }),
+      QZ('Welche Vorzeichen stehen hier?', ['Ein ♭ – F-Dur (B)', 'Ein ♯ – G-Dur', 'Zwei ♯ – D-Dur', 'Keine – C-Dur'], 0, 'Ein ♭ auf der 3. Linie ({H}) – das ist F-Dur.', { topic: 'acc', fig: FG('treble', [], '', { keyId: 'F', minW: 220 }) }),
+      NOTE('treble', 31, { keyId: 'G', topic: 'acc', q: 'Tonart G-Dur: Das ♯ am Anfang gilt für jedes F. Welchen Ton spielst du?' }),
+      NOTE('treble', 34, { keyId: 'F', topic: 'acc', q: 'Tonart F-Dur: Das ♭ gilt für jedes {H}. Welchen Ton spielst du?' }),
+      NOTE('treble', 35, { keyId: 'D', topic: 'acc', q: 'Tonart D-Dur (♯ bei F und C): Welchen Ton spielst du?' }),
+      NOTE('bass', 24, { keyId: 'G', topic: 'acc', q: 'Auch im Bassschlüssel: Tonart G-Dur. Welchen Ton spielst du?' })
+    ] },
+    { id: 'v3', title: 'Die Dur-Tonleiter', sub: 'Ganztöne, Halbtöne und fröhlicher Klang', steps: [
+      INFO('Das Dur-Muster', `<p>Eine <b>Tonleiter</b> ist eine Treppe aus acht Tönen. Die Dur-Tonleiter klingt hell und fröhlich und folgt immer demselben Muster:</p><table><tr><th>Stufen</th><td>1–2</td><td>2–3</td><td>3–4</td><td>4–5</td><td>5–6</td><td>6–7</td><td>7–8</td></tr><tr><th>Abstand</th><td>Ganz</td><td>Ganz</td><td><b>Halb</b></td><td>Ganz</td><td>Ganz</td><td>Ganz</td><td><b>Halb</b></td></tr></table><p>C-Dur braucht nur weiße Tasten. Beginnst du auf G, brauchst du für den Halbton am Ende ein <b>Fis</b> – deshalb hat G-Dur ein ♯.</p>`, [FG('treble', lblItems([28, 29, 30, 31, 32, 33, 34, 35], ['C', 'D', 'E', 'F', 'G', 'A', '{H}', 'C']), 'C-Dur', { minW: 640 })]),
+      QZ('Zwischen welchen Stufen liegen in jeder Dur-Tonleiter die Halbtonschritte?', ['3–4 und 7–8', '1–2 und 5–6', '2–3 und 6–7', '4–5 und 7–8'], 0, 'Das Dur-Muster: Ganz, Ganz, Halb, Ganz, Ganz, Ganz, Halb.', { topic: 'scales' }),
+      SEQ('Spiele die C-Dur-Tonleiter aufwärts.', 'treble', [28, 29, 30, 31, 32, 33, 34, 35], { topic: 'scales' }),
+      QZ('Warum hat G-Dur ein Fis?', ['Damit zwischen Stufe 7 und 8 ein Halbton liegt', 'Weil G ein hoher Ton ist', 'Damit die Tonleiter länger wird', 'Das ist reine Konvention ohne Grund'], 0, 'Von F zu G wäre es ein Ganzton. Erst mit Fis entsteht der geforderte Halbton zur Oktave G.', { topic: 'scales' }),
+      SEQ('Spiele die G-Dur-Tonleiter aufwärts. Das F ist ein Fis.', 'treble', [32, 33, 34, 35, 36, 37, 38, 39], { keyId: 'G', topic: 'scales' })
+    ] },
+    { id: 'v4', title: 'Moll – die andere Farbe', sub: 'Die A-Moll-Tonleiter', steps: [
+      INFO('Dur und Moll', `<p>Neben Dur gibt es <b>Moll</b>. Es klingt ernster, wehmütiger. Der Unterschied liegt im Muster: Die <b>3. Stufe</b> ist einen Halbton tiefer als in Dur.</p><p>Jede Dur-Tonart hat eine <b>Mollschwester</b> mit denselben Vorzeichen: zu <b>C-Dur</b> gehört <b>A-Moll</b>. Sie besteht ebenfalls nur aus weißen Tasten, beginnt aber auf A.</p>`, [FG('treble', lblItems([33, 34, 35, 36, 37, 38, 39, 40], ['A', '{H}', 'C', 'D', 'E', 'F', 'G', 'A']), 'A-Moll (natürlich)', { minW: 640 })]),
+      QZ('Welche Dur-Tonart hat dieselben Vorzeichen wie A-Moll?', ['C-Dur', 'G-Dur', 'F-Dur', 'A-Dur'], 0, 'A-Moll und C-Dur sind „Parallel-Tonarten“: beide ohne Vorzeichen.', { topic: 'scales' }),
+      QZ('Wodurch unterscheidet sich Moll hörbar von Dur?', ['Die 3. Stufe liegt einen Halbton tiefer', 'Die Tonleiter ist kürzer', 'Alle Töne sind einen Halbton höher', 'Es gibt keinen Unterschied'], 0, 'Die „kleine Terz“ gibt Moll den ernsten Klang.', { topic: 'scales' }),
+      SEQ('Spiele die A-Moll-Tonleiter aufwärts (A {H} C D E F G A).', 'treble', [33, 34, 35, 36, 37, 38, 39, 40], { topic: 'scales' }),
+      SEQ('Und abwärts: von A zurück zum tiefen A.', 'treble', [40, 39, 38, 37, 36, 35, 34, 33], { topic: 'scales' })
+    ] }
+  ]
+});
+
+CHAPTERS.push({
+  id: 'c5', name: 'Akkorde & Harmonie', rank: 'Harmoniker', sub: 'Mehrere Töne gleichzeitig: Dreiklänge, Umkehrungen, Septakkorde.',
+  lessons: [
+    { id: 'a1', title: 'Dreiklänge: Dur und Moll', sub: 'Drei Töne, die gut zusammen klingen', steps: [
+      INFO('Der Dreiklang', `<p>Ein <b>Akkord</b> sind mehrere Töne, die gleichzeitig erklingen. Der einfachste ist der <b>Dreiklang</b>: drei Töne, jeweils eine Linie (oder einen Raum) übersprungen – man sagt: <b>in Terzen übereinander geschichtet</b>.</p><p>C-Dur: <b>C – E – G</b>. Für Moll rutscht der mittlere Ton einen Halbton nach unten: C-Moll = <b>C – Es – G</b>.</p>`, [FG('treble', [[28, 30, 32]], 'C-Dur: C – E – G', { minW: 260 }), FG('treble', [[28, [30, -1], 32]], 'C-Moll: C – Es – G', { minW: 260 })]),
+      QZ('Wie ist ein Dreiklang aufgebaut?', ['Drei Töne, jeweils eine Linie bzw. einen Raum übersprungen', 'Drei Töne direkt nebeneinander', 'Drei gleiche Töne', 'Drei Töne in verschiedenen Oktaven'], 0, 'Die Töne liegen in Terzen übereinander: C-E-G, nicht C-D-E.', { topic: 'chords' }),
+      CHORD('Spiele den <b>C-Dur-Dreiklang</b>: C, E und G.', 'treble', [28, 30, 32], { topic: 'chords' }),
+      CHORD('Spiele den <b>C-Moll-Dreiklang</b>: C, Es und G.', 'treble', [28, [30, -1], 32], { topic: 'chords', why: 'Das Es ist die schwarze Taste links vom E.' }),
+      CHORD('Spiele den <b>G-Dur-Dreiklang</b>: G, {H} und D.', 'treble', [32, 34, 36], { topic: 'chords' }),
+      CHORD('Spiele den <b>F-Dur-Dreiklang</b>: F, A und C.', 'treble', [31, 33, 35], { topic: 'chords' })
+    ] },
+    { id: 'a2', title: 'Umkehrungen', sub: 'Dieselben Töne, andere Reihenfolge', steps: [
+      INFO('Den tiefsten Ton nach oben schieben', `<p>Ein Akkord muss nicht immer mit dem Grundton unten stehen. Schiebst du den tiefsten Ton eine Oktave nach oben, entsteht eine <b>Umkehrung</b>. Es bleiben <b>dieselben Töne</b>.</p>`, [FG('treble', [[28, 30, 32]], 'Grundstellung: C – E – G', { minW: 260 }), FG('treble', [[30, 32, 35]], '1. Umkehrung: E – G – C', { minW: 260 }), FG('treble', [[32, 35, 37]], '2. Umkehrung: G – C – E', { minW: 260 })]),
+      QZ('Welcher Akkord ist das?', ['C-Dur in 1. Umkehrung (E – G – C)', 'C-Dur in Grundstellung', 'E-Moll', 'G-Dur'], 0, 'E-G-C enthält dieselben Töne wie C-E-G, nur mit E unten.', { topic: 'chords', fig: FG('treble', [[30, 32, 35]], '', { minW: 260 }) }),
+      QZ('Ändert sich der Akkord, wenn man ihn umkehrt?', ['Nein, es bleiben dieselben Töne', 'Ja, er wird zu Moll', 'Ja, er wird höher', 'Ja, er wird zu einem Septakkord'], 0, 'Eine Umkehrung ordnet die gleichen Töne nur anders an.', { topic: 'chords' }),
+      CHORD('Spiele diese 1. Umkehrung (E – G – C).', 'treble', [30, 32, 35], { topic: 'chords' }),
+      CHORD('Spiele diese 2. Umkehrung (G – C – E).', 'treble', [32, 35, 37], { topic: 'chords' })
+    ] },
+    { id: 'a3', title: 'Septakkorde', sub: 'Vier Töne für mehr Farbe', steps: [
+      INFO('Dreiklang plus Septime', `<p>Legst du auf einen Dreiklang noch eine <b>Terz</b> oben drauf, entsteht ein <b>Septakkord</b> mit vier Tönen.</p><ul><li><b>C7</b> (Dominantseptakkord): C – E – G – <b>B</b> (♭). Spannungsvoll, will „weitergehen“.</li><li><b>Cmaj7</b> (große Septime): C – E – G – <b>{H}</b>. Weich und verträumt.</li></ul>`, [FG('treble', [[28, 30, 32, [34, -1]]], 'C7: C – E – G – B', { minW: 260 }), FG('treble', [[28, 30, 32, 34]], 'Cmaj7: C – E – G – {H}', { minW: 260 })]),
+      QZ('Was ist ein Septakkord?', ['Ein Dreiklang plus ein vierter Ton in Terzschichtung', 'Ein Akkord mit sieben Tönen', 'Ein Akkord, der sieben Sekunden dauert', 'Ein Dreiklang in 7/4-Takt'], 0, '„Septime“ heißt der siebte Ton ab dem Grundton, der hier zusätzlich erklingt.', { topic: 'chords' }),
+      QZ('Worin unterscheiden sich C7 und Cmaj7?', ['Der oberste Ton: B (C7) bzw. {H} (Cmaj7)', 'Der unterste Ton', 'Die Anzahl der Töne', 'In nichts'], 0, 'C7 hat die kleine Septime (B), Cmaj7 die große Septime ({H}).', { topic: 'chords' }),
+      CHORD('Spiele <b>C7</b>: C, E, G und B.', 'treble', [28, 30, 32, [34, -1]], { topic: 'chords' }),
+      CHORD('Spiele <b>Cmaj7</b>: C, E, G und {H}.', 'treble', [28, 30, 32, 34], { topic: 'chords' })
+    ] }
+  ]
+});
+
+CHAPTERS.push({
+  id: 'c6', name: 'Ausdruck & Vom-Blatt-Spiel', rank: 'Profi', sub: 'Tempo, Dynamik, flüssig lesen – und die Abschlussprüfung.',
+  lessons: [
+    { id: 'p1', title: 'Tempo & Ausdruck', sub: 'Allegro, forte, legato – die italienischen Wörter', steps: [
+      INFO('Die Sprache der Musik', `<p>In Noten stehen viele italienische Begriffe. Die wichtigsten:</p><table><tr><th>Begriff</th><th>Bedeutung</th></tr><tr><td><b>Allegro</b></td><td>schnell, lebhaft</td></tr><tr><td><b>Andante</b></td><td>gehend, ruhig</td></tr><tr><td><b>Adagio</b></td><td>langsam</td></tr><tr><td><b>p / f</b> (piano / forte)</td><td>leise / laut</td></tr><tr><td><b>cresc. / dim.</b></td><td>lauter werdend / leiser werdend</td></tr><tr><td><b>legato</b></td><td>gebunden, Töne fließen ineinander</td></tr><tr><td><b>staccato</b></td><td>kurz abgesetzt</td></tr><tr><td><b>ritardando</b></td><td>langsamer werdend</td></tr><tr><td><b>Fermate</b></td><td>Ton oder Pause darf länger gehalten werden</td></tr></table>`, []),
+      QZ('Was bedeutet „Allegro“?', ['Schnell, lebhaft', 'Langsam', 'Leise', 'Gebunden'], 0, 'Allegro = fröhlich/lebhaft, also zügiges Tempo. Adagio ist das langsame Gegenstück.', { topic: 'expr' }),
+      QZ('Was bedeutet „forte“ (f)?', ['Laut', 'Leise', 'Schnell', 'Kurz'], 0, 'forte = stark, laut. Das Gegenstück ist piano (leise).', { topic: 'expr' }),
+      QZ('Wie spielt man „staccato“?', ['Kurz und abgesetzt', 'Gebunden', 'Immer lauter', 'Sehr langsam'], 0, 'Staccato = die Töne werden kurz angetippt. Das Gegenteil ist legato.', { topic: 'expr' }),
+      QZ('Was bedeutet „ritardando“?', ['Allmählich langsamer werden', 'Allmählich lauter werden', 'Plötzlich stoppen', 'Wiederholen'], 0, '„Ritardare“ heißt verzögern – das Tempo wird langsamer.', { topic: 'expr' }),
+      QZ('Welches Zeichen sagt „lauter werdend“?', ['crescendo (cresc.)', 'diminuendo (dim.)', 'fermata', 'piano'], 0, 'Crescendo = anwachsend. Diminuendo = abnehmend.', { topic: 'expr' })
+    ] },
+    { id: 'p2', title: 'Vom Blatt spielen', sub: 'Erste Melodien, ohne Hilfen', steps: [
+      INFO('So liest du neue Noten', `<p>Profis lesen nicht jede Note einzeln, sondern in <b>Mustern</b>. Mit diesen Schritten gehst du an ein neues Stück:</p><ul><li>1. <b>Schlüssel und Vorzeichen</b> prüfen.</li><li>2. <b>Taktart</b> und Rhythmus überfliegen.</li><li>3. Auf <b>Tonschritte</b> achten: Nachbarnote (Stufe), Sprung (Terz), Wiederholung.</li><li>4. Nicht anhalten: lieber langsam, aber im Fluss.</li></ul><div class="tip">Bei Tonschritten musst du nur die <b>Richtung</b> lesen: Geht die Melodie hoch oder runter, und wie weit?</div>`, [FG('treble', [30, 30, 31, 32, 32, 31, 30, 29], 'Dieser Anfang geht stufenweise: aufwärts, dann abwärts', { minW: 520 })]),
+      SEQ('Spiele die Melodie „Freude, schöner Götterfunken“ (Anfang).', 'treble', [30, 30, 31, 32, 32, 31, 30, 29, 28, 28, 29, 30], { topic: 'treble' }),
+      SEQ('Spiele „Alle meine Entchen“ in C-Dur (Anfang).', 'treble', [28, 29, 30, 31, 32, 32, 33, 33, 33, 33, 32], { topic: 'treble' }),
+      SEQ('Und eine Basslinie: G, F, E, D, C – abwärts.', 'bass', [25, 24, 23, 22, 21], { topic: 'bass' }),
+      SEQ('Zum Abschluss ein Lauf in G-Dur: G, {H}, D, Fis, G.', 'treble', [32, 34, 36, 38, 39], { keyId: 'G', topic: 'scales' })
+    ] },
+    { id: 'p3', title: 'Abschlussprüfung', sub: '12 Fragen zu allem – ab 70 % bestanden', exam: true }
+  ]
+});
+
+/* ---------------------------------------------------------------
    Dialoge
    --------------------------------------------------------------- */
 function infoNoCloud() {
@@ -1932,12 +2531,62 @@ function accountModal() {
 }
 
 /* ---------------------------------------------------------------
+   Wissensquiz: Fragenbank + generierte Notenfragen
+   --------------------------------------------------------------- */
+const TOPIC_NAME = { basics: 'Klaviatur & Notensystem', treble: 'Violinschlüssel', bass: 'Bassschlüssel', ledger: 'Hilfslinien', rhythm: 'Notenwerte & Pausen', meter: 'Takt & Taktarten', acc: 'Vorzeichen & Tonarten', scales: 'Tonleitern', chords: 'Akkorde', expr: 'Tempo & Ausdruck' };
+const TQ = [
+  QZ('Wie heißt der kleinste Abstand zwischen zwei Tasten auf dem Klavier?', ['Halbton', 'Ganzton', 'Terz', 'Oktave'], 0, 'Der Halbton ist der Abstand zur direkt benachbarten Taste, egal ob schwarz oder weiß.', { topic: 'acc' }),
+  QZ('Wie viele Töne (mit dem oberen) umfasst eine Oktave?', ['8', '7', '5', '12'], 0, 'Von C bis zum nächsten C sind es acht Töne – „octo“ heißt acht.', { topic: 'basics' }),
+  QZ('Welche Linie kennzeichnet der Violinschlüssel?', ['Die 2. Linie (G)', 'Die 4. Linie (F)', 'Die 3. Linie ({H})', 'Die 1. Linie (E)'], 0, 'Der Schnörkel umkreist die 2. Linie von unten: das G.', { topic: 'treble', wo: { 1: 'Die 4. Linie kennzeichnet der Bassschlüssel (F).' } }),
+  QZ('Welche Linie kennzeichnet der Bassschlüssel?', ['Die 4. Linie (F)', 'Die 2. Linie (G)', 'Die 1. Linie (G)', 'Die oberste Linie (A)'], 0, 'Die zwei Punkte sitzen links und rechts der 4. Linie: F-Schlüssel.', { topic: 'bass' }),
+  QZ('Wie heißen die Zwischenräume im Violinschlüssel von unten nach oben?', ['F – A – C – E', 'E – G – {H} – D', 'G – {H} – D – F', 'A – C – E – G'], 0, 'FACE. Die Linien heißen E G H D F.', { topic: 'treble', wo: { 1: 'Das sind die Linien, nicht die Zwischenräume.', 3: 'Das sind die Zwischenräume im Bassschlüssel.' } }),
+  QZ('Wie heißen die Linien im Bassschlüssel von unten nach oben?', ['G – {H} – D – F – A', 'E – G – {H} – D – F', 'A – C – E – G', 'F – A – C – E'], 0, 'Große Brüder dürfen fast alles: G H D F A.', { topic: 'bass', wo: { 1: 'Das sind die Linien im Violinschlüssel.' } }),
+  QZ('Wie viele Schläge hat eine ganze Note?', ['4', '2', '1', '8'], 0, 'Ganze = 4 Schläge, halbe = 2, Viertel = 1.', { topic: 'rhythm' }),
+  QZ('Eine punktierte Halbe dauert …', ['3 Schläge', '2 Schläge', '4 Schläge', '2½ Schläge'], 0, '2 Schläge plus die Hälfte (1) = 3.', { topic: 'rhythm' }),
+  QZ('Die untere Zahl einer Taktart (z. B. 4 in 3/4) gibt an …', ['Welcher Notenwert einen Schlag bekommt', 'Wie viele Schläge pro Takt', 'Das Tempo', 'Die Tonart'], 0, 'Unten: Notenwert pro Schlag (4 = Viertelnote). Oben: Anzahl der Schläge pro Takt.', { topic: 'meter' }),
+  QZ('Welche Taktart passt zu einem Walzer?', ['3/4', '4/4', '2/4', '5/4'], 0, 'Walzer: eins-zwei-drei. Der Takt hat drei Viertelschläge.', { topic: 'meter' }),
+  QZ('Was zeigt ein ♭ vor einer Note?', ['Einen Halbton tiefer', 'Einen Halbton höher', 'Einen Ganzton tiefer', 'Eine Pause'], 0, 'b erniedrigt um einen Halbton. Das Kreuz ♯ erhöht.', { topic: 'acc' }),
+  QZ('Was hebt ein Vorzeichen wieder auf?', ['Das Auflösungszeichen ♮', 'Ein Taktstrich', 'Ein Schlüssel', 'Eine Fermate'], 0, 'Das Auflösungszeichen ♮ macht ♯ oder ♭ rückgängig.', { topic: 'acc' }),
+  QZ('Wie viele Vorzeichen hat D-Dur?', ['Zwei ♯ (Fis, Cis)', 'Ein ♯ (Fis)', 'Zwei ♭', 'Keine'], 0, 'D-Dur: Fis und Cis. G-Dur hat nur ein ♯ (Fis).', { topic: 'acc' }),
+  QZ('Welche Tonart hat ein ♭ (B)?', ['F-Dur', 'G-Dur', 'C-Dur', 'D-Dur'], 0, 'F-Dur hat ein ♭: B statt {H}.', { topic: 'acc' }),
+  QZ('Welche Stufen der Dur-Tonleiter liegen einen Halbton auseinander?', ['3–4 und 7–8', '1–2 und 4–5', '2–3 und 5–6', '1–2 und 7–8'], 0, 'Dur-Muster: Ganz-Ganz-Halb-Ganz-Ganz-Ganz-Halb.', { topic: 'scales' }),
+  QZ('Welcher Ton unterscheidet C-Moll von C-Dur?', ['Der mittlere Ton (Es statt E)', 'Der untere Ton', 'Der obere Ton', 'Keiner'], 0, 'Moll hat eine kleine Terz: Das E wird zum Es.', { topic: 'chords' }),
+  QZ('Welche Töne bilden den C-Dur-Dreiklang?', ['C – E – G', 'C – D – E', 'C – F – A', 'C – Es – G'], 0, 'Terzschichtung: C, E, G. C – Es – G wäre C-Moll.', { topic: 'chords', wo: { 3: 'Das ist C-Moll: Das Es ist einen Halbton tiefer als das E.' } }),
+  QZ('Welche Töne hat der Septakkord C7?', ['C – E – G – B', 'C – E – G – {H}', 'C – D – E – F', 'C – Es – G – B'], 0, 'C7 hat die kleine Septime B. Mit {H} wäre es Cmaj7.', { topic: 'chords', wo: { 1: 'Das wäre Cmaj7, mit großer Septime.' } }),
+  QZ('Was ist eine Akkordumkehrung?', ['Der tiefste Ton wird eine Oktave höher gespielt', 'Der Akkord wird rückwärts gespielt', 'Der Akkord wird Moll', 'Der Akkord wird leiser'], 0, 'Dieselben Töne, nur die Reihenfolge von unten nach oben ändert sich.', { topic: 'chords' }),
+  QZ('Was bedeutet „piano“?', ['Leise', 'Laut', 'Schnell', 'Langsam'], 0, 'Piano = leise. Daher kommt auch der Name des Instruments: „pianoforte“ (leise-laut).', { topic: 'expr' }),
+  QZ('„Legato“ bedeutet …', ['Gebunden spielen', 'Kurz abgesetzt spielen', 'Schneller werden', 'Pausieren'], 0, 'Legato = die Töne gehen fließend ineinander über. Staccato ist das Gegenteil.', { topic: 'expr' }),
+  QZ('Wo liegt auf dem Klavier immer das C?', ['Links von der Zweiergruppe schwarzer Tasten', 'Links von der Dreiergruppe', 'Rechts von der Dreiergruppe', 'Zwischen E und F'], 0, 'Zwei schwarze Tasten, davor links: C.', { topic: 'basics' }),
+  QZ('Auf welcher Hilfslinie sitzt das mittlere C im Violinschlüssel?', ['Unter dem System', 'Über dem System', 'Auf der 1. Linie', 'Im 1. Zwischenraum'], 0, 'Zwei Stufen unter dem E (unterste Linie) – auf der ersten Hilfslinie unter dem System.', { topic: 'ledger' }),
+  QZ('Was bewirkt der Taktstrich?', ['Er teilt die Musik in Takte', 'Er verlängert Töne', 'Er ändert die Tonart', 'Er setzt eine Pause'], 0, 'Der Taktstrich gliedert das Stück in Abschnitte mit jeweils gleich vielen Schlägen.', { topic: 'meter' })
+];
+function genRead(clef) {
+  const b = CLEF[clef].bottom, ext = curLevel() >= 4 ? 4 : 0, step = b - ext + Math.floor(Math.random() * (9 + 2 * ext)), nm = S.settings.naming, correct = nameOf(step), ds = shuffle([-2, -1, 1, 2]).slice(0, 3);
+  const wrong = ds.map(d => ({ n: nameOf(step + d), s: step + d })), all = shuffle([{ n: correct, s: step }].concat(wrong));
+  const wo = {}; all.forEach((o, i) => { if (o.s !== step) wo[i] = `Das wäre ${o.n}: Dann müsste die Note ${posText(clef, o.s)} sitzen. Sie sitzt aber ${posText(clef, step)}.`; });
+  return QZ(`Welche Note ist das? (${CLEF[clef].name})`, all.map(o => o.n), all.findIndex(o => o.s === step),
+    `Die Note sitzt ${posText(clef, step)} und ist ein ${correct}. ${clef === 'treble' ? 'Violinschlüssel: Linien E G H D F, Räume F A C E.' : 'Bassschlüssel: Linien G H D F A, Räume A C E G.'}`,
+    { topic: clef, wo, fig: FG(clef, [step], '', { minW: 260 }) });
+}
+function genQuiz(n, exam) {
+  const weak = [], w = S.story.topics;
+  Object.keys(w).forEach(t => { const [c, x] = w[t]; if (c + x >= 3 && c / (c + x) < .75) weak.push(t); });
+  let bank = shuffle(TQ);
+  if (!exam && weak.length) bank = bank.filter(q => weak.includes(q.topic)).concat(bank.filter(q => !weak.includes(q.topic)));
+  const reads = Math.ceil(n / 2), out = [];
+  for (let i = 0; i < reads; i++) out.push(genRead(i % 2 ? 'bass' : 'treble'));
+  out.push(...bank.slice(0, n - reads));
+  return shuffle(out);
+}
+
+/* ---------------------------------------------------------------
    Aktionen (Event-Delegation)
    --------------------------------------------------------------- */
 const ACT = {
   home() { closeModal(); if (G && !G.over) { G.over = true; cancelAnimationFrame(raf); } G = null; show('home'); },
   mode(el) {
     const m = el.dataset.mode; if (curLevel() < UNLOCK.mode[m]) { lockToast(UNLOCK.mode[m]); return; }
+    if (m === 'quiz') { openQuiz(); return; }
     setupMode = m; quote = pick(MOTIVATION); show('setup');
   },
   start() { startGame(setupMode); },
@@ -1974,13 +2623,33 @@ $('#btn-resume').innerHTML = icon('play', 18) + ' Weiter';
 $('#hud-streak').innerHTML = icon('flame', 22) + '0';
 $$('.ni[data-ic]').forEach(n => { n.innerHTML = icon(n.dataset.ic, 18); });
 
+/* Aktionen für Reise, Lektionen, Quiz, Einführung */
+Object.assign(ACT, {
+  lesson(el) { openLesson(el.dataset.id); },
+  lessonAgain() { if (!LSN) return show('story'); if (LSN.meta.quiz) openQuiz(); else openLesson(LSN.meta.id); },
+  lessonExit() {
+    if (!LSN) return show('story');
+    openModal(`<h2>Lektion verlassen?</h2><p class="sub">Dein Fortschritt in dieser Lektion geht verloren, bereits abgeschlossene Lektionen bleiben erhalten.</p><div class="row"><button class="btn primary" data-act="lessonLeave">Verlassen</button><button class="btn" data-act="closeModal">Weitermachen</button></div>`);
+  },
+  lessonLeave() { closeModal(); const q = LSN && LSN.meta.quiz; LSN = null; show(q ? 'home' : 'story'); },
+  intro() { openIntro(0); },
+  introGo(el) { openIntro(Number(el.dataset.i)); },
+  introEnd(el) {
+    S.story.intro = Math.max(S.story.intro, el.dataset.start ? 2 : 1); save(); closeModal(); checkAch();
+    if (el.dataset.start) { const f = lessonList()[0]; if (f) openLesson(f.id); }
+  }
+});
+
 /* ---------------------------------------------------------------
    Start
    --------------------------------------------------------------- */
 FX.init(); buildBg(); sanitize(); applyTheme(); renderLevel(); renderAuth(); renderSoundBtn();
-{ const h = location.hash.replace('#/', ''); show(['home', 'stats', 'ach', 'learn', 'profile'].includes(h) ? h : 'home'); }
+{ const h = location.hash.replace('#/', ''), fresh = !S.xp && !Object.keys(S.story.done).length; show(['story', 'home', 'stats', 'ach', 'learn', 'profile'].includes(h) ? h : (fresh ? 'story' : 'home')); }
+setTimeout(maybeIntro, 1800);
 addEventListener('load', moveInd); if (document.fonts && document.fonts.ready) document.fonts.ready.then(moveInd);
+Snd.loadManifest().then(() => { sanitize(); renderAll(); });
 Cloud.init();
+if (/[?&]nftest/.test(location.search)) window.__nf = { lsn: () => LSN, pcsOf, seqPcs, S: () => S, lessons: lessonList };
 })();
 </script>
 </body>
